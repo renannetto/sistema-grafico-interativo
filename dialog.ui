@@ -113,7 +113,7 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>90</y>
+       <y>80</y>
        <width>551</width>
        <height>111</height>
       </rect>
@@ -190,6 +190,19 @@
        </rect>
       </property>
      </widget>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>210</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Desenhar Ponto</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
@@ -533,4 +546,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>drawPoint(int,int)</slot>
+ </slots>
 </ui>
