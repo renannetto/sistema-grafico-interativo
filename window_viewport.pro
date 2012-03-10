@@ -8,9 +8,11 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     dialog.cpp \
-    ponto.cpp
+    ponto.cpp \
+    figura.cpp
 HEADERS += mainwindow.h \
     dialog.h \
-    ponto.h
+    ponto.h \
+    figura.h
 FORMS += mainwindow.ui \
     dialog.ui

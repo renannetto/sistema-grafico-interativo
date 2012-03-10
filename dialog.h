@@ -15,6 +15,14 @@ public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
 
+public slots:
+    void drawLine();
+    void drawDot();
+
+signals:
+    void drawLineM(double, double, double, double);
+    void drawDotM(double, double);
+
 private:
     Ui::Dialog *ui;
 };
