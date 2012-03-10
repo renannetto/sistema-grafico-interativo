@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include "dialog.h"
+#include "windowviewport.h"
 
 namespace Ui {
     class MainWindow;
@@ -31,18 +32,12 @@ public slots:
     void moveRight();
     void moveUp();
     void moveDown();
-    qreal fx(double);
-    qreal fy(double);
 
 private:
+    WindowViewport *windowViewport;
     Ui::MainWindow *ui;
     Dialog *newObjectWindow;
     QGraphicsScene * viewport;
-    void drawObjects();
-    qreal xMin;
-    qreal yMin;
-    qreal xMax;
-    qreal yMax;
 };
 
 #endif // MAINWINDOW_H

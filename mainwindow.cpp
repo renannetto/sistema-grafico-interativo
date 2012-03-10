@@ -5,6 +5,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    windowViewport = new WindowViewport();
+
     ui->setupUi(this);
 
     newObjectWindow = new Dialog(this); newObjectWindow->setVisible(false);
@@ -16,27 +18,6 @@ MainWindow::MainWindow(QWidget *parent) :
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
 
-    xMin = 0;
-    yMin = 0;
-    xMax = 640;
-    yMax = 480;
-    //drawObjects();
-//    for(int i = 0; i < 150; i++){
-//        moveLeft();
-//    }
-//    viewport->clear();
-//    drawDot(200,200);
-//    drawLine(50, 50, 400, 200);
-//    drawLine(0,0,640,480);
-//    drawLine(600,240,800,480);
-//    for(int i = 0; i < 250; i++){
-//        zoomIn();
-//    }
-//    viewport->clear();
-//    drawDot(200,200);
-//    drawLine(50, 50, 400, 200);
-//    drawLine(0,0,640,480);
-//    drawLine(600,240,800,480);
 }
 
 MainWindow::~MainWindow()
@@ -49,67 +30,42 @@ void MainWindow::abrirJanela(){
 }
 
 void MainWindow::drawDot(double x, double y){
-    x = fx(x);
-    y = fy(y);
+    list<Ponto*> pontos;
+    pontos.push_back(new Ponto(x, y));
+    windowViewport->addFigure(pontos);
+    x = windowViewport->fx(x);
+    y = windowViewport->fy(y);
     viewport->addLine(x,y,x,y);
 }
 
 void MainWindow::drawLine(double x1, double y1, double x2, double y2){
-    viewport->addLine(fx(x1),fy(y1),fx(x2),fy(y2));
-}
-
-void MainWindow::drawObjects(){
-    viewport->clear();
-    drawDot(200,200);
-    drawLine(50, 50, 400, 200);
-    drawLine(0,0,640,480);
-    drawLine(600,240,800,480);
-}
-
-qreal MainWindow::fx(double x){
-    return (x - xMin) * 640 / (xMax - xMin);
-}
-
-qreal MainWindow::fy(double y){
-    return (yMax - y) * 480 / (yMax - yMin);
+    list<Ponto*> pontos;
+    pontos.push_back(new Ponto(x1, y1));
+    pontos.push_back(new Ponto(x2, y2));
+    windowViewport->addFigure(pontos);
+    viewport->addLine(windowViewport->fx(x1),windowViewport->fy(y1),windowViewport->fx(x2),windowViewport->fy(y2));
 }
 
 void MainWindow::zoomIn(){
-    xMin += 2.5;
-    yMin += 2.5;
-    xMax -= 2.5;
-    yMax -= 2.5;
-    drawObjects();
+    windowViewport->zoomIn();
 }
 
 void MainWindow::zoomOut(){
-    xMin -= 2.5;
-    yMin -= 2.5;
-    xMax += 2.5;
-    yMax += 2.5;
-    drawObjects();
+    windowViewport->zoomOut();
 }
 
 void MainWindow::moveLeft(){
-    xMin -= 5;
-    xMax -= 5;
-    drawObjects();
+    windowViewport->moveLeft();
 }
 
 void MainWindow::moveRight(){
-    xMin += 5;
-    xMax += 5;
-    drawObjects();
+    windowViewport->moveRight();
 }
 
 void MainWindow::moveDown(){
-    yMin -= 5;
-    yMax -= 5;
-    drawObjects();
+   windowViewport->moveDown();
 }
 
 void MainWindow::moveUp(){
-    yMin += 5;
-    yMax += 5;
-    drawObjects();
+    windowViewport->moveUp();
 }
