@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QGraphicsItem>
 #include "dialog.h"
 
 namespace Ui {
@@ -19,13 +20,25 @@ public:
 
 public slots:
     void abrirJanela();
-    void drawDot(int,int);
-    void drawLine(int,int,int,int);
+    void drawDot(double,double);
+    void drawLine(double,double,double,double);
+    void zoomIn();
+    void zoomOut();
+    void moveLeft();
+    void moveRight();
+    void moveUp();
+    void moveDown();
+    qreal fx(double);
+    qreal fy(double);
 
 private:
     Ui::MainWindow *ui;
     Dialog *newObjectWindow;
     QGraphicsScene * viewport;
+    qreal xMin;
+    qreal yMin;
+    qreal xMax;
+    qreal yMax;
 };
 
 #endif // MAINWINDOW_H

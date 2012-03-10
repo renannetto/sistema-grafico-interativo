@@ -6,10 +6,10 @@ Ponto::Ponto(){
 Ponto::~Ponto(){
 }
 
-void Ponto::setX(int newX){
+void Ponto::setX(double newX){
     x = newX;
 }
 
-void Ponto::setY(int newY){
+void Ponto::setY(double newY){
     y = newY;
 }

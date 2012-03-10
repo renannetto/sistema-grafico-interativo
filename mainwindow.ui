@@ -298,6 +298,9 @@
       <verstretch>0</verstretch>
      </sizepolicy>
     </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">

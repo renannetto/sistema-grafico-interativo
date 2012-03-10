@@ -6,11 +6,11 @@ class Ponto
 public:
     Ponto();
     ~Ponto();
-    void setX(int);
-    void setY(int);
+    void setX(double);
+    void setY(double);
 private:
-    int x;
-    int y;
+    double x;
+    double y;
 };
 
 #endif // PONTO_H
