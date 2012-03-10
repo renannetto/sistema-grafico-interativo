@@ -8,24 +8,30 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     newObjectWindow = new Dialog(this);
     newObjectWindow->setVisible(false);
-    viewport = new QGraphicsScene(0,0,640,480);
+    viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
+
     xMin = 0;
     yMin = 0;
     xMax = 640;
     yMax = 480;
-    drawDot(200,200);
-    drawLine(50, 50, 400, 200);
-    drawLine(0,0,640,480);
-    drawLine(600,240,800,480);
-    for(int i = 0; i < 150; i++){
-        moveLeft();
-    }
-    viewport->clear();
-    drawDot(200,200);
-    drawLine(50, 50, 400, 200);
-    drawLine(0,0,640,480);
-    drawLine(600,240,800,480);
+    drawObjects();
+//    for(int i = 0; i < 150; i++){
+//        moveLeft();
+//    }
+//    viewport->clear();
+//    drawDot(200,200);
+//    drawLine(50, 50, 400, 200);
+//    drawLine(0,0,640,480);
+//    drawLine(600,240,800,480);
+//    for(int i = 0; i < 250; i++){
+//        zoomIn();
+//    }
+//    viewport->clear();
+//    drawDot(200,200);
+//    drawLine(50, 50, 400, 200);
+//    drawLine(0,0,640,480);
+//    drawLine(600,240,800,480);
 }
 
 MainWindow::~MainWindow()
@@ -47,6 +53,14 @@ void MainWindow::drawLine(double x1, double y1, double x2, double y2){
     viewport->addLine(fx(x1),fy(y1),fx(x2),fy(y2));
 }
 
+void MainWindow::drawObjects(){
+    viewport->clear();
+    drawDot(200,200);
+    drawLine(50, 50, 400, 200);
+    drawLine(0,0,640,480);
+    drawLine(600,240,800,480);
+}
+
 qreal MainWindow::fx(double x){
     return (x - xMin) * 640 / (xMax - xMin);
 }
@@ -56,35 +70,41 @@ qreal MainWindow::fy(double y){
 }
 
 void MainWindow::zoomIn(){
-    xMin++;
-    yMin++;
-    xMax--;
-    yMax--;
+    xMin += 2.5;
+    yMin += 2.5;
+    xMax -= 2.5;
+    yMax -= 2.5;
+    drawObjects();
 }
 
 void MainWindow::zoomOut(){
-    xMin--;
-    yMin--;
-    xMax++;
-    yMax++;
+    xMin -= 2.5;
+    yMin -= 2.5;
+    xMax += 2.5;
+    yMax += 2.5;
+    drawObjects();
 }
 
 void MainWindow::moveLeft(){
-    xMin--;
-    xMax--;
+    xMin -= 5;
+    xMax -= 5;
+    drawObjects();
 }
 
 void MainWindow::moveRight(){
-    xMin++;
-    xMax++;
+    xMin += 5;
+    xMax += 5;
+    drawObjects();
 }
 
 void MainWindow::moveDown(){
-    yMin--;
-    yMax--;
+    yMin -= 5;
+    yMax -= 5;
+    drawObjects();
 }
 
 void MainWindow::moveUp(){
-    yMin++;
-    yMax++;
+    yMin += 5;
+    yMax += 5;
+    drawObjects();
 }

@@ -10,6 +10,9 @@ namespace Ui {
     class MainWindow;
 }
 
+static double const VIEWPORTXSIZE = 640;
+static double const VIEWPORTYSIZE = 480;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -35,6 +38,7 @@ private:
     Ui::MainWindow *ui;
     Dialog *newObjectWindow;
     QGraphicsScene * viewport;
+    void drawObjects();
     qreal xMin;
     qreal yMin;
     qreal xMax;
