@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    newObjectWindow = new Dialog(this); newObjectWindow->setVisible(false);
+    newObjectWindow = new Dialog(this);
+    newObjectWindow->setVisible(false);
     connect(newObjectWindow, SIGNAL(drawLineM(double, double, double, double)),
     this, SLOT(drawLine(double, double, double, double)));
     connect(newObjectWindow, SIGNAL(drawDotM(double, double)),
@@ -15,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
-    Ponto ponto1;
 
 
     xMin = 0;
