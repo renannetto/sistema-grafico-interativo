@@ -6,8 +6,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    newObjectWindow = new Dialog(this);
-    newObjectWindow->setVisible(false);
+
+    newObjectWindow = new Dialog(this); newObjectWindow->setVisible(false);
+    connect(newObjectWindow, SIGNAL(drawLineM(double, double, double, double)),
+    this, SLOT(drawLine(double, double, double, double)));
+    connect(newObjectWindow, SIGNAL(drawDotM(double, double)),
+    this, SLOT(drawDot(double, double)));
+
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
 
@@ -15,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     yMin = 0;
     xMax = 640;
     yMax = 480;
-    drawObjects();
+    //drawObjects();
 //    for(int i = 0; i < 150; i++){
 //        moveLeft();
 //    }

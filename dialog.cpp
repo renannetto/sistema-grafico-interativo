@@ -12,3 +12,15 @@ Dialog::~Dialog()
 {
     delete ui;
 }
+
+void Dialog::drawLine()
+{
+    emit drawLineM(ui->lineEdit_3->text().toDouble(),
+ui->lineEdit_4->text().toDouble(), ui->lineEdit_5->text().toDouble(),
+ui->lineEdit_6->text().toDouble());
+}
+
+void Dialog::drawDot()
+{
+    emit drawDotM(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble());
+}

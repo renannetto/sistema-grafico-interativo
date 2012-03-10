@@ -1,6 +1,8 @@
 #include "ponto.h"
 
-Ponto::Ponto(){
+Ponto::Ponto(double vX, double vY){
+    x = vX;
+    y = vY;
 }
 
 Ponto::~Ponto(){

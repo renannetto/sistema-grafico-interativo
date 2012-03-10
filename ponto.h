@@ -4,7 +4,7 @@
 class Ponto
 {
 public:
-    Ponto();
+    Ponto(double vX, double vY);
     ~Ponto();
     void setX(double);
     void setY(double);

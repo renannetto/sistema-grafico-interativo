@@ -295,7 +295,7 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>140</y>
+       <y>130</y>
        <width>551</width>
        <height>91</height>
       </rect>
@@ -372,6 +372,19 @@
        </rect>
       </property>
      </widget>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>230</y>
+       <width>111</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Desenhar Reta</string>
+     </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
@@ -545,8 +558,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>drawDot()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>352</x>
+     <y>258</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>613</x>
+     <y>311</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>drawLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>355</x>
+     <y>272</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>630</x>
+     <y>298</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>drawPoint(int,int)</slot>
+  <slot>drawLine()</slot>
+  <slot>drawDot()</slot>
  </slots>
 </ui>
