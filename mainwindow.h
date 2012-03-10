@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include "dialog.h"
+#include "ponto.h"
 
 namespace Ui {
     class MainWindow;

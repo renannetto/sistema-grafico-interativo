@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     newObjectWindow->setVisible(false);
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
+    Ponto ponto1;
+
 
     xMin = 0;
     yMin = 0;
