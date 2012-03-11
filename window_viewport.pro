@@ -9,10 +9,16 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     dialog.cpp \
     ponto.cpp \
-    figura.cpp
+    figura.cpp \
+    windowviewport.cpp \
+    displayfile.cpp \
+    window.cpp
 HEADERS += mainwindow.h \
     dialog.h \
     ponto.h \
-    figura.h
+    figura.h \
+    windowviewport.h \
+    displayfile.h \
+    window.h
 FORMS += mainwindow.ui \
     dialog.ui

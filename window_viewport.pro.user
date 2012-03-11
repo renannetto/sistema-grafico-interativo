@@ -84,7 +84,7 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=br</value>
     <value type="QString">GDM_LANG=pt_BR.utf8</value>
     <value type="QString">GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/qtcreator.desktop</value>
-    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=17362</value>
+    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=18701</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
     <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-W0EC7l</value>
     <value type="QString">GNOME_KEYRING_PID=1517</value>
@@ -136,7 +136,7 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=br</value>
     <value type="QString">GDM_LANG=pt_BR.utf8</value>
     <value type="QString">GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/qtcreator.desktop</value>
-    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=17362</value>
+    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=18701</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
     <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-W0EC7l</value>
     <value type="QString">GNOME_KEYRING_PID=1517</value>
