@@ -8,10 +8,10 @@ Ponto::Ponto(double vX, double vY){
 Ponto::~Ponto(){
 }
 
-void Ponto::setX(double newX){
-    x = newX;
+double Ponto::getX(){
+    return x;
 }
 
-void Ponto::setY(double newY){
-    y = newY;
+double Ponto::getY(){
+    return y;
 }
