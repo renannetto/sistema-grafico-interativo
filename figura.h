@@ -11,6 +11,7 @@ class Figura
 public:
     Figura(list<Ponto*> vPontos);
     ~Figura();
+    list<Ponto*> getPontos();
 private:
     list<Ponto*> pontos;
 };
