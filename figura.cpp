@@ -8,3 +8,7 @@ Figura::Figura(list<Ponto*> vPontos)
 Figura::~Figura()
 {
 }
+
+list<Ponto*> Figura::getPontos(){
+    return pontos;
+}

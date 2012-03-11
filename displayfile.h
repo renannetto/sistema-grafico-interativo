@@ -8,6 +8,7 @@ class DisplayFile
 public:
     DisplayFile();
     void addFigure(list<Ponto*> pontos);
+    list<Figura*> getFigures();
 private:
     list<Figura*> figuras;
 };

@@ -26,8 +26,8 @@ public slots:
     void drawPolygon();
 
 signals:
-    void drawLineM(double, double, double, double);
-    void drawDotM(double, double);
+    void drawLineM(list<Ponto*>);
+    void drawDotM(list<Ponto*>);
     void drawPolygonM(list<Ponto*>);
 
 private:

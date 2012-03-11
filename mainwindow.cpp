@@ -12,11 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     newObjectWindow = new Dialog(this);
     newObjectWindow->setVisible(false);
-    connect(newObjectWindow, SIGNAL(drawLineM(double, double, double, double)),
-    this, SLOT(drawLine(double, double, double, double)));
-    connect(newObjectWindow, SIGNAL(drawDotM(double, double)),
-    this, SLOT(drawDot(double, double)));
-    connect(newObjectWindow, SIGNAL(drawPolygonM(list<Ponto*>)), this, SLOT(drawPolygon(list<Ponto*>)));
+    connect(newObjectWindow, SIGNAL(drawLineM(list<Ponto*>)),
+    this, SLOT(constructFigure(list<Ponto*>)));
+    connect(newObjectWindow, SIGNAL(drawDotM(list<Ponto*>)),
+    this, SLOT(constructFigure(list<Ponto*>)));
+    connect(newObjectWindow, SIGNAL(drawPolygonM(list<Ponto*>)),
+    this, SLOT(constructFigure(list<Ponto*>)));
 
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
@@ -31,54 +32,60 @@ void MainWindow::abrirJanela(){
     newObjectWindow->setVisible(true);
 }
 
-void MainWindow::drawDot(double x, double y){
-    list<Ponto*> pontos;
-    pontos.push_back(new Ponto(x, y));
+void MainWindow::constructFigure(list<Ponto *> pontos){
     windowViewport->addFigure(pontos);
-    x = windowViewport->fx(x);
-    y = windowViewport->fy(y);
-    viewport->addLine(x,y,x,y);
+    drawFigures();
 }
 
-void MainWindow::drawLine(double x1, double y1, double x2, double y2){
+void MainWindow::drawFigures() {
+    viewport->clear();
+    list<Figura*> figuras = windowViewport->getFigures();
     list<Ponto*> pontos;
-    pontos.push_back(new Ponto(x1, y1));
-    pontos.push_back(new Ponto(x2, y2));
-    windowViewport->addFigure(pontos);
-    viewport->addLine(windowViewport->fx(x1),windowViewport->fy(y1),windowViewport->fx(x2),windowViewport->fy(y2));
-}
-
-void MainWindow::drawPolygon(list<Ponto *> pontos){
-    windowViewport->addFigure(pontos);
-    QPolygonF poligono;
-    int size = pontos.size();
-    for (int i=0; i<size; i++) {
-        poligono << QPointF(windowViewport->fx(pontos.front()->getX()), windowViewport->fy(pontos.front()->getY()));
-        pontos.pop_front();
+    for (int i = 0; i < figuras.size(); i++){
+        pontos = figuras.back()->getPontos();
+        if(pontos.size()==1){
+            int x = windowViewport->fx(pontos.front()->getX());
+            int y = windowViewport->fy(pontos.front()->getY());
+            viewport->addLine(x,y,x,y);
+        } else{
+            QPolygonF poligono;
+            int size = pontos.size();
+            for (int i=0; i<size; i++) {
+                poligono << QPointF(windowViewport->fx(pontos.front()->getX()), windowViewport->fy(pontos.front()->getY()));
+                pontos.pop_front();
+            }
+            viewport->addPolygon(poligono);
+        }
+        figuras.pop_back();
     }
-    viewport->addPolygon(poligono);
 }
 
 void MainWindow::zoomIn(){
     windowViewport->zoomIn();
+    drawFigures();
 }
 
 void MainWindow::zoomOut(){
     windowViewport->zoomOut();
+    drawFigures();
 }
 
 void MainWindow::moveLeft(){
     windowViewport->moveLeft();
+    drawFigures();
 }
 
 void MainWindow::moveRight(){
     windowViewport->moveRight();
+    drawFigures();
 }
 
 void MainWindow::moveDown(){
-   windowViewport->moveDown();
+    windowViewport->moveDown();
+    drawFigures();
 }
 
 void MainWindow::moveUp(){
     windowViewport->moveUp();
+    drawFigures();
 }

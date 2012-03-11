@@ -15,14 +15,17 @@ Dialog::~Dialog()
 
 void Dialog::drawLine()
 {
-    emit drawLineM(ui->lineEdit_3->text().toDouble(),
-ui->lineEdit_4->text().toDouble(), ui->lineEdit_5->text().toDouble(),
-ui->lineEdit_6->text().toDouble());
+    list<Ponto*> line;
+    line.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
+    line.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
+    emit drawLineM(line);
 }
 
 void Dialog::drawDot()
 {
-    emit drawDotM(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble());
+    list<Ponto*> dot;
+    dot.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
+    emit drawDotM(dot);
 }
 
 void Dialog::addPoint()

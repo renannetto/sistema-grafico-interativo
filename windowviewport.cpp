@@ -11,6 +11,10 @@ void WindowViewport::addFigure(list<Ponto*> pontos)
     displayFile->addFigure(pontos);
 }
 
+list<Figura*> WindowViewport::getFigures(){
+    return displayFile->getFigures();
+}
+
 void WindowViewport::zoomIn()
 {
     window->zoomIn();

@@ -25,9 +25,8 @@ public:
 
 public slots:
     void abrirJanela();
-    void drawDot(double x, double y);
-    void drawLine(double x1, double y1, double x2, double y2);
-    void drawPolygon(list<Ponto*> pontos);
+    void constructFigure(list<Ponto*>);
+    void drawFigures();
     void zoomIn();
     void zoomOut();
     void moveLeft();
