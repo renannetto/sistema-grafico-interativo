@@ -9,37 +9,39 @@ Window::Window()
 }
 
 void Window::zoomIn(){
-    xMin += 2.5;
-    yMin += 2.5;
-    xMax -= 2.5;
-    yMax -= 2.5;
+    if(xMax - xMin > 41 && yMax - yMin > 31){
+        xMin += 20;
+        xMax -= 20;
+        yMin += 15;
+        yMax -= 15;
+    }
 }
 
 void Window::zoomOut(){
-    xMin -= 2.5;
-    yMin -= 2.5;
-    xMax += 2.5;
-    yMax += 2.5;
+    xMin -= 20;
+    yMin -= 15;
+    xMax += 20;
+    yMax += 15;
 }
 
 void Window::moveLeft(){
-    xMin -= 5;
-    xMax -= 5;
+    xMin -= 20;
+    xMax -= 20;
 }
 
 void Window::moveRight(){
-    xMin += 5;
-    xMax += 5;
+    xMin += 20;
+    xMax += 20;
 }
 
 void Window::moveDown(){
-    yMin -= 5;
-    yMax -= 5;
+    yMin -= 15;
+    yMax -= 15;
 }
 
 void Window::moveUp(){
-    yMin += 5;
-    yMax += 5;
+    yMin += 15;
+    yMax += 15;
 }
 
 double Window::fx(double x){
