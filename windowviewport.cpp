@@ -6,9 +6,9 @@ WindowViewport::WindowViewport()
     window = new Window();
 }
 
-void WindowViewport::addFigure(list<Ponto*> pontos)
+string WindowViewport::addFigure(Tipo tipo, list<Ponto*> pontos)
 {
-    displayFile->addFigure(pontos);
+    return displayFile->addFigure(tipo, pontos);
 }
 
 void WindowViewport::zoomIn()

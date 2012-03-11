@@ -34,22 +34,24 @@ void MainWindow::abrirJanela(){
 void MainWindow::drawDot(double x, double y){
     list<Ponto*> pontos;
     pontos.push_back(new Ponto(x, y));
-    windowViewport->addFigure(pontos);
+    QString nome = QString::fromStdString(windowViewport->addFigure(PONTO, pontos));
     x = windowViewport->fx(x);
     y = windowViewport->fy(y);
     viewport->addLine(x,y,x,y);
+    ui->listWidget->addItem(nome);
 }
 
 void MainWindow::drawLine(double x1, double y1, double x2, double y2){
     list<Ponto*> pontos;
     pontos.push_back(new Ponto(x1, y1));
     pontos.push_back(new Ponto(x2, y2));
-    windowViewport->addFigure(pontos);
+    QString nome = QString::fromStdString(windowViewport->addFigure(RETA, pontos));
     viewport->addLine(windowViewport->fx(x1),windowViewport->fy(y1),windowViewport->fx(x2),windowViewport->fy(y2));
+    ui->listWidget->addItem(nome);
 }
 
 void MainWindow::drawPolygon(list<Ponto *> pontos){
-    windowViewport->addFigure(pontos);
+    QString nome = QString::fromStdString(windowViewport->addFigure(POLIGONO, pontos));
     QPolygonF poligono;
     int size = pontos.size();
     for (int i=0; i<size; i++) {
@@ -57,6 +59,7 @@ void MainWindow::drawPolygon(list<Ponto *> pontos){
         pontos.pop_front();
     }
     viewport->addPolygon(poligono);
+    ui->listWidget->addItem(nome);
 }
 
 void MainWindow::zoomIn(){

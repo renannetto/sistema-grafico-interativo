@@ -2,13 +2,17 @@
 #define DISPLAYFILE_H
 
 #include "figura.h"
+#include <sstream>
 
 class DisplayFile
 {
 public:
     DisplayFile();
-    void addFigure(list<Ponto*> pontos);
+    string addFigure(Tipo tipo, list<Ponto*> pontos);
 private:
+    int nPontos;
+    int nRetas;
+    int nPoligonos;
     list<Figura*> figuras;
 };
 
