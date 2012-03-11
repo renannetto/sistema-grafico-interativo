@@ -103,7 +103,7 @@
     </palette>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -443,7 +443,7 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>120</y>
+        <y>60</y>
         <width>113</width>
         <height>31</height>
        </rect>
@@ -469,7 +469,7 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>60</y>
+        <y>120</y>
         <width>113</width>
         <height>31</height>
        </rect>
@@ -482,13 +482,26 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>180</y>
+        <y>160</y>
         <width>111</width>
         <height>27</height>
        </rect>
       </property>
       <property name="text">
        <string>Inserir Ponto</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>190</y>
+        <width>121</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Inserir Polígono</string>
       </property>
      </widget>
     </widget>
@@ -590,10 +603,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>addPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>506</x>
+     <y>225</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>67</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>drawPolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>541</x>
+     <y>259</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>97</x>
+     <y>302</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>drawPoint(int,int)</slot>
   <slot>drawLine()</slot>
   <slot>drawDot()</slot>
+  <slot>addPoint()</slot>
+  <slot>drawPolygon()</slot>
  </slots>
 </ui>

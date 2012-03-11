@@ -6,8 +6,8 @@ class Ponto
 public:
     Ponto(double vX, double vY);
     ~Ponto();
-    void setX(double);
-    void setY(double);
+    double getX();
+    double getY();
 private:
     double x;
     double y;

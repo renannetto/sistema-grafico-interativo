@@ -76,7 +76,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-xwTcFTKDFb,guid=5f4ac144b5826f7b8b7cb67e4f592d5b</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-AKBljkwk7I,guid=b5420ca8bc528e15286dc13c4f5ca209</value>
     <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
     <value type="QString">DESKTOP_SESSION=gnome</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -84,10 +84,10 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=br</value>
     <value type="QString">GDM_LANG=pt_BR.utf8</value>
     <value type="QString">GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/qtcreator.desktop</value>
-    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=18701</value>
+    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=1969</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-W0EC7l</value>
-    <value type="QString">GNOME_KEYRING_PID=1517</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-X8MhMb</value>
+    <value type="QString">GNOME_KEYRING_PID=1618</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/home/gabrielgava</value>
     <value type="QString">LANG=pt_BR.utf8</value>
@@ -99,17 +99,17 @@
     <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
     <value type="QString">PWD=/home/gabrielgava</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">SESSION_MANAGER=local/gabrielgava-laptop:@/tmp/.ICE-unix/1535,unix/gabrielgava-laptop:/tmp/.ICE-unix/1535</value>
+    <value type="QString">SESSION_MANAGER=local/gabrielgava-laptop:@/tmp/.ICE-unix/1636,unix/gabrielgava-laptop:/tmp/.ICE-unix/1636</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SPEECHD_PORT=7560</value>
-    <value type="QString">SSH_AGENT_PID=1569</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-W0EC7l/ssh</value>
+    <value type="QString">SSH_AGENT_PID=1670</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-X8MhMb/ssh</value>
     <value type="QString">USER=gabrielgava</value>
     <value type="QString">USERNAME=gabrielgava</value>
-    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-gabrielgava-yjaBsc/database</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-gabrielgava-6bC7Zo/database</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
-    <value type="QString">XDG_SESSION_COOKIE=72d9ebbd7bc4ec0a9f6794544c6ce644-1331244379.236884-1870302396</value>
+    <value type="QString">XDG_SESSION_COOKIE=72d9ebbd7bc4ec0a9f6794544c6ce644-1331470857.70298-523446315</value>
    </valuelist>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
     <value type="QString">/home/gabrielgava/Gava/cco/quinto_semestre/cg/renannetto-window_viewport/window_viewport.pro</value>
@@ -128,7 +128,7 @@
   <valuemap type="QVariantMap">
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <valuelist key="abstractProcess.Environment" type="QVariantList">
-    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-xwTcFTKDFb,guid=5f4ac144b5826f7b8b7cb67e4f592d5b</value>
+    <value type="QString">DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-AKBljkwk7I,guid=b5420ca8bc528e15286dc13c4f5ca209</value>
     <value type="QString">DEFAULTS_PATH=/usr/share/gconf/gnome.default.path</value>
     <value type="QString">DESKTOP_SESSION=gnome</value>
     <value type="QString">DISPLAY=:0.0</value>
@@ -136,10 +136,10 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=br</value>
     <value type="QString">GDM_LANG=pt_BR.utf8</value>
     <value type="QString">GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/qtcreator.desktop</value>
-    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=18701</value>
+    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=1969</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
-    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-W0EC7l</value>
-    <value type="QString">GNOME_KEYRING_PID=1517</value>
+    <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-X8MhMb</value>
+    <value type="QString">GNOME_KEYRING_PID=1618</value>
     <value type="QString">GTK_MODULES=canberra-gtk-module</value>
     <value type="QString">HOME=/home/gabrielgava</value>
     <value type="QString">LANG=pt_BR.utf8</value>
@@ -151,17 +151,17 @@
     <value type="QString">PATH=/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games</value>
     <value type="QString">PWD=/home/gabrielgava</value>
     <value type="QString">QTDIR=/usr/share/qt4</value>
-    <value type="QString">SESSION_MANAGER=local/gabrielgava-laptop:@/tmp/.ICE-unix/1535,unix/gabrielgava-laptop:/tmp/.ICE-unix/1535</value>
+    <value type="QString">SESSION_MANAGER=local/gabrielgava-laptop:@/tmp/.ICE-unix/1636,unix/gabrielgava-laptop:/tmp/.ICE-unix/1636</value>
     <value type="QString">SHELL=/bin/bash</value>
     <value type="QString">SPEECHD_PORT=7560</value>
-    <value type="QString">SSH_AGENT_PID=1569</value>
-    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-W0EC7l/ssh</value>
+    <value type="QString">SSH_AGENT_PID=1670</value>
+    <value type="QString">SSH_AUTH_SOCK=/tmp/keyring-X8MhMb/ssh</value>
     <value type="QString">USER=gabrielgava</value>
     <value type="QString">USERNAME=gabrielgava</value>
-    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-gabrielgava-yjaBsc/database</value>
+    <value type="QString">XAUTHORITY=/var/run/gdm/auth-for-gabrielgava-6bC7Zo/database</value>
     <value type="QString">XDG_CONFIG_DIRS=/etc/xdg/xdg-gnome:/etc/xdg</value>
     <value type="QString">XDG_DATA_DIRS=/usr/share/gnome:/usr/local/share/:/usr/share/</value>
-    <value type="QString">XDG_SESSION_COOKIE=72d9ebbd7bc4ec0a9f6794544c6ce644-1331244379.236884-1870302396</value>
+    <value type="QString">XDG_SESSION_COOKIE=72d9ebbd7bc4ec0a9f6794544c6ce644-1331470857.70298-523446315</value>
    </valuelist>
    <value key="abstractProcess.IgnoreReturnValue" type="bool">false</value>
    <valuelist key="abstractProcess.arguments" type="QVariantList">
