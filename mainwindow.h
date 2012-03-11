@@ -25,7 +25,7 @@ public:
 
 public slots:
     void abrirJanela();
-    void constructFigure(list<Ponto*>);
+    void constructFigure(Tipo, list<Ponto*>);
     void drawFigures();
     void zoomIn();
     void zoomOut();

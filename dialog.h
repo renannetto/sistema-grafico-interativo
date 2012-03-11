@@ -3,7 +3,7 @@
 
 #include <QDialog>
 #include <list>
-#include "ponto.h"
+#include "figura.h"
 
 using namespace std;
 
@@ -29,6 +29,7 @@ signals:
     void drawLineM(list<Ponto*>);
     void drawDotM(list<Ponto*>);
     void drawPolygonM(list<Ponto*>);
+    void drawFigure(Tipo, list<Ponto*>);
 
 private:
     Ui::Dialog *ui;

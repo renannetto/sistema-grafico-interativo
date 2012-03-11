@@ -18,14 +18,14 @@ void Dialog::drawLine()
     list<Ponto*> line;
     line.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
     line.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
-    emit drawLineM(line);
+    emit drawFigure(RETA, line);
 }
 
 void Dialog::drawDot()
 {
     list<Ponto*> dot;
     dot.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
-    emit drawDotM(dot);
+    emit drawFigure(PONTO, dot);
 }
 
 void Dialog::addPoint()
@@ -41,7 +41,7 @@ void Dialog::addPoint()
 
 void Dialog::drawPolygon()
 {
-    emit drawPolygonM(pontos);
+    emit drawFigure(POLIGONO, pontos);
     pontos.clear();
     ui->listWidget->clear();
 }

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <stdio.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,12 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     newObjectWindow = new Dialog(this);
     newObjectWindow->setVisible(false);
-    connect(newObjectWindow, SIGNAL(drawLineM(list<Ponto*>)),
-    this, SLOT(constructFigure(list<Ponto*>)));
-    connect(newObjectWindow, SIGNAL(drawDotM(list<Ponto*>)),
-    this, SLOT(constructFigure(list<Ponto*>)));
-    connect(newObjectWindow, SIGNAL(drawPolygonM(list<Ponto*>)),
-    this, SLOT(constructFigure(list<Ponto*>)));
+    connect(newObjectWindow, SIGNAL(drawFigure(Tipo, list<Ponto*>)),
+    this, SLOT(constructFigure(Tipo, list<Ponto*>)));
 
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
@@ -33,8 +28,9 @@ void MainWindow::abrirJanela(){
 }
 
 
-void MainWindow::constructFigure(list<Ponto *> pontos){
-    windowViewport->addFigure(PONTO, pontos);
+void MainWindow::constructFigure(Tipo tipo, list<Ponto *> pontos){
+    QString nome = QString::fromStdString(windowViewport->addFigure(tipo, pontos));
+    ui->listWidget->addItem(nome);
     drawFigures();
 }
 
@@ -43,7 +39,8 @@ void MainWindow::drawFigures() {
     list<Figura*> figuras = windowViewport->getFigures();
     list<Ponto*> pontos;
     for (int i = 0; i < figuras.size(); i++){
-        pontos = figuras.back()->getPontos();
+        Figura* figura = figuras.back();
+        pontos = figura->getPontos();
         if(pontos.size()==1){
             int x = windowViewport->fx(pontos.front()->getX());
             int y = windowViewport->fy(pontos.front()->getY());
@@ -52,12 +49,15 @@ void MainWindow::drawFigures() {
             QPolygonF poligono;
             int size = pontos.size();
             for (int i=0; i<size; i++) {
-                poligono << QPointF(windowViewport->fx(pontos.front()->getX()), windowViewport->fy(pontos.front()->getY()));
+                Ponto* ponto = pontos.front();
+                poligono << QPointF(windowViewport->fx(ponto->getX()), windowViewport->fy(ponto->getY()));
                 pontos.pop_front();
+                pontos.push_back(ponto);
             }
             viewport->addPolygon(poligono);
         }
         figuras.pop_back();
+        figuras.push_front(figura);
     }
 }
 
