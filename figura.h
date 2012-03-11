@@ -2,17 +2,22 @@
 #define FIGURA_H
 
 #include <list>
+#include <string>
 #include "ponto.h"
 
 using namespace std;
 
+enum Tipo {PONTO, RETA, POLIGONO};
+
 class Figura
 {
 public:
-    Figura(list<Ponto*> vPontos);
+    Figura(string vNome, Tipo vTipo, list<Ponto*> vPontos);
     ~Figura();
     list<Ponto*> getPontos();
 private:
+    string nome;
+    Tipo tipo;
     list<Ponto*> pontos;
 };
 

@@ -32,8 +32,9 @@ void MainWindow::abrirJanela(){
     newObjectWindow->setVisible(true);
 }
 
+
 void MainWindow::constructFigure(list<Ponto *> pontos){
-    windowViewport->addFigure(pontos);
+    windowViewport->addFigure(PONTO, pontos);
     drawFigures();
 }
 

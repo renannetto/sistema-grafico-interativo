@@ -8,7 +8,7 @@ class WindowViewport
 {
 public:
     WindowViewport();
-    void addFigure(list<Ponto*> pontos);
+    string addFigure(Tipo tipo, list<Ponto*> pontos);
     list<Figura*> getFigures();
     void zoomIn();
     void zoomOut();
