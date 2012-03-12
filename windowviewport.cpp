@@ -6,6 +6,11 @@ WindowViewport::WindowViewport()
     window = new Window();
 }
 
+WindowViewport::~WindowViewport(){
+    delete window;
+    delete displayFile;
+}
+
 string WindowViewport::addFigure(Tipo tipo, list<Ponto*> pontos)
 {
     return displayFile->addFigure(tipo, pontos);
@@ -19,14 +24,14 @@ void WindowViewport::destructFigure(string nome){
     displayFile->destructFigure(nome);
 }
 
-void WindowViewport::zoomIn()
+void WindowViewport::zoomIn(int percent)
 {
-    window->zoomIn();
+    window->zoomIn(percent);
 }
 
-void WindowViewport::zoomOut()
+void WindowViewport::zoomOut(int percent)
 {
-    window->zoomOut();
+    window->zoomOut(percent);
 }
 
 void WindowViewport::moveLeft()

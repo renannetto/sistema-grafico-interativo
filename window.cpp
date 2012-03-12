@@ -8,18 +8,18 @@ Window::Window()
     yMax = 480;
 }
 
-void Window::zoomIn(){
-    double passoX = 0.1*(xMax-xMin);
-    double passoY = 0.1*(yMax-yMin);
+void Window::zoomIn(int percent){
+    double passoX = (double)percent*(xMax-xMin)/200;
+    double passoY = (double)percent*(yMax-yMin)/200;
     xMin += passoX;
     xMax -= passoX;
     yMin += passoY;
     yMax -= passoY;
 }
 
-void Window::zoomOut(){
-    double passoX = 0.1*(xMax-xMin);
-    double passoY = 0.1*(yMax-yMin);
+void Window::zoomOut(int percent){
+    double passoX = (double)percent*(xMax-xMin)/200;
+    double passoY = (double)percent*(yMax-yMin)/200;
     xMin -= passoX;
     yMin -= passoY;
     xMax += passoX;

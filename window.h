@@ -5,8 +5,8 @@ class Window
 {
 public:
     Window();
-    void zoomIn();
-    void zoomOut();
+    void zoomIn(int);
+    void zoomOut(int);
     void moveLeft();
     void moveRight();
     void moveUp();

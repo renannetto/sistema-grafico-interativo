@@ -5,17 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    windowViewport = new WindowViewport();
-
-    ui->setupUi(this);
-
-    newObjectWindow = new Dialog(this);
-    newObjectWindow->setVisible(false);
-    connect(newObjectWindow, SIGNAL(drawFigure(Tipo, list<Ponto*>)),
-    this, SLOT(constructFigure(Tipo, list<Ponto*>)));
-
-    viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
-    ui->graphicsView->setScene(viewport);
+    start();
 }
 
 MainWindow::~MainWindow()
@@ -23,10 +13,30 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::start(){
+    ui->setupUi(this);
+
+    newObjectWindow = new Dialog(this);
+    newObjectWindow->setVisible(false);
+    viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
+    ui->graphicsView->setScene(viewport);
+    windowViewport = new WindowViewport();
+
+    connect(newObjectWindow, SIGNAL(drawFigure(Tipo, list<Ponto*>)),
+    this, SLOT(constructFigure(Tipo, list<Ponto*>)));
+}
+
+void MainWindow::restart(){
+    delete newObjectWindow;
+    delete windowViewport;
+    delete viewport;
+
+    start();
+}
+
 void MainWindow::abrirJanela(){
     newObjectWindow->setVisible(true);
 }
-
 
 void MainWindow::constructFigure(Tipo tipo, list<Ponto *> pontos){
     QString nome = QString::fromStdString(windowViewport->addFigure(tipo, pontos));
@@ -72,13 +82,18 @@ void MainWindow::drawFigures() {
 }
 
 void MainWindow::zoomIn(){
-    windowViewport->zoomIn();
+    windowViewport->zoomIn(ui->horizontalSlider->sliderPosition());
     drawFigures();
 }
 
 void MainWindow::zoomOut(){
-    windowViewport->zoomOut();
+    windowViewport->zoomOut(ui->horizontalSlider->sliderPosition());
     drawFigures();
+}
+
+void MainWindow::showZoomPower(int zoomValue){
+    string aux;
+    ui->textBrowser_2->clear();
 }
 
 void MainWindow::moveLeft(){

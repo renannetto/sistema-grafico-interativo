@@ -12,6 +12,7 @@ class DisplayFile
 {
 public:
     DisplayFile();
+    ~DisplayFile();
     string addFigure(Tipo, list<Ponto*> pontos);
     list<Figura*> getFigures();
     void destructFigure(string);

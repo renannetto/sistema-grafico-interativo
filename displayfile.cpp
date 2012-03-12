@@ -7,6 +7,9 @@ DisplayFile::DisplayFile()
     nPoligonos = 0;
 }
 
+DisplayFile::~ DisplayFile(){
+}
+
 string DisplayFile::addFigure(Tipo tipo, list<Ponto*> pontos)
 {
     Figura *figura;

@@ -9,11 +9,12 @@ class WindowViewport
 {
 public:
     WindowViewport();
+    ~WindowViewport();
     string addFigure(Tipo tipo, list<Ponto*> pontos);
     list<Figura*> getFigures();
     void destructFigure(string);
-    void zoomIn();
-    void zoomOut();
+    void zoomIn(int);
+    void zoomOut(int);
     void moveLeft();
     void moveRight();
     void moveUp();

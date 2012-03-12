@@ -28,18 +28,21 @@ public:
     ~MainWindow();
 
 public slots:
+    void restart();
     void abrirJanela();
     void constructFigure(Tipo, list<Ponto*>);
     void destructFigure();
     void drawFigures();
     void zoomIn();
     void zoomOut();
+    void showZoomPower(int);
     void moveLeft();
     void moveRight();
     void moveUp();
     void moveDown();
 
 private:
+    void start();
     WindowViewport *windowViewport;
     Ui::MainWindow *ui;
     Dialog *newObjectWindow;
