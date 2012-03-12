@@ -15,6 +15,8 @@ public:
     Figura(string vNome, Tipo vTipo, list<Ponto*> vPontos);
     ~Figura();
     list<Ponto*> getPontos();
+    string getNome();
+    Tipo getTipo();
 private:
     string nome;
     Tipo tipo;

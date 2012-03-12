@@ -61,9 +61,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>220</y>
+       <y>250</y>
        <width>181</width>
-       <height>431</height>
+       <height>401</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -214,7 +214,7 @@
        <x>10</x>
        <y>60</y>
        <width>181</width>
-       <height>151</height>
+       <height>131</height>
       </rect>
      </property>
      <item>
@@ -222,6 +222,19 @@
        <string>Novo Objeto</string>
       </property>
      </item>
+    </widget>
+    <widget class="QPushButton" name="pushButton_7">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>200</y>
+       <width>121</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Remover Objeto</string>
+     </property>
     </widget>
    </widget>
    <widget class="QTextBrowser" name="textBrowser">
@@ -424,7 +437,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>101</x>
-     <y>354</y>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -440,7 +453,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>127</x>
-     <y>389</y>
+     <y>435</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -456,7 +469,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>150</x>
-     <y>374</y>
+     <y>415</y>
     </hint>
     <hint type="destinationlabel">
      <x>203</x>
@@ -472,7 +485,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>69</x>
-     <y>380</y>
+     <y>415</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -488,7 +501,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>92</x>
-     <y>448</y>
+     <y>485</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -504,11 +517,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>114</x>
-     <y>464</y>
+     <y>505</y>
     </hint>
     <hint type="destinationlabel">
      <x>205</x>
      <y>462</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_7</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>destructFigure()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>233</y>
     </hint>
    </hints>
   </connection>
@@ -521,5 +550,6 @@
   <slot>moveRight()</slot>
   <slot>zoomIn()</slot>
   <slot>zoomOut()</slot>
+  <slot>destructFigure()</slot>
  </slots>
 </ui>

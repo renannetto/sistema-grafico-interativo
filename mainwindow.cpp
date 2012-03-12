@@ -34,6 +34,16 @@ void MainWindow::constructFigure(Tipo tipo, list<Ponto *> pontos){
     drawFigures();
 }
 
+void MainWindow::destructFigure(){
+    string nome = ui->listWidget->currentItem()->text().toStdString();
+    if (nome != "Novo Objeto"){
+        ui->listWidget->currentItem()->~QListWidgetItem();
+        windowViewport->destructFigure(nome);
+        drawFigures();
+        cout << "Figura apagada : " << nome << endl;
+   }
+}
+
 void MainWindow::drawFigures() {
     viewport->clear();
     list<Figura*> figuras = windowViewport->getFigures();

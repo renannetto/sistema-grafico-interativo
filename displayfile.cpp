@@ -40,3 +40,13 @@ string DisplayFile::addFigure(Tipo tipo, list<Ponto*> pontos)
 list<Figura*> DisplayFile::getFigures(){
     return figuras;
 }
+
+void DisplayFile::destructFigure(string nome){
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        if((*it)->getNome()==nome){
+            figuras.erase(it);
+            break;
+        }
+    }
+}

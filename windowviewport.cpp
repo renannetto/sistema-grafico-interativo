@@ -15,6 +15,10 @@ list<Figura*> WindowViewport::getFigures(){
     return displayFile->getFigures();
 }
 
+void WindowViewport::destructFigure(string nome){
+    displayFile->destructFigure(nome);
+}
+
 void WindowViewport::zoomIn()
 {
     window->zoomIn();

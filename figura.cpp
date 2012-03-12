@@ -14,3 +14,11 @@ Figura::~Figura()
 list<Ponto*> Figura::getPontos(){
     return pontos;
 }
+
+string Figura::getNome(){
+    return nome;
+}
+
+Tipo Figura::getTipo(){
+    return tipo;
+}
