@@ -13,9 +13,9 @@ class DisplayFile
 public:
     DisplayFile();
     ~DisplayFile();
-    string addFigure(Tipo, list<Ponto*> pontos);
-    list<Figura*> getFigures();
-    void destructFigure(string);
+    string adicionarFigura(Tipo, list<Ponto*> pontos);
+    list<Figura*> obterFiguras();
+    void destruirFigura(string);
 private:
     int nPontos;
     int nRetas;

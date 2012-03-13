@@ -7,10 +7,10 @@ public:
     Window();
     void zoomIn(int);
     void zoomOut(int);
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
+    void moverParaEsquerda();
+    void moverParaDireita();
+    void moverParaCima();
+    void moverParaBaixo();
     double fx(double x);
     double fy(double y);
 private:

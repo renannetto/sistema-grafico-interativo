@@ -36,10 +36,10 @@ public slots:
     void zoomIn();
     void zoomOut();
     void mostrarValorDoZoom(int);
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
+    void moverParaEsquerda();
+    void moverParaDireita();
+    void moverParaCima();
+    void moverParaBaixo();
 
 private:
     void iniciar();

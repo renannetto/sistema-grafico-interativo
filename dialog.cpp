@@ -13,22 +13,22 @@ Dialog::~Dialog()
     delete ui;
 }
 
-void Dialog::drawLine()
+void Dialog::desenharReta()
 {
-    list<Ponto*> line;
-    line.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
-    line.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
-    emit drawFigure(RETA, line);
+    list<Ponto*> pontos;
+    pontos.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
+    pontos.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
+    emit desenharFigura(RETA, pontos);
 }
 
-void Dialog::drawDot()
+void Dialog::desenharPonto()
 {
-    list<Ponto*> dot;
-    dot.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
-    emit drawFigure(PONTO, dot);
+    list<Ponto*> ponto;
+    ponto.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
+    emit desenharFigura(PONTO, ponto);
 }
 
-void Dialog::addPoint()
+void Dialog::adicionarPonto()
 {
     QString ponto = "(";
     ponto += ui->lineEdit_7->text();
@@ -39,9 +39,9 @@ void Dialog::addPoint()
     pontos.push_back(new Ponto(ui->lineEdit_7->text().toDouble(), ui->lineEdit_8->text().toDouble()));
 }
 
-void Dialog::drawPolygon()
+void Dialog::desenharPoligono()
 {
-    emit drawFigure(POLIGONO, pontos);
+    emit desenharFigura(POLIGONO, pontos);
     pontos.clear();
     ui->listWidget->clear();
 }

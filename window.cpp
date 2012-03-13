@@ -26,25 +26,25 @@ void Window::zoomOut(int percent){
     yMax += passoY;
 }
 
-void Window::moveLeft(){
+void Window::moverParaEsquerda(){
     double passoX = 0.1*(xMax-xMin);
     xMin -= passoX;
     xMax -= passoX;
 }
 
-void Window::moveRight(){
+void Window::moverParaDireita(){
     double passoX = 0.1*(xMax-xMin);
     xMin += passoX;
     xMax += passoX;
 }
 
-void Window::moveDown(){
+void Window::moverParaBaixo(){
     double passoY = 0.1*(yMax-yMin);
     yMin -= passoY;
     yMax -= passoY;
 }
 
-void Window::moveUp(){
+void Window::moverParaCima(){
     double passoY = 0.1*(yMax-yMin);
     yMin += passoY;
     yMax += passoY;

@@ -20,16 +20,13 @@ public:
     ~Dialog();
 
 public slots:
-    void drawLine();
-    void drawDot();
-    void addPoint();
-    void drawPolygon();
+    void desenharReta();
+    void desenharPonto();
+    void adicionarPonto();
+    void desenharPoligono();
 
 signals:
-    void drawLineM(list<Ponto*>);
-    void drawDotM(list<Ponto*>);
-    void drawPolygonM(list<Ponto*>);
-    void drawFigure(Tipo, list<Ponto*>);
+    void desenharFigura(Tipo, list<Ponto*>);
 
 private:
     Ui::Dialog *ui;

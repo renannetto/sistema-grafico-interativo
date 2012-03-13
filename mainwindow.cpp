@@ -24,7 +24,7 @@ void MainWindow::iniciar(){
     ui->zoomText->clear();
     mostrarValorDoZoom(ui->zoomSlider->value());
 
-    connect(newObjectWindow, SIGNAL(drawFigure(Tipo, list<Ponto*>)),
+    connect(newObjectWindow, SIGNAL(desenharFigura(Tipo, list<Ponto*>)),
     this, SLOT(construirFigura(Tipo, list<Ponto*>)));
 }
 
@@ -41,7 +41,7 @@ void MainWindow::abrirJanela(){
 }
 
 void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos){
-    QString nome = QString::fromStdString(windowViewport->addFigure(tipo, pontos));
+    QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos));
     ui->listaObjetos->addItem(nome);
     desenharFiguras();
 }
@@ -50,7 +50,7 @@ void MainWindow::destruirFigura(){
     string nome = ui->listaObjetos->currentItem()->text().toStdString();
     if (nome != "Novo Objeto"){
         ui->listaObjetos->currentItem()->~QListWidgetItem();
-        windowViewport->destructFigure(nome);
+        windowViewport->destruirFigura(nome);
         desenharFiguras();
         cout << "Figura apagada : " << nome << endl;
    }
@@ -58,21 +58,21 @@ void MainWindow::destruirFigura(){
 
 void MainWindow::desenharFiguras() {
     viewport->clear();
-    list<Figura*> figuras = windowViewport->getFigures();
+    list<Figura*> figuras = windowViewport->obterFiguras();
     list<Ponto*> pontos;
     for (int i = 0; i < figuras.size(); i++){
         Figura* figura = figuras.back();
-        pontos = figura->getPontos();
+        pontos = figura->obterPontos();
         if(pontos.size()==1){
-            int x = windowViewport->fx(pontos.front()->getX());
-            int y = windowViewport->fy(pontos.front()->getY());
+            int x = windowViewport->fx(pontos.front()->obterX());
+            int y = windowViewport->fy(pontos.front()->obterY());
             viewport->addLine(x,y,x,y);
         } else{
             QPolygonF poligono;
             int size = pontos.size();
             for (int i=0; i<size; i++) {
                 Ponto* ponto = pontos.front();
-                poligono << QPointF(windowViewport->fx(ponto->getX()), windowViewport->fy(ponto->getY()));
+                poligono << QPointF(windowViewport->fx(ponto->obterX()), windowViewport->fy(ponto->obterY()));
                 pontos.pop_front();
                 pontos.push_back(ponto);
             }
@@ -100,22 +100,22 @@ void MainWindow::mostrarValorDoZoom(int zoomValue){
     ui->zoomText->setText(QString::fromStdString(ss.str()));
 }
 
-void MainWindow::moveLeft(){
-    windowViewport->moveLeft();
+void MainWindow::moverParaEsquerda(){
+    windowViewport->moverParaEsquerda();
     desenharFiguras();
 }
 
-void MainWindow::moveRight(){
-    windowViewport->moveRight();
+void MainWindow::moverParaDireita(){
+    windowViewport->moverParaDireita();
     desenharFiguras();
 }
 
-void MainWindow::moveDown(){
-    windowViewport->moveDown();
+void MainWindow::moverParaBaixo(){
+    windowViewport->moverParaBaixo();
     desenharFiguras();
 }
 
-void MainWindow::moveUp(){
-    windowViewport->moveUp();
+void MainWindow::moverParaCima(){
+    windowViewport->moverParaCima();
     desenharFiguras();
 }
