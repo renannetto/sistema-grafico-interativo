@@ -26,6 +26,7 @@ void MainWindow::iniciar(){
 
     connect(newObjectWindow, SIGNAL(desenharFigura(Tipo, list<Ponto*>)),
     this, SLOT(construirFigura(Tipo, list<Ponto*>)));
+    desenharFiguras();
 }
 
 void MainWindow::reiniciar(){
@@ -34,6 +35,11 @@ void MainWindow::reiniciar(){
     delete viewport;
 
     iniciar();
+}
+
+void MainWindow::resetarWindow(){
+    windowViewport->resetarWindow();
+    desenharFiguras();
 }
 
 void MainWindow::abrirJanela(){
@@ -63,21 +69,36 @@ void MainWindow::desenharFiguras() {
     for (int i = 0; i < figuras.size(); i++){
         Figura* figura = figuras.back();
         pontos = figura->obterPontos();
-        if(pontos.size()==1){
-            int x = windowViewport->fx(pontos.front()->obterX());
-            int y = windowViewport->fy(pontos.front()->obterY());
-            viewport->addLine(x,y,x,y);
-        } else{
-            QPolygonF poligono;
-            int size = pontos.size();
-            for (int i=0; i<size; i++) {
-                Ponto* ponto = pontos.front();
-                poligono << QPointF(windowViewport->fx(ponto->obterX()), windowViewport->fy(ponto->obterY()));
-                pontos.pop_front();
-                pontos.push_back(ponto);
-            }
-            viewport->addPolygon(poligono);
+
+        int size = pontos.size();
+        double xP,yP,xa,ya,x,y;
+        xP = xa = windowViewport->fx(pontos.front()->obterX());
+        yP = ya = windowViewport->fy(pontos.front()->obterY());
+
+        list<Ponto*>::iterator it;
+        for(it = pontos.begin(); it != pontos.end(); it++){
+            x = windowViewport->fx((*it)->obterX());
+            y = windowViewport->fy((*it)->obterY());
+            viewport->addLine(xa,ya,x,y);
+            xa = x;
+            ya = y;
         }
+        viewport->addLine(x,y,xP,yP);
+//        if(pontos.size()==1){
+//            int x = windowViewport->fx(pontos.front()->obterX());
+//            int y = windowViewport->fy(pontos.front()->obterY());
+//            viewport->addLine(x,y,x,y);
+//        } else{
+//            QPolygonF poligono;
+//            int size = pontos.size();
+//            for (int i=0; i<size; i++) {
+//                Ponto* ponto = pontos.front();
+//                poligono << QPointF(windowViewport->fx(ponto->obterX()), windowViewport->fy(ponto->obterY()));
+//                pontos.pop_front();
+//                pontos.push_back(ponto);
+//            }
+//            viewport->addPolygon(poligono);
+//        }
         figuras.pop_back();
         figuras.push_front(figura);
     }

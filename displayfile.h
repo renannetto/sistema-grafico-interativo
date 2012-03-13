@@ -16,6 +16,7 @@ public:
     string adicionarFigura(Tipo, list<Ponto*> pontos);
     list<Figura*> obterFiguras();
     void destruirFigura(string);
+    void construirEixosNaOrigem();
 private:
     int nPontos;
     int nRetas;

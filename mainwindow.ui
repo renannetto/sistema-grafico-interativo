@@ -103,7 +103,7 @@
         <x>20</x>
         <y>60</y>
         <width>141</width>
-        <height>231</height>
+        <height>281</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -306,6 +306,19 @@
        </property>
        <property name="text">
         <string>%</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>240</y>
+         <width>121</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Resetar Posição</string>
        </property>
       </widget>
      </widget>
@@ -557,7 +570,7 @@
    <sender>buttonUp</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>moveUp()</slot>
+   <slot>moverParaCima()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>101</x>
@@ -573,7 +586,7 @@
    <sender>buttonDown</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>moveDown()</slot>
+   <slot>moverParaBaixo()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>127</x>
@@ -589,7 +602,7 @@
    <sender>buttonRight</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>moveRight()</slot>
+   <slot>moverParaDireita()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>150</x>
@@ -605,7 +618,7 @@
    <sender>buttonLeft</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>moveLeft()</slot>
+   <slot>moverParaEsquerda()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>69</x>
@@ -697,17 +710,34 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>resetarWindow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>158</x>
+     <y>587</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>612</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>abrirJanela()</slot>
-  <slot>moveUp()</slot>
-  <slot>moveDown()</slot>
-  <slot>moveLeft()</slot>
-  <slot>moveRight()</slot>
+  <slot>moverParaCima()</slot>
+  <slot>moverParaBaixo()</slot>
+  <slot>moverParaEsquerda()</slot>
+  <slot>moverParaDireita()</slot>
   <slot>zoomIn()</slot>
   <slot>zoomOut()</slot>
   <slot>destruirFigura()</slot>
   <slot>reiniciar()</slot>
   <slot>mostrarValorDoZoom(int)</slot>
+  <slot>resetarWindow()</slot>
  </slots>
 </ui>

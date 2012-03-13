@@ -575,7 +575,7 @@
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>drawDot()</slot>
+   <slot>desenharPonto()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>352</x>
@@ -591,7 +591,7 @@
    <sender>pushButton_3</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>drawLine()</slot>
+   <slot>desenharReta()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>355</x>
@@ -607,11 +607,11 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>addPoint()</slot>
+   <slot>adicionarPonto()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>506</x>
-     <y>225</y>
+     <x>508</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>67</x>
@@ -623,11 +623,11 @@
    <sender>pushButton_4</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>drawPolygon()</slot>
+   <slot>desenharPoligono()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>541</x>
-     <y>259</y>
+     <x>543</x>
+     <y>257</y>
     </hint>
     <hint type="destinationlabel">
      <x>97</x>
@@ -637,10 +637,10 @@
   </connection>
  </connections>
  <slots>
-  <slot>drawPoint(int,int)</slot>
-  <slot>drawLine()</slot>
-  <slot>drawDot()</slot>
-  <slot>addPoint()</slot>
-  <slot>drawPolygon()</slot>
+  <slot>desenharPonto(int,int)</slot>
+  <slot>desenharReta()</slot>
+  <slot>desenharPonto()</slot>
+  <slot>adicionarPonto()</slot>
+  <slot>desenharPoligono()</slot>
  </slots>
 </ui>

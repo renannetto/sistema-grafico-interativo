@@ -5,9 +5,29 @@ DisplayFile::DisplayFile()
     nPontos = 0;
     nRetas = 0;
     nPoligonos = 0;
+    construirEixosNaOrigem();
 }
 
 DisplayFile::~ DisplayFile(){
+}
+
+void DisplayFile::construirEixosNaOrigem(){
+    list<Ponto*> pontosEixoX;
+    list<Ponto*> pontosEixoY;
+    pontosEixoX.push_back(new Ponto(0,0));
+    pontosEixoX.push_back(new Ponto(130,0));
+    pontosEixoX.push_back(new Ponto(110,6));
+    pontosEixoX.push_back(new Ponto(130,0));
+    pontosEixoX.push_back(new Ponto(110,-6));
+    pontosEixoX.push_back(new Ponto(130,0));
+    pontosEixoY.push_back(new Ponto(0,0));
+    pontosEixoY.push_back(new Ponto(0,130));
+    pontosEixoY.push_back(new Ponto(6,110));
+    pontosEixoY.push_back(new Ponto(0,130));
+    pontosEixoY.push_back(new Ponto(-6,110));
+    pontosEixoY.push_back(new Ponto(0,130));
+    figuras.push_back(new Figura("Eixo X", EIXO, pontosEixoX));
+    figuras.push_back(new Figura("Eixo Y", EIXO, pontosEixoY));
 }
 
 string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos)
@@ -47,7 +67,7 @@ list<Figura*> DisplayFile::obterFiguras(){
 void DisplayFile::destruirFigura(string nome){
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
-        if((*it)->getNome()==nome){
+        if((*it)->obterNome()==nome){
             figuras.erase(it);
             break;
         }

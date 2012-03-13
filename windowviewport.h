@@ -12,6 +12,7 @@ public:
     ~WindowViewport();
     string adicionarFigura(Tipo tipo, list<Ponto*> pontos);
     list<Figura*> obterFiguras();
+    void resetarWindow();
     void destruirFigura(string);
     void zoomIn(int);
     void zoomOut(int);

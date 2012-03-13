@@ -11,6 +11,10 @@ WindowViewport::~WindowViewport(){
     delete displayFile;
 }
 
+void WindowViewport::resetarWindow(){
+    window->resetarCoordenadas();
+}
+
 string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos)
 {
     return displayFile->adicionarFigura(tipo, pontos);

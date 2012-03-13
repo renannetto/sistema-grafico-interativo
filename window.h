@@ -5,6 +5,7 @@ class Window
 {
 public:
     Window();
+    void resetarCoordenadas();
     void zoomIn(int);
     void zoomOut(int);
     void moverParaEsquerda();

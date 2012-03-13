@@ -8,6 +8,13 @@ Window::Window()
     yMax = 480;
 }
 
+void Window::resetarCoordenadas(){
+    xMin = 0;
+    yMin = 0;
+    xMax = 640;
+    yMax = 480;
+}
+
 void Window::zoomIn(int percent){
     double passoX = (double)percent*(xMax-xMin)/200;
     double passoY = (double)percent*(yMax-yMin)/200;

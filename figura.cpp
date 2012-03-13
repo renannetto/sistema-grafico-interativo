@@ -13,8 +13,8 @@ Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos)
     double xSum = 0, ySum = 0;
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
-        xSum += (*it)->getX();
-        ySum += (*it)->getY();
+        xSum += (*it)->obterX();
+        ySum += (*it)->obterY();
     }
     xMedio = xSum/pontos.size();
     yMedio = ySum/pontos.size();

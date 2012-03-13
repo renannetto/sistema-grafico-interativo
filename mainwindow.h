@@ -29,6 +29,7 @@ public:
 
 public slots:
     void reiniciar();
+    void resetarWindow();
     void abrirJanela();
     void construirFigura(Tipo, list<Ponto*>);
     void destruirFigura();
