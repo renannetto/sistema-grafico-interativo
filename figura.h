@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include <math.h>
 #include "ponto.h"
 
 using namespace std;
@@ -21,9 +22,12 @@ public:
     void escalonar2D(double,double);
     void rotacionarNaOrigem2D(double);
     void rotacionarNoCentro2D(double);
-    void rotacionarNoPonto2D(double,double);
+    void rotacionarNoPonto2D(double,double,double);
 private:
-    void transformar2D(double**);
+    double xMedio;
+    double yMedio;
+    double** matrizT;
+    void transformar2D();
     string nome;
     Tipo tipo;
     list<Ponto*> pontos;
