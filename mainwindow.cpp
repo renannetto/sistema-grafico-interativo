@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    start();
+    iniciar();
 }
 
 MainWindow::~MainWindow()
@@ -13,7 +13,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::start(){
+void MainWindow::iniciar(){
     ui->setupUi(this);
 
     newObjectWindow = new Dialog(this);
@@ -21,40 +21,42 @@ void MainWindow::start(){
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
     windowViewport = new WindowViewport();
+    ui->zoomText->clear();
+    mostrarValorDoZoom(ui->zoomSlider->value());
 
     connect(newObjectWindow, SIGNAL(drawFigure(Tipo, list<Ponto*>)),
-    this, SLOT(constructFigure(Tipo, list<Ponto*>)));
+    this, SLOT(construirFigura(Tipo, list<Ponto*>)));
 }
 
-void MainWindow::restart(){
+void MainWindow::reiniciar(){
     delete newObjectWindow;
     delete windowViewport;
     delete viewport;
 
-    start();
+    iniciar();
 }
 
 void MainWindow::abrirJanela(){
     newObjectWindow->setVisible(true);
 }
 
-void MainWindow::constructFigure(Tipo tipo, list<Ponto *> pontos){
+void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos){
     QString nome = QString::fromStdString(windowViewport->addFigure(tipo, pontos));
-    ui->listWidget->addItem(nome);
-    drawFigures();
+    ui->listaObjetos->addItem(nome);
+    desenharFiguras();
 }
 
-void MainWindow::destructFigure(){
-    string nome = ui->listWidget->currentItem()->text().toStdString();
+void MainWindow::destruirFigura(){
+    string nome = ui->listaObjetos->currentItem()->text().toStdString();
     if (nome != "Novo Objeto"){
-        ui->listWidget->currentItem()->~QListWidgetItem();
+        ui->listaObjetos->currentItem()->~QListWidgetItem();
         windowViewport->destructFigure(nome);
-        drawFigures();
+        desenharFiguras();
         cout << "Figura apagada : " << nome << endl;
    }
 }
 
-void MainWindow::drawFigures() {
+void MainWindow::desenharFiguras() {
     viewport->clear();
     list<Figura*> figuras = windowViewport->getFigures();
     list<Ponto*> pontos;
@@ -82,36 +84,38 @@ void MainWindow::drawFigures() {
 }
 
 void MainWindow::zoomIn(){
-    windowViewport->zoomIn(ui->horizontalSlider->sliderPosition());
-    drawFigures();
+    windowViewport->zoomIn(ui->zoomSlider->sliderPosition());
+    desenharFiguras();
 }
 
 void MainWindow::zoomOut(){
-    windowViewport->zoomOut(ui->horizontalSlider->sliderPosition());
-    drawFigures();
+    windowViewport->zoomOut(ui->zoomSlider->sliderPosition());
+    desenharFiguras();
 }
 
-void MainWindow::showZoomPower(int zoomValue){
-    string aux;
-    ui->textBrowser_2->clear();
+void MainWindow::mostrarValorDoZoom(int zoomValue){
+    stringstream ss;
+    ss << zoomValue;
+    ui->zoomText->clear();
+    ui->zoomText->setText(QString::fromStdString(ss.str()));
 }
 
 void MainWindow::moveLeft(){
     windowViewport->moveLeft();
-    drawFigures();
+    desenharFiguras();
 }
 
 void MainWindow::moveRight(){
     windowViewport->moveRight();
-    drawFigures();
+    desenharFiguras();
 }
 
 void MainWindow::moveDown(){
     windowViewport->moveDown();
-    drawFigures();
+    desenharFiguras();
 }
 
 void MainWindow::moveUp(){
     windowViewport->moveUp();
-    drawFigures();
+    desenharFiguras();
 }

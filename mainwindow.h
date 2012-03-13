@@ -28,25 +28,25 @@ public:
     ~MainWindow();
 
 public slots:
-    void restart();
+    void reiniciar();
     void abrirJanela();
-    void constructFigure(Tipo, list<Ponto*>);
-    void destructFigure();
-    void drawFigures();
+    void construirFigura(Tipo, list<Ponto*>);
+    void destruirFigura();
+    void desenharFiguras();
     void zoomIn();
     void zoomOut();
-    void showZoomPower(int);
+    void mostrarValorDoZoom(int);
     void moveLeft();
     void moveRight();
     void moveUp();
     void moveDown();
 
 private:
-    void start();
+    void iniciar();
     WindowViewport *windowViewport;
     Ui::MainWindow *ui;
     Dialog *newObjectWindow;
-    QGraphicsScene * viewport;
+    QGraphicsScene *viewport;
 };
 
 #endif // MAINWINDOW_H

@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>886</width>
-    <height>713</height>
+    <height>699</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QGroupBox" name="groupBox">
+   <widget class="QGroupBox" name="grupoOpcoes">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -57,13 +57,13 @@
       <enum>Qt::Horizontal</enum>
      </property>
     </widget>
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frameOpcoes">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>250</y>
        <width>181</width>
-       <height>401</height>
+       <height>391</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -75,7 +75,7 @@
      <property name="midLineWidth">
       <number>0</number>
      </property>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="labelMovimentoDaJanela">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -97,7 +97,7 @@
        <number>6</number>
       </property>
      </widget>
-     <widget class="QFrame" name="frame_2">
+     <widget class="QFrame" name="frameMovimentoDaJanela">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -112,7 +112,7 @@
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="buttonZoomOut">
        <property name="geometry">
         <rect>
          <x>30</x>
@@ -125,7 +125,7 @@
         <string>Zoom Out</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_5">
+      <widget class="QPushButton" name="buttonZoomIn">
        <property name="geometry">
         <rect>
          <x>30</x>
@@ -138,7 +138,7 @@
         <string>Zoom In</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="buttonDown">
        <property name="geometry">
         <rect>
          <x>40</x>
@@ -151,7 +151,7 @@
         <string>DOWN</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="buttonRight">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -164,7 +164,7 @@
         <string>RIGHT</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="buttonLeft">
        <property name="geometry">
         <rect>
          <x>10</x>
@@ -177,7 +177,7 @@
         <string>LEFT</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="buttonUp">
        <property name="geometry">
         <rect>
          <x>40</x>
@@ -190,7 +190,7 @@
         <string>UP</string>
        </property>
       </widget>
-      <widget class="QSlider" name="horizontalSlider">
+      <widget class="QSlider" name="zoomSlider">
        <property name="geometry">
         <rect>
          <x>20</x>
@@ -279,7 +279,7 @@
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
-      <widget class="QTextBrowser" name="textBrowser_2">
+      <widget class="QTextBrowser" name="zoomText">
        <property name="geometry">
         <rect>
          <x>30</x>
@@ -295,7 +295,7 @@
         <enum>Qt::ScrollBarAlwaysOff</enum>
        </property>
       </widget>
-      <widget class="QLabel" name="label_2">
+      <widget class="QLabel" name="labelPercent">
        <property name="geometry">
         <rect>
          <x>100</x>
@@ -310,7 +310,7 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="labelObjetos">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -326,7 +326,7 @@
       <number>5</number>
      </property>
     </widget>
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QListWidget" name="listaObjetos">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -341,7 +341,7 @@
       </property>
      </item>
     </widget>
-    <widget class="QPushButton" name="pushButton_7">
+    <widget class="QPushButton" name="botaoRemoverObjeto">
      <property name="geometry">
       <rect>
        <x>40</x>
@@ -355,13 +355,13 @@
      </property>
     </widget>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser">
+   <widget class="QTextBrowser" name="logText">
     <property name="geometry">
      <rect>
       <x>210</x>
       <y>550</y>
       <width>661</width>
-      <height>101</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="palette">
@@ -445,7 +445,7 @@
      <enum>QGraphicsView::NoAnchor</enum>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="labelViewport">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -458,7 +458,7 @@
      <string>Viewport</string>
     </property>
    </widget>
-   <widget class="Line" name="line_2">
+   <widget class="Line" name="line2">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -491,7 +491,7 @@
     <property name="title">
      <string>Inserir</string>
     </property>
-    <addaction name="actionNovo_Objeto_2"/>
+    <addaction name="tabNovoObjeto"/>
    </widget>
    <addaction name="menuCG1"/>
    <addaction name="menuInserir"/>
@@ -502,7 +502,7 @@
     <string>Novo Objeto</string>
    </property>
   </action>
-  <action name="actionNovo_Objeto_2">
+  <action name="tabNovoObjeto">
    <property name="text">
     <string>Novo Objeto</string>
    </property>
@@ -522,7 +522,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>listWidget</sender>
+   <sender>listaObjetos</sender>
    <signal>doubleClicked(QModelIndex)</signal>
    <receiver>MainWindow</receiver>
    <slot>abrirJanela()</slot>
@@ -538,7 +538,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionNovo_Objeto_2</sender>
+   <sender>tabNovoObjeto</sender>
    <signal>activated(int)</signal>
    <receiver>MainWindow</receiver>
    <slot>abrirJanela()</slot>
@@ -554,7 +554,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>buttonUp</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>moveUp()</slot>
@@ -570,7 +570,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>buttonDown</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>moveDown()</slot>
@@ -586,7 +586,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
+   <sender>buttonRight</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>moveRight()</slot>
@@ -602,7 +602,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_3</sender>
+   <sender>buttonLeft</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>moveLeft()</slot>
@@ -618,7 +618,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_5</sender>
+   <sender>buttonZoomIn</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>zoomIn()</slot>
@@ -634,7 +634,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_6</sender>
+   <sender>buttonZoomOut</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>zoomOut()</slot>
@@ -650,10 +650,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_7</sender>
+   <sender>botaoRemoverObjeto</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>destructFigure()</slot>
+   <slot>destruirFigura()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>123</x>
@@ -669,7 +669,7 @@
    <sender>tabNovo</sender>
    <signal>activated()</signal>
    <receiver>MainWindow</receiver>
-   <slot>restart()</slot>
+   <slot>reiniciar()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -682,10 +682,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider</sender>
+   <sender>zoomSlider</sender>
    <signal>valueChanged(int)</signal>
    <receiver>MainWindow</receiver>
-   <slot>showZoomPower(int)</slot>
+   <slot>mostrarValorDoZoom(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
@@ -706,8 +706,8 @@
   <slot>moveRight()</slot>
   <slot>zoomIn()</slot>
   <slot>zoomOut()</slot>
-  <slot>destructFigure()</slot>
-  <slot>restart()</slot>
-  <slot>showZoomPower(int)</slot>
+  <slot>destruirFigura()</slot>
+  <slot>reiniciar()</slot>
+  <slot>mostrarValorDoZoom(int)</slot>
  </slots>
 </ui>
