@@ -8,6 +8,7 @@ public:
     ~Ponto();
     double getX();
     double getY();
+    void transformar2D(double**);
 private:
     double x;
     double y;

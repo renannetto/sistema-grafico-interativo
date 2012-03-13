@@ -17,7 +17,13 @@ public:
     list<Ponto*> getPontos();
     string getNome();
     Tipo getTipo();
+    void transaladar2D(double,double);
+    void escalonar2D(double,double);
+    void rotacionarNaOrigem2D(double);
+    void rotacionarNoCentro2D(double);
+    void rotacionarNoPonto2D(double,double);
 private:
+    void transformar2D(double**);
     string nome;
     Tipo tipo;
     list<Ponto*> pontos;

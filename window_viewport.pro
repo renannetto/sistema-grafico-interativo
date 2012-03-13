@@ -12,13 +12,16 @@ SOURCES += main.cpp \
     figura.cpp \
     windowviewport.cpp \
     displayfile.cpp \
-    window.cpp
+    window.cpp \
+    Transformacoes.cpp
 HEADERS += mainwindow.h \
     dialog.h \
     ponto.h \
     figura.h \
     windowviewport.h \
     displayfile.h \
-    window.h
+    window.h \
+    Transformacoes.h
 FORMS += mainwindow.ui \
-    dialog.ui
+    dialog.ui \
+    Transformacoes.ui
