@@ -10,7 +10,7 @@ DisplayFile::DisplayFile()
 DisplayFile::~ DisplayFile(){
 }
 
-string DisplayFile::addFigure(Tipo tipo, list<Ponto*> pontos)
+string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos)
 {
     Figura *figura;
     string nome;
@@ -40,11 +40,11 @@ string DisplayFile::addFigure(Tipo tipo, list<Ponto*> pontos)
     return nome;
 }
 
-list<Figura*> DisplayFile::getFigures(){
+list<Figura*> DisplayFile::obterFiguras(){
     return figuras;
 }
 
-void DisplayFile::destructFigure(string nome){
+void DisplayFile::destruirFigura(string nome){
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
         if((*it)->getNome()==nome){

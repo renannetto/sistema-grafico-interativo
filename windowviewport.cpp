@@ -11,17 +11,17 @@ WindowViewport::~WindowViewport(){
     delete displayFile;
 }
 
-string WindowViewport::addFigure(Tipo tipo, list<Ponto*> pontos)
+string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos)
 {
-    return displayFile->addFigure(tipo, pontos);
+    return displayFile->adicionarFigura(tipo, pontos);
 }
 
-list<Figura*> WindowViewport::getFigures(){
-    return displayFile->getFigures();
+list<Figura*> WindowViewport::obterFiguras(){
+    return displayFile->obterFiguras();
 }
 
-void WindowViewport::destructFigure(string nome){
-    displayFile->destructFigure(nome);
+void WindowViewport::destruirFigura(string nome){
+    displayFile->destruirFigura(nome);
 }
 
 void WindowViewport::zoomIn(int percent)
@@ -34,24 +34,24 @@ void WindowViewport::zoomOut(int percent)
     window->zoomOut(percent);
 }
 
-void WindowViewport::moveLeft()
+void WindowViewport::moverParaEsquerda()
 {
-    window->moveLeft();
+    window->moverParaEsquerda();
 }
 
-void WindowViewport::moveRight()
+void WindowViewport::moverParaDireita()
 {
-    window->moveRight();
+    window->moverParaDireita();
 }
 
-void WindowViewport::moveDown()
+void WindowViewport::moverParaBaixo()
 {
-    window->moveDown();
+    window->moverParaBaixo();
 }
 
-void WindowViewport::moveUp()
+void WindowViewport::moverParaCima()
 {
-    window->moveUp();
+    window->moverParaCima();
 }
 
 double WindowViewport::fx(double x)

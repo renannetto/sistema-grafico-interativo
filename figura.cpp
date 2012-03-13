@@ -11,15 +11,15 @@ Figura::~Figura()
 {
 }
 
-list<Ponto*> Figura::getPontos(){
+list<Ponto*> Figura::obterPontos(){
     return pontos;
 }
 
-string Figura::getNome(){
+string Figura::obterNome(){
     return nome;
 }
 
-Tipo Figura::getTipo(){
+Tipo Figura::obterTipo(){
     return tipo;
 }
 

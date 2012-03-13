@@ -14,9 +14,9 @@ class Figura
 public:
     Figura(string vNome, Tipo vTipo, list<Ponto*> vPontos);
     ~Figura();
-    list<Ponto*> getPontos();
-    string getNome();
-    Tipo getTipo();
+    list<Ponto*> obterPontos();
+    string obterNome();
+    Tipo obterTipo();
     void transaladar2D(double,double);
     void escalonar2D(double,double);
     void rotacionarNaOrigem2D(double);

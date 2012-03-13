@@ -10,15 +10,15 @@ class WindowViewport
 public:
     WindowViewport();
     ~WindowViewport();
-    string addFigure(Tipo tipo, list<Ponto*> pontos);
-    list<Figura*> getFigures();
-    void destructFigure(string);
+    string adicionarFigura(Tipo tipo, list<Ponto*> pontos);
+    list<Figura*> obterFiguras();
+    void destruirFigura(string);
     void zoomIn(int);
     void zoomOut(int);
-    void moveLeft();
-    void moveRight();
-    void moveUp();
-    void moveDown();
+    void moverParaEsquerda();
+    void moverParaDireita();
+    void moverParaCima();
+    void moverParaBaixo();
     double fx(double x);
     double fy(double y);
 private:
