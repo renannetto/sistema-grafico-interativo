@@ -9,15 +9,6 @@ Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos)
     matrizT = new double*[3];
     for(int i = 0; i < 3; i++)
         matrizT[i] = new double[3];
-
-    double xSum = 0, ySum = 0;
-    list<Ponto*>::iterator it;
-    for(it = pontos.begin(); it != pontos.end(); it++){
-        xSum += (*it)->obterX();
-        ySum += (*it)->obterY();
-    }
-    xMedio = xSum/pontos.size();
-    yMedio = ySum/pontos.size();
 }
 
 Figura::~Figura()
@@ -44,6 +35,15 @@ void Figura::transladar2D(double vX, double vY) {
 }
 
 void Figura::escalonar2D(double vX, double vY){
+    double xSum = 0, ySum = 0;
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        xSum += (*it)->obterX();
+        ySum += (*it)->obterY();
+    }
+    xMedio = xSum/pontos.size();
+    yMedio = ySum/pontos.size();
+
     matrizT[0][0] = vX; matrizT[0][1] = 0; matrizT[0][2] = 0;
     matrizT[1][0] = 0; matrizT[1][1] = vY; matrizT[1][2] = 0;
     matrizT[2][0] = xMedio*(1-vX); matrizT[2][1] = yMedio*(1-vY); matrizT[2][2] = 1;
@@ -59,6 +59,15 @@ void Figura::rotacionarNaOrigem2D(double teta){
 }
 
 void Figura::rotacionarNoCentro2D(double teta){
+    double xSum = 0, ySum = 0;
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        xSum += (*it)->obterX();
+        ySum += (*it)->obterY();
+    }
+    xMedio = xSum/pontos.size();
+    yMedio = ySum/pontos.size();
+
     teta = teta*2*M_PI/360;
     matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
     matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
