@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabTransalacao">
      <attribute name="title">
@@ -100,6 +100,9 @@
          <height>21</height>
         </rect>
        </property>
+       <property name="text">
+        <string>0</string>
+       </property>
       </widget>
       <widget class="QLineEdit" name="deslocamentoYEdit">
        <property name="geometry">
@@ -109,6 +112,9 @@
          <width>101</width>
          <height>21</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>0</string>
        </property>
       </widget>
       <widget class="QLabel" name="label_2">
@@ -206,6 +212,9 @@
          <height>21</height>
         </rect>
        </property>
+       <property name="text">
+        <string>1</string>
+       </property>
       </widget>
       <widget class="QLabel" name="label_12">
        <property name="geometry">
@@ -228,6 +237,9 @@
          <width>101</width>
          <height>21</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>1</string>
        </property>
       </widget>
      </widget>
@@ -349,6 +361,9 @@
           <height>21</height>
          </rect>
         </property>
+        <property name="text">
+         <string>0</string>
+        </property>
        </widget>
        <widget class="QLabel" name="label_14">
         <property name="geometry">
@@ -372,6 +387,9 @@
           <height>21</height>
          </rect>
         </property>
+        <property name="text">
+         <string>0</string>
+        </property>
        </widget>
        <widget class="QLabel" name="label_15">
         <property name="geometry">
@@ -384,55 +402,6 @@
         </property>
         <property name="text">
          <string>Y : </string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="widget" native="true">
-       <property name="geometry">
-        <rect>
-         <x>30</x>
-         <y>40</y>
-         <width>271</width>
-         <height>81</height>
-        </rect>
-       </property>
-       <widget class="QRadioButton" name="radioButton">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>0</y>
-          <width>241</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Rotacionar em torno da Origem</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="radioButton_2">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>30</y>
-          <width>241</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Rotacionar em torno do Centro</string>
-        </property>
-       </widget>
-       <widget class="QRadioButton" name="radioButton_3">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>60</y>
-          <width>251</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Rotacionar em torno de um Ponto</string>
         </property>
        </widget>
       </widget>
@@ -452,6 +421,62 @@
         <string>Ponto</string>
        </property>
       </widget>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>30</y>
+         <width>301</width>
+         <height>101</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string/>
+       </property>
+       <widget class="QRadioButton" name="radioButton">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>241</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Rotacionar em torno da Origem</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_2">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>40</y>
+          <width>241</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Rotacionar em torno do Centro</string>
+        </property>
+       </widget>
+       <widget class="QRadioButton" name="radioButton_3">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>70</y>
+          <width>251</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Rotacionar em torno de um Ponto</string>
+        </property>
+       </widget>
+      </widget>
+      <zorder>groupBox</zorder>
+      <zorder>label_17</zorder>
+      <zorder>frame_6</zorder>
+      <zorder>label_16</zorder>
      </widget>
     </widget>
    </widget>
@@ -542,6 +567,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>rotacionar2D()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>465</x>
+     <y>226</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>450</x>
+     <y>6</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>transladar2D()</slot>
@@ -549,5 +590,6 @@
   <slot>rotacionarNaOrigem2D()</slot>
   <slot>rotacionarNoCentro2D()</slot>
   <slot>rotacionarNoPonto2D()</slot>
+  <slot>rotacionar2D()</slot>
  </slots>
 </ui>

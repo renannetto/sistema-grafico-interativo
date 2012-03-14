@@ -67,6 +67,7 @@ void Figura::rotacionarNoCentro2D(double teta){
 }
 
 void Figura::rotacionarNoPonto2D(double teta, double pX, double pY){
+    teta = teta*2*M_PI/360;
     matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
     matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
     matrizT[2][0] = pX*(1-cos(teta)) - pY*sin(teta); matrizT[2][1] = pY*(1-cos(teta)) + pX*sin(teta); matrizT[2][2] = 1;

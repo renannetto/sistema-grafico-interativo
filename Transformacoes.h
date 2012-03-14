@@ -15,12 +15,10 @@ public:
     explicit Transformacoes(QWidget *parent = 0);
     ~Transformacoes();
 
-public slots:
+private slots:
     void transladar2D();
     void escalonar2D();
-    void rotacionarNaOrigem2D();
-    void rotacionarNoCentro2D();
-    void rotacionarNoPonto2D();
+    void rotacionar2D();
 
 signals:
     void sTransladar2D(double,double);
@@ -30,6 +28,9 @@ signals:
     void sRotacionarNoPonto(double,double,double);
 
 private:
+    void rotacionarNaOrigem2D();
+    void rotacionarNoCentro2D();
+    void rotacionarNoPonto2D();
     Ui::Transformacoes *ui;
 };
 
