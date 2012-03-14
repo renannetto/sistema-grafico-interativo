@@ -18,7 +18,7 @@ public:
     list<Ponto*> obterPontos();
     string obterNome();
     Tipo obterTipo();
-    void transaladar2D(double,double);
+    void transladar2D(double,double);
     void escalonar2D(double,double);
     void rotacionarNaOrigem2D(double);
     void rotacionarNoCentro2D(double);

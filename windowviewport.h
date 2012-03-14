@@ -22,6 +22,11 @@ public:
     void moverParaBaixo();
     double fx(double x);
     double fy(double y);
+    void transladar2D(string,double,double);
+    void escalonar2D(string,double,double);
+    void rotacionarNaOrigem2D(string,double);
+    void rotacionarNoCentro2D(string,double);
+    void rotacionarNoPonto2D(string,double,double,double);
 private:
     DisplayFile *displayFile;
     Window *window;

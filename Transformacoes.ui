@@ -91,7 +91,7 @@
         <string>Deslocamento</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit">
+      <widget class="QLineEdit" name="deslocamentoXEdit">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -101,7 +101,7 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_2">
+      <widget class="QLineEdit" name="deslocamentoYEdit">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -197,7 +197,7 @@
         <string>X : </string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_5">
+      <widget class="QLineEdit" name="escalonamentoXEdit">
        <property name="geometry">
         <rect>
          <x>70</x>
@@ -220,7 +220,7 @@
         <string>Y : </string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_6">
+      <widget class="QLineEdit" name="escalonamentoYEdit">
        <property name="geometry">
         <rect>
          <x>290</x>
@@ -249,7 +249,7 @@
      <attribute name="title">
       <string>Rotação</string>
      </attribute>
-     <widget class="QLineEdit" name="lineEdit_7">
+     <widget class="QLineEdit" name="anguloRotacao">
       <property name="geometry">
        <rect>
         <x>430</x>
@@ -340,7 +340,7 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QLineEdit" name="lineEdit_8">
+       <widget class="QLineEdit" name="rotacaoPontoX">
         <property name="geometry">
          <rect>
           <x>50</x>
@@ -363,7 +363,7 @@
          <string>X :  </string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="lineEdit_9">
+       <widget class="QLineEdit" name="rotacaoPontoY">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -435,10 +435,6 @@
          <string>Rotacionar em torno de um Ponto</string>
         </property>
        </widget>
-       <zorder>frame_7</zorder>
-       <zorder>radioButton</zorder>
-       <zorder>radioButton_2</zorder>
-       <zorder>radioButton_3</zorder>
       </widget>
       <widget class="QLabel" name="label_16">
        <property name="geometry">
@@ -514,5 +510,44 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>transladar2D()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>298</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>80</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>escalonar2D()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>293</x>
+     <y>286</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>65</x>
+     <y>346</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>transladar2D()</slot>
+  <slot>escalonar2D()</slot>
+  <slot>rotacionarNaOrigem2D()</slot>
+  <slot>rotacionarNoCentro2D()</slot>
+  <slot>rotacionarNoPonto2D()</slot>
+ </slots>
 </ui>

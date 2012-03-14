@@ -18,6 +18,8 @@ void MainWindow::iniciar(){
 
     newObjectWindow = new Dialog(this);
     newObjectWindow->setVisible(false);
+    janelaDeTransformacoes = new Transformacoes(this);
+    janelaDeTransformacoes->setVisible(false);
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     ui->graphicsView->setScene(viewport);
     windowViewport = new WindowViewport();
@@ -26,6 +28,17 @@ void MainWindow::iniciar(){
 
     connect(newObjectWindow, SIGNAL(desenharFigura(Tipo, list<Ponto*>)),
     this, SLOT(construirFigura(Tipo, list<Ponto*>)));
+    connect(janelaDeTransformacoes, SIGNAL(sTransladar2D(double,double)),
+    this, SLOT(transladar2D(double,double)));
+    connect(janelaDeTransformacoes, SIGNAL(sEscalonar2D(double,double)),
+    this, SLOT(escalonar2D(double,double)));
+    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNaOrigem(double)),
+    this, SLOT(rotacionarNaOrigem2D(double)));
+    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoCentro(double)),
+    this, SLOT(rotacionarNoCentro2D(double)));
+    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoPonto(double,double,double)),
+    this, SLOT(rotacionarNoPonto2D(double,double,double)));
+
     desenharFiguras();
 }
 
@@ -43,7 +56,10 @@ void MainWindow::resetarWindow(){
 }
 
 void MainWindow::abrirJanela(){
-    newObjectWindow->setVisible(true);
+    if(ui->listaObjetos->currentItem()->text().toStdString() == "Novo Objeto")
+        newObjectWindow->setVisible(true);
+    else
+        janelaDeTransformacoes->setVisible(true);
 }
 
 void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos){
@@ -138,5 +154,30 @@ void MainWindow::moverParaBaixo(){
 
 void MainWindow::moverParaCima(){
     windowViewport->moverParaCima();
+    desenharFiguras();
+}
+
+void MainWindow::transladar2D(double vX, double vY){
+    windowViewport->transladar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+    desenharFiguras();
+}
+
+void MainWindow::escalonar2D(double vX, double vY){
+    windowViewport->escalonar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+    desenharFiguras();
+}
+
+void MainWindow::rotacionarNaOrigem2D(double teta){
+    windowViewport->rotacionarNaOrigem2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+    desenharFiguras();
+}
+
+void MainWindow::rotacionarNoCentro2D(double teta){
+    windowViewport->rotacionarNoCentro2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+    desenharFiguras();
+}
+
+void MainWindow::rotacionarNoPonto2D(double teta, double pX, double pY){
+    windowViewport->rotacionarNoPonto2D(ui->listaObjetos->currentItem()->text().toStdString(),teta,pX,pY);
     desenharFiguras();
 }

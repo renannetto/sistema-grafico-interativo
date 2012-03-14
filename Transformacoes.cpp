@@ -12,3 +12,32 @@ Transformacoes::~Transformacoes()
 {
     delete ui;
 }
+
+void Transformacoes::transaladar2D(){
+    double vX = ui->deslocamentoXEdit->text().toDouble();
+    double vY = ui->deslocamentoYEdit->text().toDouble();
+    emit sTransladar2D(vX,vY);
+}
+
+void Transformacoes::escalonar2D(){
+    double vX = ui->escalonamentoXEdit->text().toDouble();
+    double vY = ui->escalonamentoYEdit->text().toDouble();
+    emit sEscalonar2D(vX,vY);
+}
+
+void Transformacoes::rotacionarNaOrigem2D(){
+    double teta = ui->anguloRotacao->text().toDouble();
+    emit sRotacionarNaOrigem(teta);
+}
+
+void Transformacoes::rotacionarNoCentro2D(){
+    double teta = ui->anguloRotacao->text().toDouble();
+    emit sRotacionarNoCentro(teta);
+}
+
+void Transformacoes::rotacionarNoPonto2D(){
+    double teta = ui->anguloRotacao->text().toDouble();
+    double pX = ui->rotacaoPontoX->text().toDouble();
+    double pY = ui->rotacaoPontoY->text().toDouble();
+    emit sRotacionarNoPonto(teta,pX,pY);
+}

@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include "dialog.h"
+#include "Transformacoes.h"
 #include "windowviewport.h"
 
 
@@ -41,6 +42,11 @@ public slots:
     void moverParaDireita();
     void moverParaCima();
     void moverParaBaixo();
+    void transladar2D(double,double);
+    void escalonar2D(double,double);
+    void rotacionarNaOrigem2D(double);
+    void rotacionarNoCentro2D(double);
+    void rotacionarNoPonto2D(double,double,double);
 
 private:
     void iniciar();
@@ -48,6 +54,7 @@ private:
     Ui::MainWindow *ui;
     Dialog *newObjectWindow;
     QGraphicsScene *viewport;
+    Transformacoes *janelaDeTransformacoes;
 };
 
 #endif // MAINWINDOW_H

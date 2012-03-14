@@ -67,3 +67,58 @@ double WindowViewport::fy(double y)
 {
     return window->fy(y);
 }
+
+void WindowViewport::transladar2D(string nomeFigura, double vX, double vY){
+    list<Figura*> figuras = displayFile->obterFiguras();
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        if((*it)->obterNome()==nomeFigura){
+            (*it)->transladar2D(vX,vY);
+            break;
+        }
+    }
+}
+
+void WindowViewport::escalonar2D(string nomeFigura, double vX, double vY){
+    list<Figura*> figuras = displayFile->obterFiguras();
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        if((*it)->obterNome()==nomeFigura){
+            (*it)->escalonar2D(vX,vY);
+            break;
+        }
+    }
+}
+
+void WindowViewport::rotacionarNaOrigem2D(string nomeFigura, double teta){
+    list<Figura*> figuras = displayFile->obterFiguras();
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        if((*it)->obterNome()==nomeFigura){
+            (*it)->rotacionarNaOrigem2D(teta);
+            break;
+        }
+    }
+}
+
+void WindowViewport::rotacionarNoCentro2D(string nomeFigura, double teta){
+    list<Figura*> figuras = displayFile->obterFiguras();
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        if((*it)->obterNome()==nomeFigura){
+            (*it)->rotacionarNoCentro2D(teta);
+            break;
+        }
+    }
+}
+
+void WindowViewport::rotacionarNoPonto2D(string nomeFigura, double teta, double pX, double pY){
+    list<Figura*> figuras = displayFile->obterFiguras();
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        if((*it)->obterNome()==nomeFigura){
+            (*it)->rotacionarNoPonto2D(teta,pX,pY);
+            break;
+        }
+    }
+}

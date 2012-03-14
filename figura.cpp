@@ -36,7 +36,7 @@ Tipo Figura::obterTipo(){
     return tipo;
 }
 
-void Figura::transaladar2D(double vX, double vY) {
+void Figura::transladar2D(double vX, double vY) {
     matrizT[0][0] = 1; matrizT[0][1] = 0; matrizT[0][2] = 0;
     matrizT[1][0] = 0; matrizT[1][1] = 1; matrizT[1][2] = 0;
     matrizT[2][0] = vX; matrizT[2][1] = vY; matrizT[2][2] = 1;
