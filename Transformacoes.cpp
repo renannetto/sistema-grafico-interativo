@@ -63,3 +63,4 @@ void Transformacoes::mudarCor()
 {
     emit sMudarCor(scene->backgroundBrush().color());
 }
+
