@@ -15,9 +15,10 @@ void WindowViewport::resetarWindow(){
     window->resetarCoordenadas();
 }
 
-string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos)
+string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos, int vermelho, int verde, int azul)
 {
-    return displayFile->adicionarFigura(tipo, pontos);
+    Cor cor = Cor(vermelho, verde, azul);
+    return displayFile->adicionarFigura(tipo, pontos, cor);
 }
 
 list<Figura*> WindowViewport::obterFiguras(){
@@ -118,6 +119,17 @@ void WindowViewport::rotacionarNoPonto2D(string nomeFigura, double teta, double 
     for(it = figuras.begin(); it != figuras.end(); it++){
         if((*it)->obterNome()==nomeFigura){
             (*it)->rotacionarNoPonto2D(teta,pX,pY);
+            break;
+        }
+    }
+}
+
+void WindowViewport::mudarCor(string nomeFigura, int vermelho, int verde, int azul){
+    list<Figura*> figuras = displayFile->obterFiguras();
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        if((*it)->obterNome()==nomeFigura){
+            (*it)->mudarCor(vermelho, verde, azul);
             break;
         }
     }

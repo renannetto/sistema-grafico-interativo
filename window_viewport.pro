@@ -13,7 +13,8 @@ SOURCES += main.cpp \
     windowviewport.cpp \
     displayfile.cpp \
     window.cpp \
-    Transformacoes.cpp
+    Transformacoes.cpp \
+    cor.cpp
 HEADERS += mainwindow.h \
     dialog.h \
     ponto.h \
@@ -21,7 +22,8 @@ HEADERS += mainwindow.h \
     windowviewport.h \
     displayfile.h \
     window.h \
-    Transformacoes.h
+    Transformacoes.h \
+    cor.h
 FORMS += mainwindow.ui \
     dialog.ui \
     Transformacoes.ui

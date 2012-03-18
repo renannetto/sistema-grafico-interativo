@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <list>
 #include "figura.h"
+#include <QColorDialog>
+#include <QGraphicsScene>
 
 using namespace std;
 
@@ -24,13 +26,15 @@ public slots:
     void desenharPonto();
     void adicionarPonto();
     void desenharPoligono();
+    void escolherCor();
 
 signals:
-    void desenharFigura(Tipo, list<Ponto*>);
+    void desenharFigura(Tipo, list<Ponto*>, QColor cor);
 
 private:
     Ui::Dialog *ui;
     list<Ponto*> pontos;
+    QGraphicsScene *scene;
 };
 
 #endif // DIALOG_H

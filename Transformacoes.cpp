@@ -6,6 +6,8 @@ Transformacoes::Transformacoes(QWidget *parent) :
     ui(new Ui::Transformacoes)
 {
     ui->setupUi(this);
+    scene = new QGraphicsScene();
+    ui->graphicsView->setScene(scene);
 }
 
 Transformacoes::~Transformacoes()
@@ -13,7 +15,7 @@ Transformacoes::~Transformacoes()
     delete ui;
 }
 
-void Transformacoes::transaladar2D(){
+void Transformacoes::transladar2D(){
     double vX = ui->deslocamentoXEdit->text().toDouble();
     double vY = ui->deslocamentoYEdit->text().toDouble();
     emit sTransladar2D(vX,vY);
@@ -40,4 +42,24 @@ void Transformacoes::rotacionarNoPonto2D(){
     double pX = ui->rotacaoPontoX->text().toDouble();
     double pY = ui->rotacaoPontoY->text().toDouble();
     emit sRotacionarNoPonto(teta,pX,pY);
+}
+
+void Transformacoes::rotacionar2D(){
+    if(ui->radioButton->isChecked())
+        rotacionarNaOrigem2D();
+    if(ui->radioButton_2->isChecked())
+        rotacionarNoCentro2D();
+    if(ui->radioButton_3->isChecked())
+        rotacionarNoPonto2D();
+}
+
+void Transformacoes::escolherCor()
+{
+    QColor cor = QColorDialog::getColor(Qt::black, this);
+    scene->setBackgroundBrush(QBrush(cor));
+}
+
+void Transformacoes::mudarCor()
+{
+    emit sMudarCor(scene->backgroundBrush().color());
 }

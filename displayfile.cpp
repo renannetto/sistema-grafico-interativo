@@ -26,11 +26,12 @@ void DisplayFile::construirEixosNaOrigem(){
     pontosEixoY.push_back(new Ponto(0,130));
     pontosEixoY.push_back(new Ponto(-6,110));
     pontosEixoY.push_back(new Ponto(0,130));
-    figuras.push_back(new Figura("Eixo X", EIXO, pontosEixoX));
-    figuras.push_back(new Figura("Eixo Y", EIXO, pontosEixoY));
+    Cor preto(0,0,0);
+    figuras.push_back(new Figura("Eixo X", EIXO, pontosEixoX, preto));
+    figuras.push_back(new Figura("Eixo Y", EIXO, pontosEixoY, preto));
 }
 
-string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos)
+string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, Cor cor)
 {
     Figura *figura;
     string nome;
@@ -40,19 +41,19 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos)
         case PONTO: nome = "Ponto";
                     nomeInt << nome << nPontos;
                     nome = nomeInt.str();
-                    figura = new Figura(nome, tipo, pontos);
+                    figura = new Figura(nome, tipo, pontos, cor);
                     nPontos++;
                     break;
         case RETA: nome = "Reta";
                    nomeInt << nome << nRetas;
                    nome = nomeInt.str();
-                   figura = new Figura(nome, tipo, pontos);
+                   figura = new Figura(nome, tipo, pontos, cor);
                    nRetas++;
                    break;
         case POLIGONO: nome = "Poligono";
                        nomeInt << nome << nPoligonos;
                        nome = nomeInt.str();
-                       figura = new Figura(nome, tipo, pontos);
+                       figura = new Figura(nome, tipo, pontos, cor);
                        nPoligonos++;
                        break;
     }

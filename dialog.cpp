@@ -6,11 +6,14 @@ Dialog::Dialog(QWidget *parent) :
     ui(new Ui::Dialog)
 {
     ui->setupUi(this);
+    scene = new QGraphicsScene();
+    ui->graphicsView->setScene(scene);
 }
 
 Dialog::~Dialog()
 {
     delete ui;
+
 }
 
 void Dialog::desenharReta()
@@ -18,14 +21,14 @@ void Dialog::desenharReta()
     list<Ponto*> pontos;
     pontos.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
     pontos.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
-    emit desenharFigura(RETA, pontos);
+    emit desenharFigura(RETA, pontos, scene->backgroundBrush().color());
 }
 
 void Dialog::desenharPonto()
 {
     list<Ponto*> ponto;
     ponto.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
-    emit desenharFigura(PONTO, ponto);
+    emit desenharFigura(PONTO, ponto, scene->backgroundBrush().color());
 }
 
 void Dialog::adicionarPonto()
@@ -41,7 +44,13 @@ void Dialog::adicionarPonto()
 
 void Dialog::desenharPoligono()
 {
-    emit desenharFigura(POLIGONO, pontos);
+    emit desenharFigura(POLIGONO, pontos, scene->backgroundBrush().color());
     pontos.clear();
     ui->listWidget->clear();
+}
+
+void Dialog::escolherCor()
+{
+    QColor cor = QColorDialog::getColor(Qt::black, this);
+    scene->setBackgroundBrush(QBrush(cor));
 }

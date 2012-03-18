@@ -10,7 +10,7 @@ class WindowViewport
 public:
     WindowViewport();
     ~WindowViewport();
-    string adicionarFigura(Tipo tipo, list<Ponto*> pontos);
+    string adicionarFigura(Tipo tipo, list<Ponto*> pontos, int vermelho, int verde, int azul);
     list<Figura*> obterFiguras();
     void resetarWindow();
     void destruirFigura(string);
@@ -27,6 +27,7 @@ public:
     void rotacionarNaOrigem2D(string,double);
     void rotacionarNoCentro2D(string,double);
     void rotacionarNoPonto2D(string,double,double,double);
+    void mudarCor(string, int, int, int);
 private:
     DisplayFile *displayFile;
     Window *window;

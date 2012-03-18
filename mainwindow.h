@@ -32,7 +32,7 @@ public slots:
     void reiniciar();
     void resetarWindow();
     void abrirJanela();
-    void construirFigura(Tipo, list<Ponto*>);
+    void construirFigura(Tipo, list<Ponto*>, QColor);
     void destruirFigura();
     void desenharFiguras();
     void zoomIn();
@@ -47,6 +47,7 @@ public slots:
     void rotacionarNaOrigem2D(double);
     void rotacionarNoCentro2D(double);
     void rotacionarNoPonto2D(double,double,double);
+    void mudarCor(QColor cor);
 
 private:
     void iniciar();

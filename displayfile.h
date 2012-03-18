@@ -13,7 +13,7 @@ class DisplayFile
 public:
     DisplayFile();
     ~DisplayFile();
-    string adicionarFigura(Tipo, list<Ponto*> pontos);
+    string adicionarFigura(Tipo, list<Ponto*> pontos, Cor cor);
     list<Figura*> obterFiguras();
     void destruirFigura(string);
     void construirEixosNaOrigem();

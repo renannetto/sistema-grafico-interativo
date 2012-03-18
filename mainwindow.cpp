@@ -26,8 +26,8 @@ void MainWindow::iniciar(){
     ui->zoomText->clear();
     mostrarValorDoZoom(ui->zoomSlider->value());
 
-    connect(newObjectWindow, SIGNAL(desenharFigura(Tipo, list<Ponto*>)),
-    this, SLOT(construirFigura(Tipo, list<Ponto*>)));
+    connect(newObjectWindow, SIGNAL(desenharFigura(Tipo, list<Ponto*>, QColor)),
+    this, SLOT(construirFigura(Tipo, list<Ponto*>, QColor)));
     connect(janelaDeTransformacoes, SIGNAL(sTransladar2D(double,double)),
     this, SLOT(transladar2D(double,double)));
     connect(janelaDeTransformacoes, SIGNAL(sEscalonar2D(double,double)),
@@ -38,6 +38,7 @@ void MainWindow::iniciar(){
     this, SLOT(rotacionarNoCentro2D(double)));
     connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoPonto(double,double,double)),
     this, SLOT(rotacionarNoPonto2D(double,double,double)));
+    connect(janelaDeTransformacoes, SIGNAL(sMudarCor(QColor)), this, SLOT(mudarCor(QColor)));
 
     desenharFiguras();
 }
@@ -62,8 +63,8 @@ void MainWindow::abrirJanela(){
         janelaDeTransformacoes->setVisible(true);
 }
 
-void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos){
-    QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos));
+void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos, QColor cor){
+    QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos, cor.red(), cor.green(), cor.blue()));
     ui->listaObjetos->addItem(nome);
     desenharFiguras();
 }
@@ -86,7 +87,10 @@ void MainWindow::desenharFiguras() {
         Figura* figura = figuras.back();
         pontos = figura->obterPontos();
 
-        int size = pontos.size();
+        Cor cor = figura->obterCor();
+
+        QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul());
+
         double xP,yP,xa,ya,x,y;
         xP = xa = windowViewport->fx(pontos.front()->obterX());
         yP = ya = windowViewport->fy(pontos.front()->obterY());
@@ -95,11 +99,11 @@ void MainWindow::desenharFiguras() {
         for(it = pontos.begin(); it != pontos.end(); it++){
             x = windowViewport->fx((*it)->obterX());
             y = windowViewport->fy((*it)->obterY());
-            viewport->addLine(xa,ya,x,y);
+            viewport->addLine(xa,ya,x,y, QPen(qCor));
             xa = x;
             ya = y;
         }
-        viewport->addLine(x,y,xP,yP);
+        viewport->addLine(x,y,xP,yP, QPen(qCor));
 //        if(pontos.size()==1){
 //            int x = windowViewport->fx(pontos.front()->obterX());
 //            int y = windowViewport->fy(pontos.front()->obterY());
@@ -179,5 +183,10 @@ void MainWindow::rotacionarNoCentro2D(double teta){
 
 void MainWindow::rotacionarNoPonto2D(double teta, double pX, double pY){
     windowViewport->rotacionarNoPonto2D(ui->listaObjetos->currentItem()->text().toStdString(),teta,pX,pY);
+    desenharFiguras();
+}
+
+void MainWindow::mudarCor(QColor cor) {
+    windowViewport->mudarCor(ui->listaObjetos->currentItem()->text().toStdString(), cor.red(), cor.green(), cor.blue());
     desenharFiguras();
 }
