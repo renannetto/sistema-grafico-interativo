@@ -58,6 +58,7 @@
    <value key="ProjectExplorer.BuildConfiguration.DisplayName" type="QString">Debug</value>
    <value key="QtVersionId" type="int">2</value>
    <value key="ToolChain" type="int">0</value>
+   <value key="addQDumper" type=""></value>
    <value key="buildConfiguration" type="int">2</value>
   </valuemap>
  </data>
@@ -74,7 +75,7 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=br</value>
     <value type="QString">GDM_LANG=pt_BR.utf8</value>
     <value type="QString">GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/qtcreator.desktop</value>
-    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=9431</value>
+    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=9545</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
     <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-stzAQT</value>
     <value type="QString">GNOME_KEYRING_PID=1352</value>
@@ -126,7 +127,7 @@
     <value type="QString">GDM_KEYBOARD_LAYOUT=br</value>
     <value type="QString">GDM_LANG=pt_BR.utf8</value>
     <value type="QString">GIO_LAUNCHED_DESKTOP_FILE=/usr/share/applications/qtcreator.desktop</value>
-    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=9431</value>
+    <value type="QString">GIO_LAUNCHED_DESKTOP_FILE_PID=9545</value>
     <value type="QString">GNOME_DESKTOP_SESSION_ID=this-is-deprecated</value>
     <value type="QString">GNOME_KEYRING_CONTROL=/tmp/keyring-stzAQT</value>
     <value type="QString">GNOME_KEYRING_PID=1352</value>

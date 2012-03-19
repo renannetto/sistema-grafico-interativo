@@ -6,6 +6,7 @@
 #include "figura.h"
 #include <QColorDialog>
 #include <QGraphicsScene>
+#include <sstream>
 
 using namespace std;
 
@@ -20,6 +21,8 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
+    void receberPontoX(double);
+    void receberPontoY(double);
 
 public slots:
     void desenharReta();

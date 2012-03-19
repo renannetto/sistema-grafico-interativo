@@ -15,6 +15,20 @@ Transformacoes::~Transformacoes()
     delete ui;
 }
 
+void Transformacoes::receberPontoX(double x){
+    stringstream ssX;
+    ssX << x;
+
+    this->ui->rotacaoPontoX->setText(ssX.str().c_str());
+}
+
+void Transformacoes::receberPontoY(double y){
+    stringstream ssY;
+    ssY << y;
+
+    this->ui->rotacaoPontoY->setText(ssY.str().c_str());
+}
+
 void Transformacoes::transladar2D(){
     double vX = ui->deslocamentoXEdit->text().toDouble();
     double vY = ui->deslocamentoYEdit->text().toDouble();

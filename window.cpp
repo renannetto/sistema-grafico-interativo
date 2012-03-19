@@ -57,10 +57,18 @@ void Window::moverParaCima(){
     yMax += passoY;
 }
 
-double Window::fx(double x){
-    return (x - xMin) * 640 / (xMax - xMin);
+double Window::obterXMinDaWindow(){
+    return xMin;
 }
 
-double Window::fy(double y){
-    return (yMax - y) * 480 / (yMax - yMin);
+double Window::obterYMinDaWindow(){
+    return yMin;
+}
+
+double Window::obterXMaxDaWindow(){
+    return xMax;
+}
+
+double Window::obterYMaxDaWindow(){
+    return yMax;
 }

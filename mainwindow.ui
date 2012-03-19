@@ -427,7 +427,7 @@
      <number>0</number>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="graphicsView">
+   <widget class="Canvas" name="graphicsView">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -532,6 +532,13 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Canvas</class>
+   <extends>QGraphicsView</extends>
+   <header>canvas.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>

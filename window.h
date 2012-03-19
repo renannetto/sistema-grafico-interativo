@@ -12,8 +12,10 @@ public:
     void moverParaDireita();
     void moverParaCima();
     void moverParaBaixo();
-    double fx(double x);
-    double fy(double y);
+    double obterXMinDaWindow();
+    double obterYMinDaWindow();
+    double obterXMaxDaWindow();
+    double obterYMaxDaWindow();
 private:
     double xMin;
     double xMax;

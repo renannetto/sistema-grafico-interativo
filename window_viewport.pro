@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     displayfile.cpp \
     window.cpp \
     Transformacoes.cpp \
-    cor.cpp
+    cor.cpp \
+    canvas.cpp
 HEADERS += mainwindow.h \
     dialog.h \
     ponto.h \
@@ -23,7 +24,8 @@ HEADERS += mainwindow.h \
     displayfile.h \
     window.h \
     Transformacoes.h \
-    cor.h
+    cor.h \
+    canvas.h
 FORMS += mainwindow.ui \
     dialog.ui \
     Transformacoes.ui

@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <string>
 #include <iostream>
+#include "canvas.h"
 #include "dialog.h"
 #include "Transformacoes.h"
 #include "windowviewport.h"
@@ -17,9 +18,10 @@ namespace Ui {
 
 using namespace std;
 
-static double const VIEWPORTXSIZE = 640;
-static double const VIEWPORTYSIZE = 480;
+static double const VIEWPORTXSIZE = 660;
+static double const VIEWPORTYSIZE = 500;
 
+class Canvas;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,7 +36,8 @@ public slots:
     void abrirJanela();
     void construirFigura(Tipo, list<Ponto*>, QColor);
     void destruirFigura();
-    void desenharFiguras();
+    void receberPontoX(double);
+    void receberPontoY(double);
     void zoomIn();
     void zoomOut();
     void mostrarValorDoZoom(int);
@@ -51,11 +54,17 @@ public slots:
 
 private:
     void iniciar();
+    void desenharFiguras();
+    double transformadaViewportX(double);
+    double transformadaViewportY(double);
+    double transformadaInversaViewportX(double);
+    double transformadaInversaViewportY(double);
     WindowViewport *windowViewport;
     Ui::MainWindow *ui;
-    Dialog *newObjectWindow;
     QGraphicsScene *viewport;
+    Dialog *janelaDeCriacoes;
     Transformacoes *janelaDeTransformacoes;
+    Canvas *detectorDeEventos;
 };
 
 #endif // MAINWINDOW_H

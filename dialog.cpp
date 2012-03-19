@@ -16,6 +16,51 @@ Dialog::~Dialog()
 
 }
 
+void Dialog::receberPontoX(double x){
+    stringstream ssX;
+    ssX << x;
+
+    switch(this->ui->tabWidget->currentIndex()) {
+
+    case 0 :
+        this->ui->lineEdit->setText(ssX.str().c_str());
+
+        break;
+    case 1 :
+        this->ui->lineEdit_3->setText(this->ui->lineEdit_5->text());
+        this->ui->lineEdit_5->setText(ssX.str().c_str());
+
+        break;
+    case 2 :
+        this->ui->lineEdit_7->setText(ssX.str().c_str());
+
+        break;
+    }
+}
+
+void Dialog::receberPontoY(double y){
+    stringstream ssY;
+    ssY << y;
+
+    switch(this->ui->tabWidget->currentIndex()) {
+
+    case 0 :
+        this->ui->lineEdit_2->setText(ssY.str().c_str());
+
+        break;
+    case 1 :
+        this->ui->lineEdit_4->setText(this->ui->lineEdit_6->text());
+        this->ui->lineEdit_6->setText(ssY.str().c_str());
+
+        break;
+    case 2 :
+        this->ui->lineEdit_8->setText(ssY.str().c_str());
+        this->ui->pushButton->click();
+
+        break;
+    }
+}
+
 void Dialog::desenharReta()
 {
     list<Ponto*> pontos;
@@ -44,9 +89,11 @@ void Dialog::adicionarPonto()
 
 void Dialog::desenharPoligono()
 {
-    emit desenharFigura(POLIGONO, pontos, scene->backgroundBrush().color());
-    pontos.clear();
-    ui->listWidget->clear();
+    if(pontos.size()>=3){
+        emit desenharFigura(POLIGONO, pontos, scene->backgroundBrush().color());
+        pontos.clear();
+        ui->listWidget->clear();
+    }
 }
 
 void Dialog::escolherCor()

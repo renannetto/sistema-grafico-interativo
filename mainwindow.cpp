@@ -16,17 +16,18 @@ MainWindow::~MainWindow()
 void MainWindow::iniciar(){
     ui->setupUi(this);
 
-    newObjectWindow = new Dialog(this);
-    newObjectWindow->setVisible(false);
+    janelaDeCriacoes = new Dialog(this);
+    janelaDeCriacoes->setVisible(false);
     janelaDeTransformacoes = new Transformacoes(this);
     janelaDeTransformacoes->setVisible(false);
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
-    ui->graphicsView->setScene(viewport);
     windowViewport = new WindowViewport();
+    detectorDeEventos = this->ui->graphicsView;
+    detectorDeEventos->fixarJanelaPrincipal(this);
+    ui->graphicsView->setScene(viewport);
     ui->zoomText->clear();
-    mostrarValorDoZoom(ui->zoomSlider->value());
 
-    connect(newObjectWindow, SIGNAL(desenharFigura(Tipo, list<Ponto*>, QColor)),
+    connect(janelaDeCriacoes, SIGNAL(desenharFigura(Tipo, list<Ponto*>, QColor)),
     this, SLOT(construirFigura(Tipo, list<Ponto*>, QColor)));
     connect(janelaDeTransformacoes, SIGNAL(sTransladar2D(double,double)),
     this, SLOT(transladar2D(double,double)));
@@ -40,11 +41,12 @@ void MainWindow::iniciar(){
     this, SLOT(rotacionarNoPonto2D(double,double,double)));
     connect(janelaDeTransformacoes, SIGNAL(sMudarCor(QColor)), this, SLOT(mudarCor(QColor)));
 
+    mostrarValorDoZoom(ui->zoomSlider->value());
     desenharFiguras();
 }
 
 void MainWindow::reiniciar(){
-    delete newObjectWindow;
+    delete janelaDeCriacoes;
     delete windowViewport;
     delete viewport;
 
@@ -58,7 +60,7 @@ void MainWindow::resetarWindow(){
 
 void MainWindow::abrirJanela(){
     if(ui->listaObjetos->currentItem()->text().toStdString() == "Novo Objeto")
-        newObjectWindow->setVisible(true);
+        janelaDeCriacoes->setVisible(true);
     else
         janelaDeTransformacoes->setVisible(true);
 }
@@ -92,13 +94,13 @@ void MainWindow::desenharFiguras() {
         QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul());
 
         double xP,yP,xa,ya,x,y;
-        xP = xa = windowViewport->fx(pontos.front()->obterX());
-        yP = ya = windowViewport->fy(pontos.front()->obterY());
+        xP = xa = transformadaViewportX(pontos.front()->obterX());
+        yP = ya = transformadaViewportY(pontos.front()->obterY());
 
         list<Ponto*>::iterator it;
         for(it = pontos.begin(); it != pontos.end(); it++){
-            x = windowViewport->fx((*it)->obterX());
-            y = windowViewport->fy((*it)->obterY());
+            x = transformadaViewportX((*it)->obterX());
+            y = transformadaViewportY((*it)->obterY());
             viewport->addLine(xa,ya,x,y, QPen(qCor));
             xa = x;
             ya = y;
@@ -122,6 +124,46 @@ void MainWindow::desenharFiguras() {
         figuras.pop_back();
         figuras.push_front(figura);
     }
+}
+
+double MainWindow::transformadaViewportX(double x){
+    double xMin = windowViewport->obterXMinDaWindow();
+    double xMax = windowViewport->obterXMaxDaWindow();
+    return (x - xMin) * VIEWPORTXSIZE / (xMax - xMin);
+}
+
+double MainWindow::transformadaViewportY(double y){
+    double yMin = windowViewport->obterYMinDaWindow();
+    double yMax = windowViewport->obterYMaxDaWindow();
+    return (yMax - y) * VIEWPORTYSIZE / (yMax - yMin);
+}
+
+double MainWindow::transformadaInversaViewportX(double x){
+    double xMin = windowViewport->obterXMinDaWindow();
+    double xMax = windowViewport->obterXMaxDaWindow();
+    return x * (xMax - xMin) / VIEWPORTXSIZE + xMin;
+}
+
+double MainWindow::transformadaInversaViewportY(double y){
+    double yMin = windowViewport->obterYMinDaWindow();
+    double yMax = windowViewport->obterYMaxDaWindow();
+    return yMax - (y * (yMax - yMin) / VIEWPORTYSIZE);
+}
+
+void MainWindow::receberPontoX(double x){
+    x = transformadaInversaViewportX(x);
+    if(janelaDeCriacoes->isVisible())
+        janelaDeCriacoes->receberPontoX(x);
+    if(janelaDeTransformacoes->isVisible())
+        janelaDeTransformacoes->receberPontoX(x);
+}
+
+void MainWindow::receberPontoY(double y){
+    y = transformadaInversaViewportY(y);
+    if(janelaDeCriacoes->isVisible())
+        janelaDeCriacoes->receberPontoY(y);
+    if(janelaDeTransformacoes->isVisible())
+        janelaDeTransformacoes->receberPontoY(y);
 }
 
 void MainWindow::zoomIn(){

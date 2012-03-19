@@ -4,6 +4,9 @@
 #include <QDialog>
 #include <QGraphicsScene>
 #include <QColorDialog>
+#include <sstream>
+
+using namespace std;
 
 namespace Ui {
     class Transformacoes;
@@ -16,6 +19,8 @@ class Transformacoes : public QDialog
 public:
     explicit Transformacoes(QWidget *parent = 0);
     ~Transformacoes();
+    void receberPontoX(double);
+    void receberPontoY(double);
 
 private slots:
     void transladar2D();

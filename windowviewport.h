@@ -20,8 +20,10 @@ public:
     void moverParaDireita();
     void moverParaCima();
     void moverParaBaixo();
-    double fx(double x);
-    double fy(double y);
+    double obterXMinDaWindow();
+    double obterYMinDaWindow();
+    double obterXMaxDaWindow();
+    double obterYMaxDaWindow();
     void transladar2D(string,double,double);
     void escalonar2D(string,double,double);
     void rotacionarNaOrigem2D(string,double);

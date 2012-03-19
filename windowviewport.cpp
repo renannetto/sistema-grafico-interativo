@@ -59,14 +59,20 @@ void WindowViewport::moverParaCima()
     window->moverParaCima();
 }
 
-double WindowViewport::fx(double x)
-{
-    return window->fx(x);
+double WindowViewport::obterXMinDaWindow(){
+    return window->obterXMinDaWindow();
 }
 
-double WindowViewport::fy(double y)
-{
-    return window->fy(y);
+double WindowViewport::obterYMinDaWindow(){
+    return window->obterYMinDaWindow();
+}
+
+double WindowViewport::obterXMaxDaWindow(){
+    return window->obterXMaxDaWindow();
+}
+
+double WindowViewport::obterYMaxDaWindow(){
+    return window->obterYMaxDaWindow();
 }
 
 void WindowViewport::transladar2D(string nomeFigura, double vX, double vY){
