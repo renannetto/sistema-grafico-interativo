@@ -9,7 +9,7 @@
 
 using namespace std;
 
-enum Tipo {PONTO, RETA, POLIGONO, EIXO};
+enum Tipo {PONTO, RETA, POLIGONO, EIXO, WINDOW};
 
 class Figura
 {
@@ -26,12 +26,14 @@ public:
     void rotacionarNoCentro2D(double);
     void rotacionarNoPonto2D(double,double,double);
     void mudarCor(int, int, int);
+    void gerarDescricaoPPC(double wcX, double wcY, double teta);
 private:
     double** matrizT;
     void transformar2D();
     string nome;
     Tipo tipo;
     list<Ponto*> pontos;
+    list<Ponto*> pontosPPC;
     Cor cor;
 };
 

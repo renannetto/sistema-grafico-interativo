@@ -5,6 +5,15 @@ DisplayFile::DisplayFile()
     nPontos = 0;
     nRetas = 0;
     nPoligonos = 0;
+
+    list<Ponto*> pontosWindow;
+    pontosWindow.push_back(new Ponto(0, 0));
+    pontosWindow.push_back(new Ponto(640, 0));
+    pontosWindow.push_back(new Ponto(640, 480));
+    pontosWindow.push_back(new Ponto(0, 480));
+    Cor preto(0, 0, 0);
+    figuras.push_back(new Figura("Window", WINDOW, pontosWindow, preto));
+
     construirEixosNaOrigem();
 }
 
