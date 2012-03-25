@@ -3,7 +3,7 @@
 WindowViewport::WindowViewport()
 {
     displayFile = new DisplayFile();
-    window = new Window();
+    window = displayFile->obterFiguras().front();
 }
 
 WindowViewport::~WindowViewport(){
@@ -12,7 +12,14 @@ WindowViewport::~WindowViewport(){
 }
 
 void WindowViewport::resetarWindow(){
-    window->resetarCoordenadas();
+    delete(window);
+    list<Ponto*> pontosWindow;
+    pontosWindow.push_back(new Ponto(0, 0));
+    pontosWindow.push_back(new Ponto(640, 0));
+    pontosWindow.push_back(new Ponto(640, 480));
+    pontosWindow.push_back(new Ponto(0, 480));
+    Cor preto(0, 0, 0);
+    window = new Figura("Window", WINDOW, pontosWindow, preto);
 }
 
 string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos, int vermelho, int verde, int azul)
@@ -31,48 +38,80 @@ void WindowViewport::destruirFigura(string nome){
 
 void WindowViewport::zoomIn(int percent)
 {
-    window->zoomIn(percent);
+    window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
 }
 
 void WindowViewport::zoomOut(int percent)
 {
-    window->zoomOut(percent);
+    window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
 }
 
 void WindowViewport::moverParaEsquerda()
 {
-    window->moverParaEsquerda();
+    window->transladar2D(-0.1*(obterXMaxDaWindow()-obterXMinDaWindow()), 0);
 }
 
 void WindowViewport::moverParaDireita()
 {
-    window->moverParaDireita();
+    window->transladar2D(0.1*(obterXMaxDaWindow()-obterXMinDaWindow()), 0);
 }
 
 void WindowViewport::moverParaBaixo()
 {
-    window->moverParaBaixo();
+    window->transladar2D(0, -0.1*(obterYMaxDaWindow()-obterYMinDaWindow()));
 }
 
 void WindowViewport::moverParaCima()
 {
-    window->moverParaCima();
+    window->transladar2D(0, 0.1*(obterYMaxDaWindow()-obterYMinDaWindow()));
 }
 
 double WindowViewport::obterXMinDaWindow(){
-    return window->obterXMinDaWindow();
+    list<Ponto*> pontos = window->obterPontos();
+    double xMin = 510515250;
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterX() < xMin){
+            xMin = (*it)->obterX();
+        }
+    }
+    return xMin;
 }
 
 double WindowViewport::obterYMinDaWindow(){
-    return window->obterYMinDaWindow();
+    list<Ponto*> pontos = window->obterPontos();
+    double yMin = 510515250;
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterY() < yMin){
+            yMin = (*it)->obterY();
+        }
+    }
+    return yMin;
 }
 
 double WindowViewport::obterXMaxDaWindow(){
-    return window->obterXMaxDaWindow();
+    list<Ponto*> pontos = window->obterPontos();
+    double xMax = -510515250;
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterX() > xMax){
+            xMax = (*it)->obterX();
+        }
+    }
+    return xMax;
 }
 
 double WindowViewport::obterYMaxDaWindow(){
-    return window->obterYMaxDaWindow();
+    list<Ponto*> pontos = window->obterPontos();
+    double yMax = -510515250;
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterY() > yMax){
+            yMax = (*it)->obterY();
+        }
+    }
+    return yMax;
 }
 
 void WindowViewport::transladar2D(string nomeFigura, double vX, double vY){

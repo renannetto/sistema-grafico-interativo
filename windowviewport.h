@@ -32,7 +32,11 @@ public:
     void mudarCor(string, int, int, int);
 private:
     DisplayFile *displayFile;
-    Window *window;
+    Figura *window;
+    double xMin;
+    double xMax;
+    double yMin;
+    double yMax;
 };
 
 #endif // WINDOWVIEWPORT_H
