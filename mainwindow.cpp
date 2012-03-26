@@ -87,7 +87,7 @@ void MainWindow::desenharFiguras() {
     list<Ponto*> pontos;
     for (int i = 1; i < figuras.size(); i++){
         Figura* figura = figuras.back();
-        pontos = figura->obterPontos();
+        pontos = figura->obterPontosPPC();
 
         Cor cor = figura->obterCor();
 
@@ -168,11 +168,13 @@ void MainWindow::receberPontoY(double y){
 
 void MainWindow::zoomIn(){
     windowViewport->zoomIn(ui->zoomSlider->sliderPosition());
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::zoomOut(){
     windowViewport->zoomOut(ui->zoomSlider->sliderPosition());
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
@@ -185,21 +187,25 @@ void MainWindow::mostrarValorDoZoom(int zoomValue){
 
 void MainWindow::moverParaEsquerda(){
     windowViewport->moverParaEsquerda();
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::moverParaDireita(){
     windowViewport->moverParaDireita();
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::moverParaBaixo(){
     windowViewport->moverParaBaixo();
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::moverParaCima(){
     windowViewport->moverParaCima();
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
@@ -235,5 +241,6 @@ void MainWindow::mudarCor(QColor cor) {
 
 void MainWindow::rotacionarWindow() {
     windowViewport->rotacionarNoCentro2D("Window", ui->editGraus->text().toDouble());
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }

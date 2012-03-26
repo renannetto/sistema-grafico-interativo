@@ -14,12 +14,13 @@ WindowViewport::~WindowViewport(){
 void WindowViewport::resetarWindow(){
     delete(window);
     list<Ponto*> pontosWindow;
-    pontosWindow.push_back(new Ponto(0, 0));
-    pontosWindow.push_back(new Ponto(640, 0));
-    pontosWindow.push_back(new Ponto(640, 480));
-    pontosWindow.push_back(new Ponto(0, 480));
+    pontosWindow.push_back(new Ponto(-320, -240));
+    pontosWindow.push_back(new Ponto(320, -240));
+    pontosWindow.push_back(new Ponto(320, 240));
+    pontosWindow.push_back(new Ponto(-320, 240));
     Cor preto(0, 0, 0);
-    window = new Figura("Window", WINDOW, pontosWindow, preto);
+    window = new Figura("Window", WINDOW, pontosWindow, preto, 0, 0, 0);
+    gerarDescricoesPPC();
 }
 
 string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos, int vermelho, int verde, int azul)
@@ -67,7 +68,7 @@ void WindowViewport::moverParaCima()
 }
 
 double WindowViewport::obterXMinDaWindow(){
-    list<Ponto*> pontos = window->obterPontos();
+    list<Ponto*> pontos = window->obterPontosPPC();
     double xMin = 510515250;
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
@@ -79,7 +80,7 @@ double WindowViewport::obterXMinDaWindow(){
 }
 
 double WindowViewport::obterYMinDaWindow(){
-    list<Ponto*> pontos = window->obterPontos();
+    list<Ponto*> pontos = window->obterPontosPPC();
     double yMin = 510515250;
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
@@ -91,7 +92,7 @@ double WindowViewport::obterYMinDaWindow(){
 }
 
 double WindowViewport::obterXMaxDaWindow(){
-    list<Ponto*> pontos = window->obterPontos();
+    list<Ponto*> pontos = window->obterPontosPPC();
     double xMax = -510515250;
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
@@ -103,7 +104,7 @@ double WindowViewport::obterXMaxDaWindow(){
 }
 
 double WindowViewport::obterYMaxDaWindow(){
-    list<Ponto*> pontos = window->obterPontos();
+    list<Ponto*> pontos = window->obterPontosPPC();
     double yMax = -510515250;
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
@@ -177,5 +178,27 @@ void WindowViewport::mudarCor(string nomeFigura, int vermelho, int verde, int az
             (*it)->mudarCor(vermelho, verde, azul);
             break;
         }
+    }
+}
+
+void WindowViewport::gerarDescricoesPPC(){
+    Ponto centro = window->obterCentro();
+    double wcX = centro.obterX();
+    double wcY = centro.obterY();
+    double teta = 0;
+
+    list<Figura*> figuras = displayFile->obterFiguras();
+    /*figuras.pop_front();
+    for(int i=0; i<figuras.size(); i++) {
+        Figura *figura = figuras.front();
+        figuras.pop_front();
+        figura->gerarDescricaoPPC(wcX, wcY, teta);
+        figuras.push_back(figura);
+    }
+    figuras.push_back(window);*/
+
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        (*it)->gerarDescricaoPPC(wcX, wcY, teta);
     }
 }

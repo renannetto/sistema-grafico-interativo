@@ -30,6 +30,7 @@ public:
     void rotacionarNoCentro2D(string,double);
     void rotacionarNoPonto2D(string,double,double,double);
     void mudarCor(string, int, int, int);
+    void gerarDescricoesPPC();
 private:
     DisplayFile *displayFile;
     Figura *window;
