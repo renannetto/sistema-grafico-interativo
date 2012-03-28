@@ -117,6 +117,54 @@ double WindowViewport::obterYMaxDaWindow(){
     return yMax;
 }
 
+double WindowViewport::obterXMinOriginalDaWindow(){
+    list<Ponto*> pontos = window->obterPontos();
+    double xMin = numeric_limits<double>::max();
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterX() < xMin){
+            xMin = (*it)->obterX();
+        }
+    }
+    return xMin;
+}
+
+double WindowViewport::obterYMinOriginalDaWindow(){
+    list<Ponto*> pontos = window->obterPontosPPC();
+    double yMin = numeric_limits<double>::max();
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterY() < yMin){
+            yMin = (*it)->obterY();
+        }
+    }
+    return yMin;
+}
+
+double WindowViewport::obterXMaxOriginalDaWindow(){
+    list<Ponto*> pontos = window->obterPontos();
+    double xMax = numeric_limits<double>::min();
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterX() > xMax){
+            xMax = (*it)->obterX();
+        }
+    }
+    return xMax;
+}
+
+double WindowViewport::obterYMaxOriginalDaWindow(){
+    list<Ponto*> pontos = window->obterPontos();
+    double yMax = numeric_limits<double>::min();
+    list<Ponto*>::iterator it;
+    for(it = pontos.begin(); it != pontos.end(); it++){
+        if ((*it)->obterY() > yMax){
+            yMax = (*it)->obterY();
+        }
+    }
+    return yMax;
+}
+
 void WindowViewport::transladar2D(string nomeFigura, double vX, double vY){
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
