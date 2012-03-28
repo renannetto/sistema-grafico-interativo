@@ -85,7 +85,7 @@ void MainWindow::desenharFiguras() {
     viewport->clear();
     list<Figura*> figuras = windowViewport->obterFiguras();
     list<Ponto*> pontos;
-    for (int i = 0; i < figuras.size(); i++){
+    for (unsigned int i = 0; i < figuras.size(); i++){
         Figura* figura = figuras.back();
         pontos = figura->obterPontos();
 

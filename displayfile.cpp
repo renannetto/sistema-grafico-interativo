@@ -56,6 +56,7 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, Cor cor)
                        figura = new Figura(nome, tipo, pontos, cor);
                        nPoligonos++;
                        break;
+        case EIXO: break;
     }
     figuras.push_back(figura);
     return nome;
