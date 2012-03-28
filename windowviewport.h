@@ -5,6 +5,9 @@
 #include "window.h"
 #include <string>
 #include <limits>
+#include <math.h>
+
+#define PI 3.14159265;
 
 class WindowViewport
 {
