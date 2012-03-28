@@ -51,6 +51,7 @@ public slots:
     void rotacionarNoCentro2D(double);
     void rotacionarNoPonto2D(double,double,double);
     void mudarCor(QColor cor);
+    void rotacionarWindow();
 
 private:
     void iniciar();
