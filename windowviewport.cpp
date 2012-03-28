@@ -39,12 +39,14 @@ void WindowViewport::destruirFigura(string nome){
 
 void WindowViewport::zoomIn(int percent)
 {
-    window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
+    window->escalonar2D(1-(double)percent/100, 1-(double)percent/100);
+    //window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
 }
 
 void WindowViewport::zoomOut(int percent)
 {
-    window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
+    window->escalonar2D((double)100/(100-percent), (double)100/(100-percent));
+    //window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
 }
 
 void WindowViewport::moverParaEsquerda()
