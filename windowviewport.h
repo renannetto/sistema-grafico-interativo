@@ -4,6 +4,7 @@
 #include "displayfile.h"
 #include "window.h"
 #include <string>
+#include <limits>
 
 class WindowViewport
 {
@@ -24,6 +25,10 @@ public:
     double obterYMinDaWindow();
     double obterXMaxDaWindow();
     double obterYMaxDaWindow();
+    double obterXMinOriginalDaWindow();
+    double obterYMinOriginalDaWindow();
+    double obterXMaxOriginalDaWindow();
+    double obterYMaxOriginalDaWindow();
     void transladar2D(string,double,double);
     void escalonar2D(string,double,double);
     void rotacionarNaOrigem2D(string,double);

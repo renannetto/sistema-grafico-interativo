@@ -139,14 +139,14 @@ double MainWindow::transformadaViewportY(double y){
 }
 
 double MainWindow::transformadaInversaViewportX(double x){
-    double xMin = windowViewport->obterXMinDaWindow();
-    double xMax = windowViewport->obterXMaxDaWindow();
+    double xMin = windowViewport->obterXMinOriginalDaWindow();
+    double xMax = windowViewport->obterXMaxOriginalDaWindow();
     return x * (xMax - xMin) / VIEWPORTXSIZE + xMin;
 }
 
 double MainWindow::transformadaInversaViewportY(double y){
-    double yMin = windowViewport->obterYMinDaWindow();
-    double yMax = windowViewport->obterYMaxDaWindow();
+    double yMin = windowViewport->obterYMinOriginalDaWindow();
+    double yMax = windowViewport->obterYMaxOriginalDaWindow();
     return yMax - (y * (yMax - yMin) / VIEWPORTYSIZE);
 }
 
