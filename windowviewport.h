@@ -44,6 +44,7 @@ public:
     void mudarCor(string, int, int, int);
     void gerarDescricoesPPC();
 private:
+    double obterAnguloDaWindow();
     DisplayFile *displayFile;
     Figura *window;
     double xMin;

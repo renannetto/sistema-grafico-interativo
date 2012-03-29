@@ -45,22 +45,33 @@ void WindowViewport::zoomOut(int percent)
 
 void WindowViewport::moverParaEsquerda()
 {
-    window->transladar2D(-0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC()), 0);
+    double teta = obterAnguloDaWindow();
+    teta = (int)(teta+90)%360;
+    double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
+    window->transladar2D(modulo*sin(teta), modulo*cos(teta));
 }
 
 void WindowViewport::moverParaDireita()
 {
-    window->transladar2D(0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC()), 0);
+    double teta = obterAnguloDaWindow();
+    teta = (int)(teta+270)%360;
+    double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
+    window->transladar2D(modulo*sin(teta), modulo*cos(teta));
 }
 
 void WindowViewport::moverParaBaixo()
 {
-    window->transladar2D(0, -0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC()));
+    double teta = obterAnguloDaWindow();
+    teta = (int)(teta+180)%360;
+    double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
+    window->transladar2D(modulo*sin(teta), modulo*cos(teta));
 }
 
 void WindowViewport::moverParaCima()
 {
-    window->transladar2D(0, 0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC()));
+    double teta = obterAnguloDaWindow();
+    double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
+    window->transladar2D(modulo*sin(teta), modulo*cos(teta));
 }
 
 double WindowViewport::obterXMinDaWindow(list<Ponto*> pontos){
@@ -218,6 +229,17 @@ void WindowViewport::gerarDescricoesPPC(){
     double wcX = centro.obterX();
     double wcY = centro.obterY();
 
+    double teta = obterAnguloDaWindow();
+
+    list<Figura*> figuras = displayFile->obterFiguras();
+    list<Figura*>::iterator it;
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        (*it)->gerarDescricaoPPC(wcX, wcY, teta);
+    }
+}
+
+double WindowViewport::obterAnguloDaWindow()
+{
     list<Ponto*> pontosWindow = window->obterPontos();
     Ponto* pontoInicial = pontosWindow.front();
     Ponto* pontoFinal = pontosWindow.back();
@@ -232,9 +254,5 @@ void WindowViewport::gerarDescricoesPPC(){
     if (pontoInicial->obterX()>pontoFinal->obterX())
         teta = 360 - teta;
 
-    list<Figura*> figuras = displayFile->obterFiguras();
-    list<Figura*>::iterator it;
-    for(it = figuras.begin(); it != figuras.end(); it++){
-        (*it)->gerarDescricaoPPC(wcX, wcY, teta);
-    }
+    return teta;
 }
