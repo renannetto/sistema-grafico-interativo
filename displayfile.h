@@ -6,6 +6,8 @@
 #include <string>
 #include <list>
 
+#define PI 3.14159265;
+
 using std::list;
 
 class DisplayFile

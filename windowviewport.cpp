@@ -71,7 +71,7 @@ void WindowViewport::moverParaCima()
 
 double WindowViewport::obterXMinDaWindow(){
     list<Ponto*> pontos = window->obterPontosPPC();
-    double xMin = 510515250;
+    double xMin = numeric_limits<double>::max();
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
         if ((*it)->obterX() < xMin){
@@ -83,7 +83,7 @@ double WindowViewport::obterXMinDaWindow(){
 
 double WindowViewport::obterYMinDaWindow(){
     list<Ponto*> pontos = window->obterPontosPPC();
-    double yMin = 510515250;
+    double yMin = numeric_limits<double>::max();
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
         if ((*it)->obterY() < yMin){
@@ -95,7 +95,7 @@ double WindowViewport::obterYMinDaWindow(){
 
 double WindowViewport::obterXMaxDaWindow(){
     list<Ponto*> pontos = window->obterPontosPPC();
-    double xMax = -510515250;
+    double xMax = numeric_limits<double>::min();
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
         if ((*it)->obterX() > xMax){
@@ -107,7 +107,7 @@ double WindowViewport::obterXMaxDaWindow(){
 
 double WindowViewport::obterYMaxDaWindow(){
     list<Ponto*> pontos = window->obterPontosPPC();
-    double yMax = -510515250;
+    double yMax = numeric_limits<double>::min();
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
         if ((*it)->obterY() > yMax){
@@ -245,19 +245,12 @@ void WindowViewport::gerarDescricoesPPC(){
     double y = vetor->obterY();
 
     double teta = acos(y/sqrt(x*x+y*y));
+    teta = (teta*180)/PI;
 
-    teta = teta*180/PI;
+    if (pontoInicial->obterX()>pontoFinal->obterX())
+        teta = 360 - teta;
 
     list<Figura*> figuras = displayFile->obterFiguras();
-    /*figuras.pop_front();
-    for(int i=0; i<figuras.size(); i++) {
-        Figura *figura = figuras.front();
-        figuras.pop_front();
-        figura->gerarDescricaoPPC(wcX, wcY, teta);
-        figuras.push_back(figura);
-    }
-    figuras.push_back(window);*/
-
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
         (*it)->gerarDescricaoPPC(wcX, wcY, teta);
