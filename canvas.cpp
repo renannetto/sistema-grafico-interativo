@@ -45,6 +45,12 @@ void Canvas::keyPressEvent(QKeyEvent *event)
     case MENOS:
         this->janelaPrincipal->zoomOut();
         break;
+    case GIRARDIREITA:
+        this->janelaPrincipal->rotacionarWindowParaDireita();
+        break;
+    case GIRARESQUERDA:
+        this->janelaPrincipal->rotacionarWindowParaEsquerda();
+        break;
     }
 }
 

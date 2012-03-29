@@ -22,7 +22,8 @@ public:
 private:
     MainWindow * janelaPrincipal;
     typedef enum Teclas {
-        CIMA = 16777235, BAIXO = 16777237, ESQUERDA = 16777234,  DIREITA = 16777236, MAIS = 43, MENOS = 45
+        CIMA = 16777235, BAIXO = 16777237, ESQUERDA = 16777234,  DIREITA = 16777236,
+        MAIS = 43, MENOS = 45, GIRARDIREITA = 48, GIRARESQUERDA = 57
     } Tecla;
 
 protected:

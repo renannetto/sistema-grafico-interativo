@@ -244,8 +244,14 @@ void MainWindow::mudarCor(QColor cor) {
     desenharFiguras();
 }
 
-void MainWindow::rotacionarWindow() {
+void MainWindow::rotacionarWindowParaDireita() {
     windowViewport->rotacionarNoCentro2D("Window", ui->editGraus->text().toDouble());
+    windowViewport->gerarDescricoesPPC();
+    desenharFiguras();
+}
+
+void MainWindow::rotacionarWindowParaEsquerda() {
+    windowViewport->rotacionarNoCentro2D("Window", (double)360 - ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
