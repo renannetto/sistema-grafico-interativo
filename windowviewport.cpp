@@ -130,7 +130,7 @@ double WindowViewport::obterXMinOriginalDaWindow(){
 }
 
 double WindowViewport::obterYMinOriginalDaWindow(){
-    list<Ponto*> pontos = window->obterPontosPPC();
+    list<Ponto*> pontos = window->obterPontos();
     double yMin = numeric_limits<double>::max();
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){

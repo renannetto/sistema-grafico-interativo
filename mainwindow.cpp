@@ -211,26 +211,31 @@ void MainWindow::moverParaCima(){
 
 void MainWindow::transladar2D(double vX, double vY){
     windowViewport->transladar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::escalonar2D(double vX, double vY){
     windowViewport->escalonar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::rotacionarNaOrigem2D(double teta){
     windowViewport->rotacionarNaOrigem2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::rotacionarNoCentro2D(double teta){
     windowViewport->rotacionarNoCentro2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::rotacionarNoPonto2D(double teta, double pX, double pY){
     windowViewport->rotacionarNoPonto2D(ui->listaObjetos->currentItem()->text().toStdString(),teta,pX,pY);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
