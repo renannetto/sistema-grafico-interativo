@@ -15,6 +15,7 @@ class DisplayFile
 public:
     DisplayFile();
     ~DisplayFile();
+    Figura* criarWindow();
     string adicionarFigura(Tipo, list<Ponto*> pontos, Cor cor);
     list<Figura*> obterFiguras();
     void destruirFigura(string);
@@ -24,6 +25,7 @@ private:
     int nRetas;
     int nPoligonos;
     list<Figura*> figuras;
+    Figura* window;
 };
 
 #endif // DISPLAYFILE_H

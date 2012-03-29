@@ -6,18 +6,24 @@ DisplayFile::DisplayFile()
     nRetas = 0;
     nPoligonos = 0;
 
+    window = criarWindow();
+    figuras.push_back(window);
+
+    construirEixosNaOrigem();
+}
+
+DisplayFile::~ DisplayFile(){
+}
+
+Figura* DisplayFile::criarWindow(){
     list<Ponto*> pontosWindow;
     pontosWindow.push_back(new Ponto(-320, -240));
     pontosWindow.push_back(new Ponto(320, -240));
     pontosWindow.push_back(new Ponto(320, 240));
     pontosWindow.push_back(new Ponto(-320, 240));
     Cor preto(0, 0, 0);
-    figuras.push_back(new Figura("Window", WINDOW, pontosWindow, preto, 0, 0, 0));
-
-    construirEixosNaOrigem();
-}
-
-DisplayFile::~ DisplayFile(){
+    Figura* window = new Figura("Window", WINDOW, pontosWindow, preto, 0, 0, 0);
+    return window;
 }
 
 void DisplayFile::construirEixosNaOrigem(){

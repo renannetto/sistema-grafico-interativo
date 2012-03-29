@@ -127,26 +127,26 @@ void MainWindow::desenharFiguras() {
 }
 
 double MainWindow::transformadaViewportX(double x){
-    double xMin = windowViewport->obterXMinDaWindow();
-    double xMax = windowViewport->obterXMaxDaWindow();
+    double xMin = windowViewport->obterXMinDaWindowPPC();
+    double xMax = windowViewport->obterXMaxDaWindowPPC();
     return (x - xMin) * VIEWPORTXSIZE / (xMax - xMin);
 }
 
 double MainWindow::transformadaViewportY(double y){
-    double yMin = windowViewport->obterYMinDaWindow();
-    double yMax = windowViewport->obterYMaxDaWindow();
+    double yMin = windowViewport->obterYMinDaWindowPPC();
+    double yMax = windowViewport->obterYMaxDaWindowPPC();
     return (yMax - y) * VIEWPORTYSIZE / (yMax - yMin);
 }
 
 double MainWindow::transformadaInversaViewportX(double x){
-    double xMin = windowViewport->obterXMinOriginalDaWindow();
-    double xMax = windowViewport->obterXMaxOriginalDaWindow();
+    double xMin = windowViewport->obterXMinDaWindowMundo();
+    double xMax = windowViewport->obterXMaxDaWindowMundo();
     return x * (xMax - xMin) / VIEWPORTXSIZE + xMin;
 }
 
 double MainWindow::transformadaInversaViewportY(double y){
-    double yMin = windowViewport->obterYMinOriginalDaWindow();
-    double yMax = windowViewport->obterYMaxOriginalDaWindow();
+    double yMin = windowViewport->obterYMinDaWindowMundo();
+    double yMax = windowViewport->obterYMaxDaWindowMundo();
     return yMax - (y * (yMax - yMin) / VIEWPORTYSIZE);
 }
 
@@ -211,26 +211,31 @@ void MainWindow::moverParaCima(){
 
 void MainWindow::transladar2D(double vX, double vY){
     windowViewport->transladar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::escalonar2D(double vX, double vY){
     windowViewport->escalonar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::rotacionarNaOrigem2D(double teta){
     windowViewport->rotacionarNaOrigem2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::rotacionarNoCentro2D(double teta){
     windowViewport->rotacionarNoCentro2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
 void MainWindow::rotacionarNoPonto2D(double teta, double pX, double pY){
     windowViewport->rotacionarNoPonto2D(ui->listaObjetos->currentItem()->text().toStdString(),teta,pX,pY);
+    windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
