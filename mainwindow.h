@@ -6,6 +6,7 @@
 #include <QGraphicsItem>
 #include <string>
 #include <iostream>
+#include <math.h>
 #include "canvas.h"
 #include "dialog.h"
 #include "Transformacoes.h"
@@ -36,8 +37,7 @@ public slots:
     void abrirJanela();
     void construirFigura(Tipo, list<Ponto*>, QColor);
     void destruirFigura();
-    void receberPontoX(double);
-    void receberPontoY(double);
+    void receberPonto(double, double);
     void zoomIn();
     void zoomOut();
     void mostrarValorDoZoom(int);

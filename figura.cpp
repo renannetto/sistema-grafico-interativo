@@ -105,13 +105,13 @@ void Figura::gerarDescricaoPPC(double wcX, double wcY, double teta){
         pontosPPC.push_back(new Ponto((*it)->obterX(), (*it)->obterY()));
     }
 
-    matrizT[0][0] = 1; matrizT[0][1] = 0; matrizT[0][2] = 0;
-    matrizT[1][0] = 0; matrizT[1][1] = 1; matrizT[1][2] = 0;
-    matrizT[2][0] = -wcX; matrizT[2][1] = -wcY; matrizT[2][2] = 1;
-
-    for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
-        (*it)->transformar2D(matrizT);
-    }
+//    matrizT[0][0] = 1; matrizT[0][1] = 0; matrizT[0][2] = 0;
+//    matrizT[1][0] = 0; matrizT[1][1] = 1; matrizT[1][2] = 0;
+//    matrizT[2][0] = -wcX; matrizT[2][1] = -wcY; matrizT[2][2] = 1;
+//
+//    for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
+//        (*it)->transformar2D(matrizT);
+//    }
 
     Ponto centro = obterCentro();
     double xMedio = centro.obterX();
@@ -121,7 +121,7 @@ void Figura::gerarDescricaoPPC(double wcX, double wcY, double teta){
 
     matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
     matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
-    matrizT[2][0] = 0; matrizT[2][1] = 0; matrizT[2][2] = 1;
+    matrizT[2][0] = -cos(teta)*wcX - sin(teta)*wcY; matrizT[2][1] = -cos(teta)*wcY + sin(teta)*wcX; matrizT[2][2] = 1;
 //    matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
 //    matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
 //    matrizT[2][0] = xMedio*(1-cos(teta)) - yMedio*sin(teta); matrizT[2][1] = yMedio*(1-cos(teta)) + xMedio*sin(teta); matrizT[2][2] = 1;

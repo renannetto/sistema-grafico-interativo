@@ -1,5 +1,4 @@
 #include "windowviewport.h"
-#include "iostream"
 
 WindowViewport::WindowViewport()
 {
@@ -48,11 +47,9 @@ void WindowViewport::moverParaEsquerda()
 {
     double teta = obterAnguloDaWindow();
     teta = (teta+270)*M_PI/180;
-    std::cout << teta << std::endl;
     double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    std::cout << vX << " " << vY << std::endl;
     window->transladar2D(vX, vY);
 }
 
@@ -60,11 +57,9 @@ void WindowViewport::moverParaDireita()
 {
     double teta = obterAnguloDaWindow();
     teta = (teta+90)*M_PI/180;
-    std::cout << teta << std::endl;
     double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    std::cout << vX << " " << vY << std::endl;
     window->transladar2D(vX, vY);
 }
 
@@ -72,11 +67,9 @@ void WindowViewport::moverParaBaixo()
 {
     double teta = obterAnguloDaWindow();
     teta = (teta+180)*M_PI/180;
-    std::cout << teta << std::endl;
     double modulo = 0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    std::cout << vX << " " << vY << std::endl;
     window->transladar2D(vX, vY);
 }
 
@@ -84,11 +77,9 @@ void WindowViewport::moverParaCima()
 {
     double teta = obterAnguloDaWindow();
     teta = teta*M_PI/180;
-    std::cout << teta << std::endl;
     double modulo = 0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    std::cout << vX << " " << vY << std::endl;
     window->transladar2D(vX, vY);
 }
 
@@ -174,6 +165,14 @@ double WindowViewport::obterYMaxDaWindowPPC(){
 double WindowViewport::obterYMinDaWindowPPC(){
     list<Ponto*> pontos = window->obterPontosPPC();
     return obterYMinDaWindow(pontos);
+}
+
+double WindowViewport::obterCentroXDaWindow(){
+    return window->obterCentro().obterX();
+}
+
+double WindowViewport::obterCentroYDaWindow(){
+    return window->obterCentro().obterY();
 }
 
 void WindowViewport::transladar2D(string nomeFigura, double vX, double vY){

@@ -36,6 +36,8 @@ public:
     double obterYMinDaWindowPPC();
     double obterXMaxDaWindowPPC();
     double obterYMaxDaWindowPPC();
+    double obterCentroXDaWindow();
+    double obterCentroYDaWindow();
     void transladar2D(string,double,double);
     void escalonar2D(string,double,double);
     void rotacionarNaOrigem2D(string,double);
@@ -43,8 +45,8 @@ public:
     void rotacionarNoPonto2D(string,double,double,double);
     void mudarCor(string, int, int, int);
     void gerarDescricoesPPC();
-private:
     double obterAnguloDaWindow();
+private:
     DisplayFile *displayFile;
     Figura *window;
     double xMin;

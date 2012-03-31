@@ -139,31 +139,35 @@ double MainWindow::transformadaViewportY(double y){
 }
 
 double MainWindow::transformadaInversaViewportX(double x){
-    double xMin = windowViewport->obterXMinDaWindowMundo();
-    double xMax = windowViewport->obterXMaxDaWindowMundo();
+    double xMin = windowViewport->obterXMinDaWindowPPC();
+    double xMax = windowViewport->obterXMaxDaWindowPPC();
     return x * (xMax - xMin) / VIEWPORTXSIZE + xMin;
 }
 
 double MainWindow::transformadaInversaViewportY(double y){
-    double yMin = windowViewport->obterYMinDaWindowMundo();
-    double yMax = windowViewport->obterYMaxDaWindowMundo();
+    double yMin = windowViewport->obterYMinDaWindowPPC();
+    double yMax = windowViewport->obterYMaxDaWindowPPC();
     return yMax - (y * (yMax - yMin) / VIEWPORTYSIZE);
 }
 
-void MainWindow::receberPontoX(double x){
-    x = transformadaInversaViewportX(x);
-    if(janelaDeCriacoes->isVisible())
-        janelaDeCriacoes->receberPontoX(x);
-    if(janelaDeTransformacoes->isVisible())
-        janelaDeTransformacoes->receberPontoX(x);
-}
+void MainWindow::receberPonto(double x, double y){
+    double xn = transformadaInversaViewportX(x);
+    double yn = transformadaInversaViewportY(y);
+    double teta = (360-windowViewport->obterAnguloDaWindow())*M_PI/180;
+    double centroXDaWindowPPC = windowViewport->obterCentroXDaWindow();
+    double centroYDaWindowPPC = windowViewport->obterCentroYDaWindow();
 
-void MainWindow::receberPontoY(double y){
-    y = transformadaInversaViewportY(y);
-    if(janelaDeCriacoes->isVisible())
+    x = xn*cos(teta)-yn*sin(teta) + centroXDaWindowPPC;
+    y = yn*cos(teta)+xn*sin(teta) + centroYDaWindowPPC;
+
+    if(janelaDeCriacoes->isVisible()){
+        janelaDeCriacoes->receberPontoX(x);
         janelaDeCriacoes->receberPontoY(y);
-    if(janelaDeTransformacoes->isVisible())
-        janelaDeTransformacoes->receberPontoY(y);
+    }
+    if(janelaDeTransformacoes->isVisible()){
+        janelaDeTransformacoes->receberPontoX(x);
+        janelaDeCriacoes->receberPontoY(y);
+    }
 }
 
 void MainWindow::zoomIn(){

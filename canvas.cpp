@@ -10,8 +10,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event)
 
 void Canvas::mousePressEvent(QMouseEvent *event)
 {
-    this->janelaPrincipal->receberPontoX(event->x());
-    this->janelaPrincipal->receberPontoY(event->y());
+    this->janelaPrincipal->receberPonto(event->x(), event->y());
 }
 
 void Canvas::fixarJanelaPrincipal(QMainWindow *janelaPrincipal)
