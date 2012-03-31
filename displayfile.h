@@ -20,6 +20,7 @@ public:
     list<Figura*> obterFiguras();
     void destruirFigura(string);
     void construirEixosNaOrigem();
+    double obterAnguloDaWindow();
 private:
     int nPontos;
     int nRetas;

@@ -59,17 +59,7 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, Cor cor)
     double wcX = centro.obterX();
     double wcY = centro.obterY();
 
-    list<Ponto*> pontosWindow = window->obterPontos();
-    Ponto* pontoInicial = pontosWindow.front();
-    Ponto* pontoFinal = pontosWindow.back();
-    Ponto* vetor = new Ponto(pontoFinal->obterX()-pontoInicial->obterX(), pontoFinal->obterY()-pontoInicial->obterY());
-
-    double x = vetor->obterX();
-    double y = vetor->obterY();
-
-    double teta = acos(y/sqrt(x*x+y*y));
-
-    teta = (teta*180)/PI;
+    double teta = obterAnguloDaWindow();
 
     Figura *figura;
     string nome;
@@ -112,4 +102,23 @@ void DisplayFile::destruirFigura(string nome){
             break;
         }
     }
+}
+
+double DisplayFile::obterAnguloDaWindow()
+{
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto* pontoInicial = pontosWindow.front();
+    Ponto* pontoFinal = pontosWindow.back();
+    Ponto* vetor = new Ponto(pontoFinal->obterX()-pontoInicial->obterX(), pontoFinal->obterY()-pontoInicial->obterY());
+
+    double x = vetor->obterX();
+    double y = vetor->obterY();
+
+    double teta = acos(y/sqrt(x*x+y*y));
+    teta = (teta*180)/PI;
+
+    if (pontoInicial->obterX()>pontoFinal->obterX())
+        teta = 360 - teta;
+
+    return teta;
 }

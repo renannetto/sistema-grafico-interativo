@@ -257,19 +257,5 @@ void WindowViewport::gerarDescricoesPPC(){
 
 double WindowViewport::obterAnguloDaWindow()
 {
-    list<Ponto*> pontosWindow = window->obterPontos();
-    Ponto* pontoInicial = pontosWindow.front();
-    Ponto* pontoFinal = pontosWindow.back();
-    Ponto* vetor = new Ponto(pontoFinal->obterX()-pontoInicial->obterX(), pontoFinal->obterY()-pontoInicial->obterY());
-
-    double x = vetor->obterX();
-    double y = vetor->obterY();
-
-    double teta = acos(y/sqrt(x*x+y*y));
-    teta = (teta*180)/PI;
-
-    if (pontoInicial->obterX()>pontoFinal->obterX())
-        teta = 360 - teta;
-
-    return teta;
+    return displayFile->obterAnguloDaWindow();
 }
