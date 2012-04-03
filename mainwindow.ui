@@ -555,8 +555,15 @@
     </property>
     <addaction name="tabNovoObjeto"/>
    </widget>
+   <widget class="QMenu" name="menuAjuda">
+    <property name="title">
+     <string>Ajuda</string>
+    </property>
+    <addaction name="actionAjuda"/>
+   </widget>
    <addaction name="menuCG1"/>
    <addaction name="menuInserir"/>
+   <addaction name="menuAjuda"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNovo_Objeto">
@@ -579,6 +586,11 @@
     <string>Novo</string>
    </property>
   </action>
+  <action name="actionAjuda">
+   <property name="text">
+    <string>Ajuda</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -594,7 +606,7 @@
    <sender>listaObjetos</sender>
    <signal>doubleClicked(QModelIndex)</signal>
    <receiver>MainWindow</receiver>
-   <slot>abrirJanela()</slot>
+   <slot>abrirJanelaDeTransformacoes()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>58</x>
@@ -610,7 +622,7 @@
    <sender>tabNovoObjeto</sender>
    <signal>activated(int)</signal>
    <receiver>MainWindow</receiver>
-   <slot>abrirJanela()</slot>
+   <slot>abrirJanelaDeCriacoes()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -814,9 +826,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionAjuda</sender>
+   <signal>activated()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>abrirJanelaDeAjuda()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>442</x>
+     <y>349</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>abrirJanela()</slot>
+  <slot>abrirJanelaDeCriacoes()</slot>
   <slot>moverParaCima()</slot>
   <slot>moverParaBaixo()</slot>
   <slot>moverParaEsquerda()</slot>
@@ -829,5 +857,7 @@
   <slot>resetarWindow()</slot>
   <slot>rotacionarWindowParaDireita()</slot>
   <slot>rotacionarWindowParaEsquerda()</slot>
+  <slot>abrirJanelaDeTransformacoes()</slot>
+  <slot>abrirJanelaDeAjuda()</slot>
  </slots>
 </ui>

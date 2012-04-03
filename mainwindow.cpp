@@ -20,6 +20,7 @@ void MainWindow::iniciar(){
     janelaDeCriacoes->setVisible(false);
     janelaDeTransformacoes = new Transformacoes(this);
     janelaDeTransformacoes->setVisible(false);
+    clipador = new Clipping(SUBVIEWPORTXMIN, SUBVIEWPORTXMAX, SUBVIEWPORTYMIN, SUBVIEWPORTYMAX);
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     windowViewport = new WindowViewport();
     detectorDeEventos = this->ui->graphicsView;
@@ -58,11 +59,15 @@ void MainWindow::resetarWindow(){
     desenharFiguras();
 }
 
-void MainWindow::abrirJanela(){
-    if(ui->listaObjetos->currentItem()->text().toStdString() == "Novo Objeto")
-        janelaDeCriacoes->setVisible(true);
-    else
-        janelaDeTransformacoes->setVisible(true);
+void MainWindow::abrirJanelaDeCriacoes(){
+    janelaDeCriacoes->setVisible(true);
+}
+
+void MainWindow::abrirJanelaDeTransformacoes(){
+    janelaDeTransformacoes->setVisible(true);
+}
+
+void MainWindow::abrirJanelaDeAjuda(){
 }
 
 void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos, QColor cor){
@@ -83,6 +88,7 @@ void MainWindow::destruirFigura(){
 
 void MainWindow::desenharFiguras() {
     viewport->clear();
+    desenharSubViewport();
     list<Figura*> figuras = windowViewport->obterFiguras();
     list<Ponto*> pontos;
     for (int i = 1; i < figuras.size(); i++){
@@ -93,37 +99,48 @@ void MainWindow::desenharFiguras() {
 
         QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul());
 
-        double xP,yP,xa,ya,x,y;
-        xP = xa = transformadaViewportX(pontos.front()->obterX());
-        yP = ya = transformadaViewportY(pontos.front()->obterY());
-
-        list<Ponto*>::iterator it;
-        for(it = pontos.begin(); it != pontos.end(); it++){
-            x = transformadaViewportX((*it)->obterX());
-            y = transformadaViewportY((*it)->obterY());
-            viewport->addLine(xa,ya,x,y, QPen(qCor));
-            xa = x;
-            ya = y;
-        }
-        viewport->addLine(x,y,xP,yP, QPen(qCor));
-//        if(pontos.size()==1){
-//            int x = windowViewport->fx(pontos.front()->obterX());
-//            int y = windowViewport->fy(pontos.front()->obterY());
-//            viewport->addLine(x,y,x,y);
-//        } else{
-//            QPolygonF poligono;
-//            int size = pontos.size();
-//            for (int i=0; i<size; i++) {
-//                Ponto* ponto = pontos.front();
-//                poligono << QPointF(windowViewport->fx(ponto->obterX()), windowViewport->fy(ponto->obterY()));
-//                pontos.pop_front();
-//                pontos.push_back(ponto);
-//            }
-//            viewport->addPolygon(poligono);
+//        double xP,yP,xa,ya,x,y;
+//        xP = xa = transformadaViewportX(pontos.front()->obterX());
+//        yP = ya = transformadaViewportY(pontos.front()->obterY());
+//
+//        list<Ponto*>::iterator it;
+//        for(it = pontos.begin(); it != pontos.end(); it++){
+//            x = transformadaViewportX((*it)->obterX());
+//            y = transformadaViewportY((*it)->obterY());
+//            viewport->addLine(xa,ya,x,y, QPen(qCor));
+//            xa = x;
+//            ya = y;
 //        }
+//        viewport->addLine(x,y,xP,yP, QPen(qCor));
+        if(pontos.size()==1){
+            int x = transformadaViewportX(pontos.front()->obterX());
+            int y = transformadaViewportY(pontos.front()->obterY());
+            Ponto ponto(x,y);
+            if(clipador->clippingDePonto(ponto)){
+                viewport->addLine(x,y,x,y, QPen(qCor));
+            }
+        } else{
+            QPolygonF poligono;
+            int size = pontos.size();
+            for (int i=0; i<size; i++) {
+                Ponto* ponto = pontos.front();
+                poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
+
+                pontos.pop_front();
+                pontos.push_back(ponto);
+            }
+            viewport->addPolygon(poligono, QPen(qCor), QBrush(qCor));
+        }
         figuras.pop_back();
         figuras.push_front(figura);
     }
+}
+
+void MainWindow::desenharSubViewport(){
+    viewport->addLine(SUBVIEWPORTXMIN,SUBVIEWPORTYMIN,SUBVIEWPORTXMAX,SUBVIEWPORTYMIN);
+    viewport->addLine(SUBVIEWPORTXMAX,SUBVIEWPORTYMIN,SUBVIEWPORTXMAX,SUBVIEWPORTYMAX);
+    viewport->addLine(SUBVIEWPORTXMAX,SUBVIEWPORTYMAX,SUBVIEWPORTXMIN,SUBVIEWPORTYMAX);
+    viewport->addLine(SUBVIEWPORTXMIN,SUBVIEWPORTYMAX,SUBVIEWPORTXMIN,SUBVIEWPORTYMIN);
 }
 
 double MainWindow::transformadaViewportX(double x){
@@ -247,8 +264,8 @@ void MainWindow::mudarCor(QColor cor) {
     windowViewport->mudarCor(ui->listaObjetos->currentItem()->text().toStdString(), cor.red(), cor.green(), cor.blue());
     desenharFiguras();
 }
-
 void MainWindow::rotacionarWindowParaDireita() {
+
     windowViewport->rotacionarNoCentro2D("Window", ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();

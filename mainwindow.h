@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <math.h>
+#include "Clipping.h"
 #include "canvas.h"
 #include "dialog.h"
 #include "Transformacoes.h"
@@ -21,6 +22,10 @@ using namespace std;
 
 static double const VIEWPORTXSIZE = 660;
 static double const VIEWPORTYSIZE = 500;
+static double const SUBVIEWPORTXMIN = 20;
+static double const SUBVIEWPORTXMAX = 639;
+static double const SUBVIEWPORTYMIN = 20;
+static double const SUBVIEWPORTYMAX = 479;
 
 class Canvas;
 class MainWindow : public QMainWindow
@@ -34,7 +39,9 @@ public:
 public slots:
     void reiniciar();
     void resetarWindow();
-    void abrirJanela();
+    void abrirJanelaDeCriacoes();
+    void abrirJanelaDeTransformacoes();
+    void abrirJanelaDeAjuda();
     void construirFigura(Tipo, list<Ponto*>, QColor);
     void destruirFigura();
     void receberPonto(double, double);
@@ -57,6 +64,7 @@ public slots:
 private:
     void iniciar();
     void desenharFiguras();
+    void desenharSubViewport();
     double transformadaViewportX(double);
     double transformadaViewportY(double);
     double transformadaInversaViewportX(double);
@@ -67,6 +75,7 @@ private:
     Dialog *janelaDeCriacoes;
     Transformacoes *janelaDeTransformacoes;
     Canvas *detectorDeEventos;
+    Clipping *clipador;
 };
 
 #endif // MAINWINDOW_H
