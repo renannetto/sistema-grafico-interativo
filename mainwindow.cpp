@@ -132,7 +132,7 @@ void MainWindow::desenharFiguras() {
             Ponto np1(ponto1);
             Ponto np2(ponto2);
                 if(clipador->clippingDeLinhaCohen(ponto1,ponto2,np1,np2)){
-                    viewport->addLine(np1.obterX(),np1.obterY(),np2.obterX(),np2.obterY());
+                    viewport->addLine(np1.obterX(),np1.obterY(),np2.obterX(),np2.obterY(), QPen(qCor));
                 }
         } else{
             QPolygonF poligono;

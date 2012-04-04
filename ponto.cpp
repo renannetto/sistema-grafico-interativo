@@ -22,3 +22,11 @@ void Ponto::transformar2D(double** matrizT){
     x = xN;
     y = yN;
 }
+
+void Ponto::setarX(double nx){
+    x = nx;
+}
+
+void Ponto::setarY(double ny){
+    y = ny;
+}

@@ -8,6 +8,8 @@ public:
     ~Ponto();
     double obterX() const;
     double obterY() const;
+    void setarX(double);
+    void setarY(double);
     void transformar2D(double**);
 private:
     double x;

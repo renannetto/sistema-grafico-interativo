@@ -17,12 +17,13 @@ class Clipping
         BD = 0x6
     };
 public:
-    Clipping(double,double,double,double);
-    int identificarRC(Ponto const &);
+    Clipping(double,double,double,double);   
     bool clippingDePonto(Ponto&);
     bool clippingDeLinhaCohen(Ponto const &, Ponto const &, Ponto&, Ponto&);
     bool clippingDePoligonosWeiler();
 private:
+    int identificarRC(Ponto const &);
+    bool calculaNovoPonto(double, int, Ponto const &, Ponto &);
     double xMin;
     double xMax;
     double yMin;

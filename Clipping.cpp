@@ -35,12 +35,54 @@ bool Clipping::clippingDeLinhaCohen(Ponto const &p1, Ponto const &p2, Ponto &np1
     } else if ((rc1 & rc2) != 0){ // Totalmente fora
         return false;
     } else{ // Parcialmente dentro
-
-        // TODO
-        np1 = p1;
-        np2 = p2;
-        return true;
+        bool clipou = false;
+        double m = (p2.obterY()-p1.obterY())/(p2.obterX()-p1.obterX());
+        if (rc1 != 0)
+            if(calculaNovoPonto(m, rc1, p1, np1))
+                clipou = true;
+        if (rc2 != 0)
+            if(calculaNovoPonto(m, rc2, p2, np2))
+                clipou = true;
+        return clipou;
     }
+}
+
+bool Clipping::calculaNovoPonto(double m, int rc, Ponto const &p, Ponto &np){
+    bool clipou = false;
+    double nc;
+    if(rc == B || rc == BE || rc == BD){
+        nc = p.obterX()+(yMin - p.obterY())/m;
+        if(nc>xMin && nc<xMax){
+            np.setarX(nc);
+            np.setarY(yMin);
+            clipou = true;
+        }
+    }
+    if(rc == C || rc == CE || rc == CD){
+        nc = p.obterX()+(yMax - p.obterY())/m;
+        if(nc>xMin && nc<xMax){
+            np.setarX(nc);
+            np.setarY(yMax);
+            clipou = true;
+        }
+    }
+    if(rc == E || rc == BE || rc == CE){
+        nc = p.obterY()+(xMin - p.obterX())*m;
+        if(nc>yMin && nc<yMax){
+            np.setarY(nc);
+            np.setarX(xMin);
+            clipou = true;
+        }
+    }
+    if(rc == D || rc == BD || rc == CD){
+        nc = p.obterY()+(xMax - p.obterX())*m;
+        if(nc>yMin && nc<yMax){
+            np.setarY(nc);
+            np.setarX(xMax);
+            clipou = true;
+        }
+    }
+    return clipou;
 }
 
 
