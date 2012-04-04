@@ -64,7 +64,10 @@ void MainWindow::abrirJanelaDeCriacoes(){
 }
 
 void MainWindow::abrirJanelaDeTransformacoes(){
-    janelaDeTransformacoes->setVisible(true);
+    if(this->ui->listaObjetos->currentItem()->text() == "Novo Objeto")
+        janelaDeCriacoes->setVisible(true);
+    else
+        janelaDeTransformacoes->setVisible(true);
 }
 
 void MainWindow::abrirJanelaDeAjuda(){
@@ -113,12 +116,24 @@ void MainWindow::desenharFiguras() {
 //        }
 //        viewport->addLine(x,y,xP,yP, QPen(qCor));
         if(pontos.size()==1){
-            int x = transformadaViewportX(pontos.front()->obterX());
-            int y = transformadaViewportY(pontos.front()->obterY());
+            double x = transformadaViewportX(pontos.front()->obterX());
+            double y = transformadaViewportY(pontos.front()->obterY());
             Ponto ponto(x,y);
             if(clipador->clippingDePonto(ponto)){
                 viewport->addLine(x,y,x,y, QPen(qCor));
             }
+        } else if(pontos.size()==2){
+            double x1 = transformadaViewportX(pontos.front()->obterX());
+            double y1 = transformadaViewportY(pontos.front()->obterY());
+            double x2 = transformadaViewportX(pontos.back()->obterX());
+            double y2 = transformadaViewportY(pontos.back()->obterY());
+            Ponto ponto1(x1,y1);
+            Ponto ponto2(x2, y2);
+            Ponto np1(ponto1);
+            Ponto np2(ponto2);
+                if(clipador->clippingDeLinhaCohen(ponto1,ponto2,np1,np2)){
+                    viewport->addLine(np1.obterX(),np1.obterY(),np2.obterX(),np2.obterY());
+                }
         } else{
             QPolygonF poligono;
             int size = pontos.size();

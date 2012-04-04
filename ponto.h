@@ -6,8 +6,8 @@ class Ponto
 public:
     Ponto(double vX, double vY);
     ~Ponto();
-    double obterX();
-    double obterY();
+    double obterX() const;
+    double obterY() const;
     void transformar2D(double**);
 private:
     double x;

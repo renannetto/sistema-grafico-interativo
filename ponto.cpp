@@ -8,11 +8,11 @@ Ponto::Ponto(double vX, double vY){
 Ponto::~Ponto(){
 }
 
-double Ponto::obterX(){
+double Ponto::obterX() const{
     return x;
 }
 
-double Ponto::obterY(){
+double Ponto::obterY() const{
     return y;
 }
 
