@@ -136,15 +136,30 @@ void MainWindow::desenharFiguras() {
                 }
         } else{
             QPolygonF poligono;
+            list<Ponto*> pontosTransformados;
+            list<Ponto*> npontos;
+
             int size = pontos.size();
             for (int i=0; i<size; i++) {
                 Ponto* ponto = pontos.front();
-                poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
+                pontosTransformados.push_back(new Ponto(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY())));
 
                 pontos.pop_front();
                 pontos.push_back(ponto);
             }
-            viewport->addPolygon(poligono, QPen(qCor), QBrush(qCor));
+
+            if(clipador->clippingDePoligonosWeiler(pontosTransformados, npontos)){
+                int size = npontos.size();
+                cout << size << endl;
+                for (int i=0; i<size; i++) {
+                    Ponto* ponto = npontos.front();
+                    poligono << QPointF(ponto->obterX(), ponto->obterY());
+
+                    npontos.pop_front();
+                    npontos.push_back(ponto);
+                }
+                viewport->addPolygon(poligono, QPen(qCor), QBrush(qCor));
+            }
         }
         figuras.pop_back();
         figuras.push_front(figura);

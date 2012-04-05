@@ -11,6 +11,7 @@ public:
     void setarX(double);
     void setarY(double);
     void transformar2D(double**);
+    bool operator==(Ponto);
 private:
     double x;
     double y;

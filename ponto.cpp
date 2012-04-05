@@ -30,3 +30,7 @@ void Ponto::setarX(double nx){
 void Ponto::setarY(double ny){
     y = ny;
 }
+
+bool Ponto::operator ==(Ponto ponto){
+    return (this->x == ponto.obterX() && this->y == ponto.obterY());
+}
