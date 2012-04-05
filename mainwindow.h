@@ -60,6 +60,8 @@ public slots:
     void mudarCor(QColor cor);
     void rotacionarWindowParaDireita();
     void rotacionarWindowParaEsquerda();
+    void aumentarRegiaoDeClipping();
+    void diminuirRegiaoDeClipping();
 
 private:
     void iniciar();
@@ -76,7 +78,7 @@ private:
     Transformacoes *janelaDeTransformacoes;
     Canvas *detectorDeEventos;
     Clipping *clipador;
-    int deslocamentoClipador;
+    unsigned int deslocamentoClipador;
 };
 
 #endif // MAINWINDOW_H

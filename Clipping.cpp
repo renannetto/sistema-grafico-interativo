@@ -17,7 +17,7 @@ int Clipping::identificarRC(Ponto const &p){
         rc += BAIXO;
     if(p.obterY() >= yMax)
         rc += CIMA;
-    cout << "rc ==== " << rc << endl;
+//    cout << "rc ==== " << rc << endl;
     return rc;
 }
 
@@ -69,13 +69,13 @@ bool Clipping::clippingDeLinhaCohen(Ponto const &p1, Ponto const &p2, Ponto &np1
     rc2 = identificarRC(p2);
     np1 = p1;
     np2 = p2;
-    cout << ", rc1 = " <<rc1 <<", rc2 = " <<rc2 << endl;
+//    cout << ", rc1 = " <<rc1 <<", rc2 = " <<rc2 << endl;
     if(rc1 == MEIO && rc2 == MEIO){ // Totalmente dentro
         return true;
     } else if ((rc1 & rc2) != 0){ // Totalmente fora
         return false;
     } else{ // Parcialmente dentro
-        cout << "parcialmente dentro" << endl;
+//        cout << "parcialmente dentro" << endl;
         bool clipou = false;
         double m = (p2.obterY()-p1.obterY())/(p2.obterX()-p1.obterX());
         if (rc1 != MEIO)
@@ -102,7 +102,7 @@ bool Clipping::clippingDePoligonosWeiler(list<Ponto*> &pontos, list<Ponto*> &npo
                 npontos.push_back(new Ponto(pontoOutIn->obterX(), pontoOutIn->obterY()));
                 pegouPrimeiroPonto = true;
             }
-            cout << "pushing back ->  Ponto 1 x = " << pontoInOut->obterX() <<", Ponto 1 y = " << pontoInOut->obterY() << endl;
+//            cout << "pushing back ->  Ponto 1 x = " << pontoInOut->obterX() <<", Ponto 1 y = " << pontoInOut->obterY() << endl;
             npontos.push_back(new Ponto(pontoInOut->obterX(), pontoInOut->obterY()));
         }
         ponto1 = ponto2;
@@ -119,14 +119,14 @@ bool Clipping::clippingDePoligonosWeiler(list<Ponto*> &pontos, list<Ponto*> &npo
 }
 
 bool Clipping::clippingDeLinhaCohenParaWeiler(Ponto const &p1, Ponto const &p2, Ponto &pontoOutIn, Ponto &pontoInOut){
-    cout << "Ponto 1 x = " << p1.obterX() <<", Ponto 1 y = " << p1.obterY() << ", Ponto 2 x = " << p2.obterX() << ", Ponto 2 y = " << p2.obterY() << endl;
+//    cout << "Ponto 1 x = " << p1.obterX() <<", Ponto 1 y = " << p1.obterY() << ", Ponto 2 x = " << p2.obterX() << ", Ponto 2 y = " << p2.obterY() << endl;
     int rc1, rc2;
     rc1 = identificarRC(p1);
     rc2 = identificarRC(p2);
     pontoOutIn = p1;
     pontoInOut = p2;
     if(rc1 == MEIO && rc2 == MEIO){ // Totalmente dentro
-        cout << "Totalmente Dentro" << endl;
+//        cout << "Totalmente Dentro" << endl;
         return true;
     } else if ((rc1 & rc2) != 0){ // Totalmente fora
 //        cout << "Ponto 1 x = " << p1.obterX() <<", Ponto 1 y = " << p1.obterY() <<
@@ -135,7 +135,7 @@ bool Clipping::clippingDeLinhaCohenParaWeiler(Ponto const &p1, Ponto const &p2, 
 
         return false;
     } else{ // Parcialmente dentro
-        cout << "Parcialmente Dentro" << endl;
+//        cout << "Parcialmente Dentro" << endl;
 
         bool clipou = false;
         double m = (p2.obterY()-p1.obterY())/(p2.obterX()-p1.obterX());

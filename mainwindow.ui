@@ -343,6 +343,12 @@
          <height>21</height>
         </rect>
        </property>
+       <property name="text">
+        <string>10</string>
+       </property>
+       <property name="cursorPosition">
+        <number>2</number>
+       </property>
       </widget>
       <widget class="QLabel" name="labelGraus">
        <property name="geometry">
@@ -532,6 +538,64 @@
     <property name="orientation">
      <enum>Qt::Horizontal</enum>
     </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>7</y>
+      <width>31</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>+</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>743</x>
+      <y>7</y>
+      <width>31</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>-</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>5</y>
+      <width>88</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QCheckBox" name="checkBox">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>-10</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clipping</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -842,6 +906,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>aumentarRegiaoDeClipping()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>724</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>531</x>
+     <y>51</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>diminuirRegiaoDeClipping()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>763</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>692</x>
+     <y>43</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>abrirJanelaDeCriacoes()</slot>
@@ -859,5 +955,7 @@
   <slot>rotacionarWindowParaEsquerda()</slot>
   <slot>abrirJanelaDeTransformacoes()</slot>
   <slot>abrirJanelaDeAjuda()</slot>
+  <slot>aumentarRegiaoDeClipping()</slot>
+  <slot>diminuirRegiaoDeClipping()</slot>
  </slots>
 </ui>

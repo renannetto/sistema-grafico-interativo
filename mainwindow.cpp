@@ -142,7 +142,6 @@ void MainWindow::desenharFiguras() {
 
             if(clipador->clippingDePoligonosWeiler(pontos, npontos)){
                 int size = npontos.size();
-                cout << size << endl;
                 for (int i=0; i<size; i++) {
                     Ponto* ponto = npontos.front();
                     poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
@@ -317,4 +316,24 @@ void MainWindow::rotacionarWindowParaEsquerda() {
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
                                windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
+}
+
+void MainWindow::aumentarRegiaoDeClipping(){
+    if(this->ui->checkBox->checkState() == Qt::Checked){
+        if(deslocamentoClipador > 5)
+            deslocamentoClipador -= 3;
+        clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                                   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+        desenharFiguras();
+    }
+}
+
+void MainWindow::diminuirRegiaoDeClipping(){
+    if(this->ui->checkBox->checkState() == Qt::Checked){
+        if(deslocamentoClipador < 45)
+            deslocamentoClipador += 3;
+        clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                                   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+        desenharFiguras();
+    }
 }

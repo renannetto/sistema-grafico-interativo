@@ -2,6 +2,8 @@
 
 Canvas::Canvas(QWidget *parent) : QGraphicsView(parent)
 {
+    ctrlAtivado = false;
+    shiftAtivado = false;
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event)
@@ -21,7 +23,6 @@ void Canvas::fixarJanelaPrincipal(QMainWindow *janelaPrincipal)
 void Canvas::keyPressEvent(QKeyEvent *event)
 {
     int tecla;
-
     tecla = event->key();
 
     switch(tecla) {
@@ -50,13 +51,42 @@ void Canvas::keyPressEvent(QKeyEvent *event)
     case GIRARESQUERDA:
         this->janelaPrincipal->rotacionarWindowParaEsquerda();
         break;
+    case CTRL:
+        ctrlAtivado = true;
+        break;
+    case SHIFT:
+        shiftAtivado = true;
+        break;
+    }
+}
+
+void Canvas::keyReleaseEvent(QKeyEvent *event){
+    int tecla = event->key();
+
+    switch(tecla) {
+    case CTRL:
+        ctrlAtivado = false;
+        break;
+    case SHIFT:
+        shiftAtivado = false;
+        break;
     }
 }
 
 void Canvas::wheelEvent(QWheelEvent *event)
 {
     if(event->delta() > 0)
-        this->janelaPrincipal->zoomIn();
+        if(ctrlAtivado)
+            this->janelaPrincipal->aumentarRegiaoDeClipping();
+        else if (shiftAtivado)
+            this->janelaPrincipal->rotacionarWindowParaDireita();
+        else
+            this->janelaPrincipal->zoomIn();
     else if (event-> delta() < 0)
-        this->janelaPrincipal->zoomOut();
+        if(ctrlAtivado)
+            this->janelaPrincipal->diminuirRegiaoDeClipping();
+        else if (shiftAtivado)
+            this->janelaPrincipal->rotacionarWindowParaEsquerda();
+        else
+            this->janelaPrincipal->zoomOut();
 }
