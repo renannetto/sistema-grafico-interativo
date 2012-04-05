@@ -20,9 +20,13 @@ void MainWindow::iniciar(){
     janelaDeCriacoes->setVisible(false);
     janelaDeTransformacoes = new Transformacoes(this);
     janelaDeTransformacoes->setVisible(false);
-    clipador = new Clipping(SUBVIEWPORTXMIN, SUBVIEWPORTXMAX, SUBVIEWPORTYMIN, SUBVIEWPORTYMAX);
+    //clipador = new Clipping(SUBVIEWPORTXMIN, SUBVIEWPORTXMAX, SUBVIEWPORTYMIN, SUBVIEWPORTYMAX);
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     windowViewport = new WindowViewport();
+
+    deslocamentoClipador = 10;
+    clipador = new Clipping(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                            windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     detectorDeEventos = this->ui->graphicsView;
     detectorDeEventos->fixarJanelaPrincipal(this);
     ui->graphicsView->setScene(viewport);
@@ -116,44 +120,32 @@ void MainWindow::desenharFiguras() {
 //        }
 //        viewport->addLine(x,y,xP,yP, QPen(qCor));
         if(pontos.size()==1){
-            double x = transformadaViewportX(pontos.front()->obterX());
-            double y = transformadaViewportY(pontos.front()->obterY());
-            Ponto ponto(x,y);
-            if(clipador->clippingDePonto(ponto)){
+            if(clipador->clippingDePonto(*pontos.front())){
+                double x = transformadaViewportX(pontos.front()->obterX());
+                double y = transformadaViewportY(pontos.front()->obterY());
                 viewport->addLine(x,y,x,y, QPen(qCor));
             }
         } else if(pontos.size()==2){
-            double x1 = transformadaViewportX(pontos.front()->obterX());
-            double y1 = transformadaViewportY(pontos.front()->obterY());
-            double x2 = transformadaViewportX(pontos.back()->obterX());
-            double y2 = transformadaViewportY(pontos.back()->obterY());
-            Ponto ponto1(x1,y1);
-            Ponto ponto2(x2, y2);
-            Ponto np1(ponto1);
-            Ponto np2(ponto2);
-                if(clipador->clippingDeLinhaCohen(ponto1,ponto2,np1,np2)){
-                    viewport->addLine(np1.obterX(),np1.obterY(),np2.obterX(),np2.obterY(), QPen(qCor));
-                }
-        } else{
-            QPolygonF poligono;
-            list<Ponto*> pontosTransformados;
-            list<Ponto*> npontos;
-
-            int size = pontos.size();
-            for (int i=0; i<size; i++) {
-                Ponto* ponto = pontos.front();
-                pontosTransformados.push_back(new Ponto(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY())));
-
-                pontos.pop_front();
-                pontos.push_back(ponto);
+            Ponto np1(0, 0);
+            Ponto np2(0, 0);
+            if(clipador->clippingDeLinhaCohen(*pontos.front(),*pontos.back(),np1,np2)){
+                double x1 = transformadaViewportX(np1.obterX());
+                double y1 = transformadaViewportY(np1.obterY());
+                double x2 = transformadaViewportX(np2.obterX());
+                double y2 = transformadaViewportY(np2.obterY());
+                viewport->addLine(x1, y1, x2, y2, QPen(qCor));
             }
 
-            if(clipador->clippingDePoligonosWeiler(pontosTransformados, npontos)){
+        } else{
+            QPolygonF poligono;
+            list<Ponto*> npontos;
+
+            if(clipador->clippingDePoligonosWeiler(pontos, npontos)){
                 int size = npontos.size();
                 cout << size << endl;
                 for (int i=0; i<size; i++) {
                     Ponto* ponto = npontos.front();
-                    poligono << QPointF(ponto->obterX(), ponto->obterY());
+                    poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
 
                     npontos.pop_front();
                     npontos.push_back(ponto);
@@ -167,10 +159,14 @@ void MainWindow::desenharFiguras() {
 }
 
 void MainWindow::desenharSubViewport(){
-    viewport->addLine(SUBVIEWPORTXMIN,SUBVIEWPORTYMIN,SUBVIEWPORTXMAX,SUBVIEWPORTYMIN);
-    viewport->addLine(SUBVIEWPORTXMAX,SUBVIEWPORTYMIN,SUBVIEWPORTXMAX,SUBVIEWPORTYMAX);
-    viewport->addLine(SUBVIEWPORTXMAX,SUBVIEWPORTYMAX,SUBVIEWPORTXMIN,SUBVIEWPORTYMAX);
-    viewport->addLine(SUBVIEWPORTXMIN,SUBVIEWPORTYMAX,SUBVIEWPORTXMIN,SUBVIEWPORTYMIN);
+    double xMin = transformadaViewportX(clipador->obterXMin());
+    double xMax = transformadaViewportX(clipador->obterXMax());
+    double yMin = transformadaViewportY(clipador->obterYMin());
+    double yMax = transformadaViewportY(clipador->obterYMax());
+    viewport->addLine(xMin, yMin, xMax, yMin);
+    viewport->addLine(xMax,yMin,xMax,yMax);
+    viewport->addLine(xMax,yMax,xMin,yMax);
+    viewport->addLine(xMin,yMax,xMin,yMin);
 }
 
 double MainWindow::transformadaViewportX(double x){
@@ -220,12 +216,16 @@ void MainWindow::receberPonto(double x, double y){
 void MainWindow::zoomIn(){
     windowViewport->zoomIn(ui->zoomSlider->sliderPosition());
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
 void MainWindow::zoomOut(){
     windowViewport->zoomOut(ui->zoomSlider->sliderPosition());
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -239,24 +239,32 @@ void MainWindow::mostrarValorDoZoom(int zoomValue){
 void MainWindow::moverParaEsquerda(){
     windowViewport->moverParaEsquerda();
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
 void MainWindow::moverParaDireita(){
     windowViewport->moverParaDireita();
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
 void MainWindow::moverParaBaixo(){
     windowViewport->moverParaBaixo();
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
 void MainWindow::moverParaCima(){
     windowViewport->moverParaCima();
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -298,11 +306,15 @@ void MainWindow::rotacionarWindowParaDireita() {
 
     windowViewport->rotacionarNoCentro2D("Window", ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
 void MainWindow::rotacionarWindowParaEsquerda() {
     windowViewport->rotacionarNoCentro2D("Window", (double)360 - ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }

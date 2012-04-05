@@ -76,6 +76,7 @@ private:
     Transformacoes *janelaDeTransformacoes;
     Canvas *detectorDeEventos;
     Clipping *clipador;
+    int deslocamentoClipador;
 };
 
 #endif // MAINWINDOW_H
