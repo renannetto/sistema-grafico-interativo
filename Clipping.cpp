@@ -26,35 +26,35 @@ bool Clipping::calculaNovoPonto(double m, int rc, Ponto const &p, Ponto &np){
     double nc;
     if(rc == BAIXO || rc == BAIXOESQUERDA || rc == BAIXODIREITA){
         nc = p.obterX()+(yMin - p.obterY())/m;
-        if(nc>=xMin && nc<=xMax){
+        //if(nc>=xMin && nc<=xMax){
             np.setarX(nc);
             np.setarY(yMin);
             clipou = true;
-        }
+        //}
     }
     if(rc == CIMA || rc == CIMAESQUERDA || rc == CIMADIREITA){
         nc = p.obterX()+(yMax - p.obterY())/m;
-        if(nc>=xMin && nc<=xMax){
+        //if(nc>=xMin && nc<=xMax){
             np.setarX(nc);
             np.setarY(yMax);
             clipou = true;
-        }
+        //}
     }
     if(rc == ESQUERDA || rc == BAIXOESQUERDA || rc == CIMAESQUERDA){
         nc = p.obterY()+(xMin - p.obterX())*m;
-        if(nc>=yMin && nc<=yMax){
+        //if(nc>=yMin && nc<=yMax){
             np.setarY(nc);
             np.setarX(xMin);
             clipou = true;
-        }
+        //}
     }
     if(rc == DIREITA || rc == BAIXODIREITA || rc == CIMADIREITA){
         nc = p.obterY()+(xMax - p.obterX())*m;
-        if(nc>=yMin && nc<=yMax){
+        //if(nc>=yMin && nc<=yMax){
             np.setarY(nc);
             np.setarX(xMax);
             clipou = true;
-        }
+        //}
     }
     return clipou;
 }
@@ -149,81 +149,178 @@ bool Clipping::clippingDeLinhaCohenParaWeiler(Ponto const &p1, Ponto const &p2, 
     }
 }
 
-bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &npontos){
-    int rc = 0x1;
-    npontos = pontos;
-    Ponto *ponto1;
+bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &nPontos){
+    list<Ponto*> pontosEsq;
+    list<Ponto*> pontosDir;
+    list<Ponto*> pontosCima;
+    bool clippingEsquerda = cliparPontosPoligono(BESQUERDA, pontos, pontosEsq);
+    bool clippingDireita =  cliparPontosPoligono(BDIREITA, pontosEsq, pontosDir);
+    bool clippingCima = cliparPontosPoligono(BCIMA, pontosDir, pontosCima);
+    bool clippingBaixo = cliparPontosPoligono(BBAIXO, pontosCima, nPontos);
+    return (clippingEsquerda || clippingDireita || clippingCima || clippingBaixo);
+}
+
+bool Clipping::cliparPontosPoligono(BORDA borda, list<Ponto *> &pontos, list<Ponto *> &nPontos) {
+    if (pontos.size()==0)
+        return false;
+    list<Ponto*>::iterator it = pontos.begin();
+    Ponto *ponto1 = (*it);
     Ponto *ponto2;
-    bool clipou = false;
-    list<Ponto*>::iterator it;
-    cout << "Pontos antes de clipar: " << endl;
-    for(it = npontos.begin(); it != npontos.end(); it++){
-        cout << "Ponto: (" << (*it)->obterX() << "," << (*it)->obterY() << ")" << endl;
+    double m;
+    for (++it; it!=pontos.end(); it++) {
+        ponto2 = (*it);
+        switch(borda) {
+        case BESQUERDA:
+            if(ponto1->obterX()>xMin && ponto2->obterX()>xMin) { // dentro -> dentro
+                nPontos.push_back(ponto2);
+            } else
+                if(ponto1->obterX()<xMin && ponto2->obterX()>xMin) { // fora -> dentro
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                    calculaNovoPonto(m, ESQUERDA, *ponto1, nPonto1);
+                    nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                    nPontos.push_back(ponto2);
+                } else
+                    if (ponto1->obterX()>xMin && ponto2->obterX()<xMin) { // dentro -> fora
+                        m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                        Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                        calculaNovoPonto(m, ESQUERDA, *ponto2, nPonto2);
+                        nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
+                    }
+            break;
+        case BDIREITA:
+            if(ponto1->obterX()<xMax && ponto2->obterX()<xMax) { // dentro -> dentro
+                nPontos.push_back(ponto2);
+            } else
+                if(ponto1->obterX()>xMax && ponto2->obterX()<xMax) { // fora -> dentro
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                    calculaNovoPonto(m, DIREITA, *ponto1, nPonto1);
+                    nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                    nPontos.push_back(ponto2);
+                } else
+                    if (ponto1->obterX()<xMax && ponto2->obterX()>xMax) { // dentro -> fora
+                        m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                        Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                        calculaNovoPonto(m, DIREITA, *ponto2, nPonto2);
+                        nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
+                    }
+            break;
+        case BCIMA:
+            if(ponto1->obterY()<yMax && ponto2->obterY()<yMax) { // dentro -> dentro
+                nPontos.push_back(ponto2);
+            } else
+                if(ponto1->obterY()>yMax && ponto2->obterY()<yMax) { // fora -> dentro
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                    calculaNovoPonto(m, CIMA, *ponto1, nPonto1);
+                    nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                    nPontos.push_back(ponto2);
+                } else
+                    if (ponto1->obterY()<yMax && ponto2->obterY()>yMax) { // dentro -> fora
+                        m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                        Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                        calculaNovoPonto(m, CIMA, *ponto2, nPonto2);
+                        nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
+                    }
+            break;
+        case BBAIXO:
+            if(ponto1->obterY()>yMin && ponto2->obterY()>yMin) { // dentro -> dentro
+                nPontos.push_back(ponto2);
+            } else
+                if(ponto1->obterY()<yMin && ponto2->obterY()>yMin) { // fora -> dentro
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                    calculaNovoPonto(m, BAIXO, *ponto1, nPonto1);
+                    nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                    nPontos.push_back(ponto2);
+                } else
+                    if (ponto1->obterY()>yMin && ponto2->obterY()<yMin) { // dentro -> fora
+                        m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                        Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                        calculaNovoPonto(m, BAIXO, *ponto2, nPonto2);
+                        nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
+                    }
+            break;
+        }
+        ponto1 = ponto2;
     }
-    for (int i=0; i<4; i++) {
-        cout << "i = " << i << endl;
-        for (int j=0; j<pontos.size()-1; j++) {
-            ponto1 = npontos.front();
-            npontos.pop_front();
-            ponto2 = npontos.front();
-
-            Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
-
-            if (ponto2->obterX()-ponto1->obterX()!=0) {
-                cout << "Ponto: (" << ponto1->obterX() << "," << ponto1->obterY() << ")" << endl;
-
-                double m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
-
-                cout << "m: " << m << endl;
-
-                int rcPonto = identificarRC(*ponto1);
-
-                if (calculaNovoPonto(m, rc, *ponto1, nPonto1) && rcPonto!=0x0) {
-                    clipou = true;
-                    cout << "Clipou" << endl;
-                    cout << "Novo ponto: (" << nPonto1.obterX() << "," << nPonto1.obterY() << ")" << endl;
-                    npontos.push_back(&nPonto1);
+    ponto2 = pontos.front();
+    switch(borda) {
+    case BESQUERDA:
+        if(ponto1->obterX()>xMin && ponto2->obterX()>xMin) { // dentro -> dentro
+            nPontos.push_back(ponto2);
+        } else
+            if(ponto1->obterX()<xMin && ponto2->obterX()>xMin) { // fora -> dentro
+                m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                calculaNovoPonto(m, ESQUERDA, *ponto1, nPonto1);
+                nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                nPontos.push_back(ponto2);
+            } else
+                if (ponto1->obterX()>xMin && ponto2->obterX()<xMin) { // dentro -> fora
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                    calculaNovoPonto(m, ESQUERDA, *ponto2, nPonto2);
+                    nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
                 }
-                else {
-                    npontos.push_back(ponto1);
+        break;
+    case BDIREITA:
+        if(ponto1->obterX()<xMax && ponto2->obterX()<xMax) { // dentro -> dentro
+            nPontos.push_back(ponto2);
+        } else
+            if(ponto1->obterX()>xMax && ponto2->obterX()<xMax) { // fora -> dentro
+                m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                calculaNovoPonto(m, DIREITA, *ponto1, nPonto1);
+                nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                nPontos.push_back(ponto2);
+            } else
+                if (ponto1->obterX()<xMax && ponto2->obterX()>xMax) { // dentro -> fora
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                    calculaNovoPonto(m, DIREITA, *ponto2, nPonto2);
+                    nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
                 }
-            }
-            else{
-                npontos.push_back(ponto1);
-            }
-
-
-        }
-        ponto1 = new Ponto(ponto2->obterX(), ponto2->obterY());
-        ponto2 = npontos.front();
-        npontos.pop_front();
-
-        Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
-
-        if (ponto2->obterX()-ponto1->obterX()!=0) {
-            double m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
-            int rcPonto = identificarRC(*ponto1);
-            if (calculaNovoPonto(m, rc, *ponto1, nPonto1) && rcPonto!=0x0) {
-                npontos.push_back(&nPonto1);
-            }
-            else {
-                npontos.push_back(ponto1);
-            }
-        }
-        else {
-            npontos.push_back(ponto1);
-        }
-
-
-        rc*=2;
+        break;
+    case BCIMA:
+        if(ponto1->obterY()<yMax && ponto2->obterY()<yMax) { // dentro -> dentro
+            nPontos.push_back(ponto2);
+        } else
+            if(ponto1->obterY()>yMax && ponto2->obterY()<yMax) { // fora -> dentro
+                m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                calculaNovoPonto(m, CIMA, *ponto1, nPonto1);
+                nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                nPontos.push_back(ponto2);
+            } else
+                if (ponto1->obterY()<yMax && ponto2->obterY()>yMax) { // dentro -> fora
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                    calculaNovoPonto(m, CIMA, *ponto2, nPonto2);
+                    nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
+                }
+        break;
+    case BBAIXO:
+        if(ponto1->obterY()>yMin && ponto2->obterY()>yMin) { // dentro -> dentro
+            nPontos.push_back(ponto2);
+        } else
+            if(ponto1->obterY()<yMin && ponto2->obterY()>yMin) { // fora -> dentro
+                m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+                calculaNovoPonto(m, BAIXO, *ponto1, nPonto1);
+                nPontos.push_back(new Ponto(nPonto1.obterX(), nPonto1.obterY()));
+                nPontos.push_back(ponto2);
+            } else
+                if (ponto1->obterY()>yMin && ponto2->obterY()<yMin) { // dentro -> fora
+                    m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+                    Ponto nPonto2(ponto2->obterX(), ponto2->obterY());
+                    calculaNovoPonto(m, BAIXO, *ponto2, nPonto2);
+                    nPontos.push_back(new Ponto(nPonto2.obterX(), nPonto2.obterY()));
+                }
+        break;
     }
-
-    cout << "Pontos depois de clipar: " << endl;
-    for(it = npontos.begin(); it != npontos.end(); it++){
-        cout << "Ponto: (" << (*it)->obterX() << "," << (*it)->obterY() << ")" << endl;
-    }
-
-    return true;
+    return nPontos.size()>0;
 }
 
 void Clipping::fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento) {
