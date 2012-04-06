@@ -29,7 +29,8 @@ public:
     bool clippingDeLinhaCohen(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDePoligonosWeiler(list<Ponto*> &, list<Ponto*> &);
     bool clippingDePoligonosSutherland(list<Ponto*> &, list<Ponto*> &);
-    bool cliparPontosPoligono(BORDA borda, list<Ponto*> &pontos, list<Ponto*> &nPontos);
+    void cliparPontosPoligono(BORDA borda, list<Ponto*> &pontos, list<Ponto*> &nPontos);
+    void cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, list<Ponto*> &nPontos);
     void fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento);
     double obterXMin();
     double obterXMax();
