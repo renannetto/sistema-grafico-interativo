@@ -149,6 +149,83 @@ bool Clipping::clippingDeLinhaCohenParaWeiler(Ponto const &p1, Ponto const &p2, 
     }
 }
 
+bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &npontos){
+    int rc = 0x1;
+    npontos = pontos;
+    Ponto *ponto1;
+    Ponto *ponto2;
+    bool clipou = false;
+    list<Ponto*>::iterator it;
+    cout << "Pontos antes de clipar: " << endl;
+    for(it = npontos.begin(); it != npontos.end(); it++){
+        cout << "Ponto: (" << (*it)->obterX() << "," << (*it)->obterY() << ")" << endl;
+    }
+    for (int i=0; i<4; i++) {
+        cout << "i = " << i << endl;
+        for (int j=0; j<pontos.size()-1; j++) {
+            ponto1 = npontos.front();
+            npontos.pop_front();
+            ponto2 = npontos.front();
+
+            Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+
+            if (ponto2->obterX()-ponto1->obterX()!=0) {
+                cout << "Ponto: (" << ponto1->obterX() << "," << ponto1->obterY() << ")" << endl;
+
+                double m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+
+                cout << "m: " << m << endl;
+
+                int rcPonto = identificarRC(*ponto1);
+
+                if (calculaNovoPonto(m, rc, *ponto1, nPonto1) && rcPonto!=0x0) {
+                    clipou = true;
+                    cout << "Clipou" << endl;
+                    cout << "Novo ponto: (" << nPonto1.obterX() << "," << nPonto1.obterY() << ")" << endl;
+                    npontos.push_back(&nPonto1);
+                }
+                else {
+                    npontos.push_back(ponto1);
+                }
+            }
+            else{
+                npontos.push_back(ponto1);
+            }
+
+
+        }
+        ponto1 = new Ponto(ponto2->obterX(), ponto2->obterY());
+        ponto2 = npontos.front();
+        npontos.pop_front();
+
+        Ponto nPonto1(ponto1->obterX(), ponto1->obterY());
+
+        if (ponto2->obterX()-ponto1->obterX()!=0) {
+            double m = (ponto2->obterY()-ponto1->obterY())/(ponto2->obterX()-ponto1->obterX());
+            int rcPonto = identificarRC(*ponto1);
+            if (calculaNovoPonto(m, rc, *ponto1, nPonto1) && rcPonto!=0x0) {
+                npontos.push_back(&nPonto1);
+            }
+            else {
+                npontos.push_back(ponto1);
+            }
+        }
+        else {
+            npontos.push_back(ponto1);
+        }
+
+
+        rc*=2;
+    }
+
+    cout << "Pontos depois de clipar: " << endl;
+    for(it = npontos.begin(); it != npontos.end(); it++){
+        cout << "Ponto: (" << (*it)->obterX() << "," << (*it)->obterY() << ")" << endl;
+    }
+
+    return true;
+}
+
 void Clipping::fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento) {
     this->xMin = xMin + (xMax-xMin)*deslocamento/100;
     this->xMax = xMax - (xMax-xMin)*deslocamento/100;

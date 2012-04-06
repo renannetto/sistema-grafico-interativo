@@ -140,7 +140,7 @@ void MainWindow::desenharFiguras() {
             QPolygonF poligono;
             list<Ponto*> npontos;
 
-            if(clipador->clippingDePoligonosWeiler(pontos, npontos)){
+            if(clipador->clippingDePoligonosSutherland(pontos, npontos)){
                 int size = npontos.size();
                 for (int i=0; i<size; i++) {
                     Ponto* ponto = npontos.front();
