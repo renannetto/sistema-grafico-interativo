@@ -25,10 +25,12 @@ public:
     void receberPontoY(double);
 
 public slots:
-    void desenharReta();
-    void desenharPonto();
-    void adicionarPonto();
-    void desenharPoligono();
+    void construirReta();
+    void construirPonto();
+    void adicionarPontoPoligono();
+    void construirPoligono();
+    void adicionarPontoCurva();
+    void construirCurva();
     void escolherCor();
 
 signals:
@@ -36,7 +38,8 @@ signals:
 
 private:
     Ui::Dialog *ui;
-    list<Ponto*> pontos;
+    list<Ponto*> pontosPoligono;
+    list<Ponto*> pontosCurva;
     QGraphicsScene *scene;
 };
 

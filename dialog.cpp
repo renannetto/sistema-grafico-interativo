@@ -1,5 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include <iostream>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -10,8 +11,7 @@ Dialog::Dialog(QWidget *parent) :
     ui->graphicsView->setScene(scene);
 }
 
-Dialog::~Dialog()
-{
+Dialog::~Dialog(){
     delete ui;
 
 }
@@ -61,43 +61,55 @@ void Dialog::receberPontoY(double y){
     }
 }
 
-void Dialog::desenharReta()
-{
+void Dialog::construirReta(){
     list<Ponto*> pontos;
     pontos.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
     pontos.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
     emit desenharFigura(RETA, pontos, scene->backgroundBrush().color());
 }
 
-void Dialog::desenharPonto()
-{
+void Dialog::construirPonto(){
     list<Ponto*> ponto;
     ponto.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
     emit desenharFigura(PONTO, ponto, scene->backgroundBrush().color());
 }
 
-void Dialog::adicionarPonto()
-{
+void Dialog::adicionarPontoPoligono(){
     QString ponto = "(";
     ponto += ui->lineEdit_7->text();
     ponto += ", ";
     ponto += ui->lineEdit_8->text();
     ponto += ")";
     ui->listWidget->addItem(ponto);
-    pontos.push_back(new Ponto(ui->lineEdit_7->text().toDouble(), ui->lineEdit_8->text().toDouble()));
+    pontosPoligono.push_back(new Ponto(ui->lineEdit_7->text().toDouble(), ui->lineEdit_8->text().toDouble()));
 }
 
-void Dialog::desenharPoligono()
-{
-    if(pontos.size()>=3){
-        emit desenharFigura(POLIGONO, pontos, scene->backgroundBrush().color());
-        pontos.clear();
+void Dialog::construirPoligono(){
+    if(pontosPoligono.size()>=3){
+        if(this->ui->checkBox->checkState() == Qt::Checked){
+            emit desenharFigura(POLIGONOPREENCHIDO, pontosPoligono, scene->backgroundBrush().color());
+        }
+        else{
+            emit desenharFigura(POLIGONO, pontosPoligono, scene->backgroundBrush().color());
+        }
+        pontosPoligono.clear();
         ui->listWidget->clear();
     }
 }
 
-void Dialog::escolherCor()
-{
+void Dialog::adicionarPontoCurva(){
+    std::cout << "passando aqui" << std::endl;
+    ui->tableWidget->setCellWidget(pontosCurva.size()+1,1,new QLineEdit(ui->lineEdit_9->text()));
+    ui->tableWidget->setCellWidget(pontosCurva.size(),1,new QLineEdit(ui->lineEdit_10->text()));
+    pontosCurva.push_back(new Ponto(ui->lineEdit_9->text().toDouble(), ui->lineEdit_10->text().toDouble()));
+}
+
+void Dialog::construirCurva(){
+
+
+}
+
+void Dialog::escolherCor(){
     QColor cor = QColorDialog::getColor(Qt::black, this);
     scene->setBackgroundBrush(QBrush(cor));
 }

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-enum Tipo {PONTO, RETA, POLIGONO, EIXO, WINDOW};
+enum Tipo {PONTO, RETA, POLIGONO, POLIGONOPREENCHIDO, EIXO, WINDOW};
 
 class Figura
 {
