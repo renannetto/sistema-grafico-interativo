@@ -28,6 +28,7 @@ public:
     bool clippingDePonto(Ponto &);
     bool clippingDeLinhaLiam(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDeLinhaCohen(Ponto const &, Ponto const &, Ponto &, Ponto &);
+    bool clippingDeLinhaLiang(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDePoligonosSutherland(list<Ponto*> &, list<Ponto*> &);
     void cliparPontosPoligono(BORDA borda, list<Ponto*> &pontos, list<Ponto*> &nPontos);
     void cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, list<Ponto*> &nPontos);

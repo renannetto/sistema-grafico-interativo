@@ -93,6 +93,7 @@ void Dialog::construirPoligono(){
             emit desenharFigura(POLIGONO, pontosPoligono, scene->backgroundBrush().color());
         }
         pontosPoligono.clear();
+
         ui->listWidget->clear();
     }
 }
