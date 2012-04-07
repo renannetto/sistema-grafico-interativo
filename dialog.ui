@@ -631,9 +631,6 @@
        <height>171</height>
       </rect>
      </property>
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
      <property name="columnCount">
       <number>3</number>
      </property>
@@ -860,7 +857,7 @@
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>desenharPonto()</slot>
+   <slot>construirPonto()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>352</x>
@@ -876,7 +873,7 @@
    <sender>pushButton_3</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>desenharReta()</slot>
+   <slot>construirReta()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>355</x>
@@ -892,7 +889,7 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>adicionarPonto()</slot>
+   <slot>adicionarPontoPoligono()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>508</x>
@@ -908,7 +905,7 @@
    <sender>pushButton_4</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>desenharPoligono()</slot>
+   <slot>construirPoligono()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>543</x>
@@ -948,6 +945,22 @@
     </hint>
     <hint type="destinationlabel">
      <x>570</x>
+     <y>335</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_7</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>construirCurva()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>474</x>
+     <y>256</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>500</x>
      <y>335</y>
     </hint>
    </hints>

@@ -99,15 +99,26 @@ void Dialog::construirPoligono(){
 }
 
 void Dialog::adicionarPontoCurva(){
-    std::cout << "passando aqui" << std::endl;
-    ui->tableWidget->setCellWidget(pontosCurva.size()+1,1,new QLineEdit(ui->lineEdit_9->text()));
-    ui->tableWidget->setCellWidget(pontosCurva.size(),1,new QLineEdit(ui->lineEdit_10->text()));
-    pontosCurva.push_back(new Ponto(ui->lineEdit_9->text().toDouble(), ui->lineEdit_10->text().toDouble()));
+    stringstream string;
+    string << ui->tableWidget->rowCount();
+    QString s = "Ponto " + QString::fromStdString(string.str());
+    ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+    ui->tableWidget->setVerticalHeaderItem(ui->tableWidget->rowCount()-1, new QTableWidgetItem(s));;
+    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 0, new QTableWidgetItem(ui->lineEdit_9->text()));
+    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 1, new QTableWidgetItem(ui->lineEdit_10->text()));
+    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 2, new QTableWidgetItem("0"));
 }
 
 void Dialog::construirCurva(){
+    for(int i = 0; i < ui->tableWidget->rowCount(); i++){
+        pontosCurva.push_back(new Ponto(ui->tableWidget->item(i,0)->text().toDouble(), ui->tableWidget->item(i,1)->text().toDouble()));
+    }
+    emit desenharCurva(CURVABEZIER, pontosCurva, scene->backgroundBrush().color());
 
-
+    pontosCurva.clear();
+    ui->tableWidget->clear();
+    while(ui->tableWidget->rowCount())
+        ui->tableWidget->removeRow(0);
 }
 
 void Dialog::escolherCor(){

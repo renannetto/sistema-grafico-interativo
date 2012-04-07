@@ -621,6 +621,9 @@
      <property name="text">
       <string>Cohen-Sutherland</string>
      </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QRadioButton" name="radioLiang">
      <property name="geometry">
