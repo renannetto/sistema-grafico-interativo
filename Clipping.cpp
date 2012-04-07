@@ -92,6 +92,65 @@ bool Clipping::clippingDeLinhaCohen(Ponto const &p1, Ponto const &p2, Ponto &np1
     }
 }
 
+bool Clipping::clippingDeLinhaLiang(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2) {
+    double p[4];
+    double q[4];
+    double x1 = p1.obterX();
+    double y1 = p1.obterY();
+    double x2 = p2.obterX();
+    double y2 = p2.obterY();
+    double deltaX = x2-x1;
+    double deltaY = y2-y1;
+
+    np1 = p1;
+    np2 = p2;
+
+    p[0] = -deltaX;
+    p[1] = deltaX;
+    p[2] = -deltaY;
+    p[3] = deltaY;
+
+    q[0] = x1-xMin;
+    q[1] = xMax-x1;
+    q[2] = y1-yMin;
+    q[3] = yMax-y1;
+
+    double u1 = 0;
+    double u2 = 1;
+    double r;
+
+    for (int i=0; i<4; i++) {
+        r = q[i]/p[i];
+
+        if (p[i]<0) {
+            if (r>u1)
+                u1 = r;
+        } else {
+            if (r<u2)
+                u2 = r;
+        }
+    }
+
+    if (u1>u2)
+        return false;
+
+    if (u1>0) {
+        double xNovo1 = x1+u1*deltaX;
+        double yNovo1 = y1+u1*deltaY;
+        np1.setarX(xNovo1);
+        np1.setarY(yNovo1);
+    }
+
+    if (u2<1) {
+        double xNovo2 = x1+u2*deltaX;
+        double yNovo2 = y1+u2*deltaY;
+        np2.setarX(xNovo2);
+        np2.setarY(yNovo2);
+    }
+
+    return true;
+}
+
 bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &nPontos){
     list<Ponto*> pontosEsq;
     list<Ponto*> pontosDir;

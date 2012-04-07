@@ -129,14 +129,23 @@ void MainWindow::desenharFiguras() {
         } else if(figura->obterTipo() == RETA){
             Ponto np1(0, 0);
             Ponto np2(0, 0);
-            if(clipador->clippingDeLinhaCohen(*pontos.front(),*pontos.back(),np1,np2)){
-                double x1 = transformadaViewportX(np1.obterX());
-                double y1 = transformadaViewportY(np1.obterY());
-                double x2 = transformadaViewportX(np2.obterX());
-                double y2 = transformadaViewportY(np2.obterY());
-                viewport->addLine(x1, y1, x2, y2, QPen(qCor));
+            if (ui->radioCohen->isChecked()) {
+                if(clipador->clippingDeLinhaCohen(*pontos.front(),*pontos.back(),np1,np2)){
+                    double x1 = transformadaViewportX(np1.obterX());
+                    double y1 = transformadaViewportY(np1.obterY());
+                    double x2 = transformadaViewportX(np2.obterX());
+                    double y2 = transformadaViewportY(np2.obterY());
+                    viewport->addLine(x1, y1, x2, y2, QPen(qCor));
+                }
+            } else {
+                if(clipador->clippingDeLinhaLiang(*pontos.front(),*pontos.back(),np1,np2)){
+                    double x1 = transformadaViewportX(np1.obterX());
+                    double y1 = transformadaViewportY(np1.obterY());
+                    double x2 = transformadaViewportX(np2.obterX());
+                    double y2 = transformadaViewportY(np2.obterY());
+                    viewport->addLine(x1, y1, x2, y2, QPen(qCor));
+                }
             }
-
         } else{
             QPolygonF poligono;
             list<Ponto*> npontos;
