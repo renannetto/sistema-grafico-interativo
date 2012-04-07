@@ -119,13 +119,14 @@ void MainWindow::desenharFiguras() {
 //            ya = y;
 //        }
 //        viewport->addLine(x,y,xP,yP, QPen(qCor));
-        if(pontos.size()==1){
+
+        if(figura->obterTipo() == PONTO){
             if(clipador->clippingDePonto(*pontos.front())){
                 double x = transformadaViewportX(pontos.front()->obterX());
                 double y = transformadaViewportY(pontos.front()->obterY());
                 viewport->addLine(x,y,x,y, QPen(qCor));
             }
-        } else if(pontos.size()==2){
+        } else if(figura->obterTipo() == RETA){
             Ponto np1(0, 0);
             Ponto np2(0, 0);
             if(clipador->clippingDeLinhaCohen(*pontos.front(),*pontos.back(),np1,np2)){
@@ -149,7 +150,12 @@ void MainWindow::desenharFiguras() {
                     npontos.pop_front();
                     npontos.push_back(ponto);
                 }
-                viewport->addPolygon(poligono, QPen(qCor), QBrush(qCor));
+                if(figura->obterTipo() == POLIGONOPREENCHIDO){
+                    viewport->addPolygon(poligono, QPen(qCor), QBrush(qCor));
+                }
+                else{
+                    viewport->addPolygon(poligono, QPen(qCor));
+                }
             }
         }
         figuras.pop_back();

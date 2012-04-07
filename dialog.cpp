@@ -1,5 +1,6 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+#include <iostream>
 
 Dialog::Dialog(QWidget *parent) :
     QDialog(parent),
@@ -90,7 +91,12 @@ void Dialog::adicionarPonto()
 void Dialog::desenharPoligono()
 {
     if(pontos.size()>=3){
-        emit desenharFigura(POLIGONO, pontos, scene->backgroundBrush().color());
+        if(this->ui->checkBox->checkState() == Qt::Checked){
+            emit desenharFigura(POLIGONOPREENCHIDO, pontos, scene->backgroundBrush().color());
+        }
+        else{
+            emit desenharFigura(POLIGONO, pontos, scene->backgroundBrush().color());
+        }
         pontos.clear();
         ui->listWidget->clear();
     }

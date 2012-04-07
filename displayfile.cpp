@@ -5,6 +5,7 @@ DisplayFile::DisplayFile()
     nPontos = 0;
     nRetas = 0;
     nPoligonos = 0;
+    nPoligonosP = 0;
 
     window = criarWindow();
     figuras.push_back(window);
@@ -66,25 +67,32 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, Cor cor)
     stringstream nomeInt;
     switch(tipo)
     {
-        case PONTO: nome = "Ponto";
+        case PONTO: nome = "Ponto ";
                     nomeInt << nome << nPontos;
                     nome = nomeInt.str();
                     figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
                     nPontos++;
                     break;
-        case RETA: nome = "Reta";
+        case RETA: nome = "Reta ";
                    nomeInt << nome << nRetas;
                    nome = nomeInt.str();
                    figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
                    nRetas++;
                    break;
-        case POLIGONO: nome = "Poligono";
+        case POLIGONO: nome = "Poligono ";
                        nomeInt << nome << nPoligonos;
                        nome = nomeInt.str();
                        figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
                        nPoligonos++;
                        break;
+        case POLIGONOPREENCHIDO: nome = "Poligono Preenchido ";
+                                 nomeInt << nome << nPoligonosP;
+                                 nome = nomeInt.str();
+                                 figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
+                                 nPoligonosP++;
+                                 break;
         case EIXO: break;
+        case WINDOW: break;
     }
     figuras.push_back(figura);
     return nome;
