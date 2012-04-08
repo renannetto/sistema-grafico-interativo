@@ -6,6 +6,7 @@ DisplayFile::DisplayFile()
     nRetas = 0;
     nPoligonos = 0;
     nPoligonosP = 0;
+    nBeziers = 0;
 
     window = criarWindow();
     figuras.push_back(window);
@@ -67,32 +68,43 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, Cor cor)
     stringstream nomeInt;
     switch(tipo)
     {
-        case PONTO: nome = "Ponto ";
-                    nomeInt << nome << nPontos;
-                    nome = nomeInt.str();
-                    figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
-                    nPontos++;
-                    break;
-        case RETA: nome = "Reta ";
-                   nomeInt << nome << nRetas;
-                   nome = nomeInt.str();
-                   figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
-                   nRetas++;
-                   break;
-        case POLIGONO: nome = "Poligono ";
-                       nomeInt << nome << nPoligonos;
-                       nome = nomeInt.str();
-                       figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
-                       nPoligonos++;
-                       break;
-        case POLIGONOPREENCHIDO: nome = "Poligono Preenchido ";
-                                 nomeInt << nome << nPoligonosP;
-                                 nome = nomeInt.str();
-                                 figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
-                                 nPoligonosP++;
-                                 break;
-        case EIXO: break;
-        case WINDOW: break;
+    case PONTO:
+        nome = "Ponto ";
+        nomeInt << nome << nPontos;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
+        nPontos++;
+        break;
+    case RETA:
+        nome = "Reta ";
+        nomeInt << nome << nRetas;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
+        nRetas++;
+        break;
+    case POLIGONO:
+        nome = "Poligono ";
+        nomeInt << nome << nPoligonos;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
+        nPoligonos++;
+        break;
+    case POLIGONOPREENCHIDO:
+        nome = "Poligono Preenchido ";
+        nomeInt << nome << nPoligonosP;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
+        nPoligonosP++;
+        break;
+    case CURVABEZIER :
+        nome = "Bezier ";
+        nomeInt << nome << nBeziers;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
+        nBeziers++;
+        break;
+    case EIXO: break;
+    case WINDOW: break;
     }
     figuras.push_back(figura);
     return nome;

@@ -26,6 +26,7 @@ private:
     int nRetas;
     int nPoligonos;
     int nPoligonosP;
+    int nBeziers;
     list<Figura*> figuras;
     Figura* window;
 };

@@ -34,7 +34,7 @@ public slots:
     void escolherCor();
 
 signals:
-    void desenharFigura(Tipo, list<Ponto*>, QColor cor);
+    void construirFigura(Tipo, list<Ponto*>, QColor cor);
 
 private:
     Ui::Dialog *ui;

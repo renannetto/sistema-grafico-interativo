@@ -32,7 +32,7 @@ void MainWindow::iniciar(){
     ui->graphicsView->setScene(viewport);
     ui->zoomText->clear();
 
-    connect(janelaDeCriacoes, SIGNAL(desenharFigura(Tipo, list<Ponto*>, QColor)),
+    connect(janelaDeCriacoes, SIGNAL(construirFigura(Tipo, list<Ponto*>, QColor)),
     this, SLOT(construirFigura(Tipo, list<Ponto*>, QColor)));
     connect(janelaDeTransformacoes, SIGNAL(sTransladar2D(double,double)),
     this, SLOT(transladar2D(double,double)));
@@ -47,6 +47,7 @@ void MainWindow::iniciar(){
     connect(janelaDeTransformacoes, SIGNAL(sMudarCor(QColor)), this, SLOT(mudarCor(QColor)));
 
     mostrarValorDoZoom(ui->zoomSlider->value());
+    construirMatrizes();
     desenharFiguras();
 }
 
@@ -56,6 +57,13 @@ void MainWindow::reiniciar(){
     delete viewport;
 
     iniciar();
+}
+
+void MainWindow::construirMatrizes(){
+    matrizBezier[0][0] = -1; matrizBezier[0][1] = 3; matrizBezier[0][2] = -3; matrizBezier[0][3] = 1;
+    matrizBezier[1][0] = 3; matrizBezier[1][1] = -6; matrizBezier[1][2] = 3; matrizBezier[1][3] = 0;
+    matrizBezier[2][0] = -3; matrizBezier[2][1] = 3; matrizBezier[2][2] = 0; matrizBezier[2][3] = 0;
+    matrizBezier[3][0] = 1; matrizBezier[3][1] = 0; matrizBezier[3][2] = 0; matrizBezier[3][3] = 0;
 }
 
 void MainWindow::resetarWindow(){
@@ -146,6 +154,42 @@ void MainWindow::desenharFiguras() {
                     viewport->addLine(x1, y1, x2, y2, QPen(qCor));
                 }
             }
+        } else if (figura->obterTipo() == CURVABEZIER){
+            list<Ponto*>::iterator it = pontos.begin();
+            double constantesX[4], constantesY[4];
+            //int nPassos = (100.0/sqrt(clipador->obterYMax() - clipador->obterYMin()))*3.0;
+            int nPassos = 40;
+            for(int i = 0; i < (pontos.size()-1)/3; i++){
+                Ponto* p1 = *it++;
+                Ponto* p2 = *it++;
+                Ponto* p3 = *it++;
+                Ponto* p4 = *it;
+                for(int j = 0; j < 4; j++){
+                    constantesX[j] = 0;
+                    constantesY[j] = 0;
+
+                    constantesX[j] += matrizBezier[j][0]*p1->obterX();
+                    constantesY[j] += matrizBezier[j][0]*p1->obterY();
+                    constantesX[j] += matrizBezier[j][1]*p2->obterX();
+                    constantesY[j] += matrizBezier[j][1]*p2->obterY();
+                    constantesX[j] += matrizBezier[j][2]*p3->obterX();
+                    constantesY[j] += matrizBezier[j][2]*p3->obterY();
+                    constantesX[j] += matrizBezier[j][3]*p4->obterX();
+                    constantesY[j] += matrizBezier[j][3]*p4->obterY();
+                }
+                double x1,x2,y1,y2;
+                x1 = constantesX[3];
+                y1 = constantesY[3];
+                std::cout << nPassos << " | X1 = " << x1 << "X2 = " << y1 << std::endl;
+                for(int j = 1; j <= nPassos; j++){
+                    double passo = (double)j/(double)nPassos;
+                    x2 = ((constantesX[0]*passo + constantesX[1])*passo + constantesX[2])*passo + constantesX[3];
+                    y2 = ((constantesY[0]*passo + constantesY[1])*passo + constantesY[2])*passo + constantesY[3];
+                    viewport->addLine(transformadaViewportX(x1),transformadaViewportY(y1),transformadaViewportX(x2),transformadaViewportY(y2),QPen(qCor));
+                    x1 = x2;
+                    y1 = y2;
+                }
+            }
         } else{
             QPolygonF poligono;
             list<Ponto*> npontos;
@@ -223,7 +267,7 @@ void MainWindow::receberPonto(double x, double y){
     }
     if(janelaDeTransformacoes->isVisible()){
         janelaDeTransformacoes->receberPontoX(x);
-        janelaDeCriacoes->receberPontoY(y);
+        janelaDeTransformacoes->receberPontoY(y);
     }
 }
 

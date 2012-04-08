@@ -35,6 +35,9 @@ void Dialog::receberPontoX(double x){
         this->ui->lineEdit_7->setText(ssX.str().c_str());
 
         break;
+    case 3 :
+        this->ui->lineEdit_9->setText(ssX.str().c_str());
+        break;
     }
 }
 
@@ -58,6 +61,10 @@ void Dialog::receberPontoY(double y){
         this->ui->pushButton->click();
 
         break;
+    case 3 :
+        this->ui->lineEdit_10->setText(ssY.str().c_str());
+        this->ui->pushButton_6->click();
+        break;
     }
 }
 
@@ -65,13 +72,13 @@ void Dialog::construirReta(){
     list<Ponto*> pontos;
     pontos.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
     pontos.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
-    emit desenharFigura(RETA, pontos, scene->backgroundBrush().color());
+    emit construirFigura(RETA, pontos, scene->backgroundBrush().color());
 }
 
 void Dialog::construirPonto(){
     list<Ponto*> ponto;
     ponto.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
-    emit desenharFigura(PONTO, ponto, scene->backgroundBrush().color());
+    emit construirFigura(PONTO, ponto, scene->backgroundBrush().color());
 }
 
 void Dialog::adicionarPontoPoligono(){
@@ -87,10 +94,10 @@ void Dialog::adicionarPontoPoligono(){
 void Dialog::construirPoligono(){
     if(pontosPoligono.size()>=3){
         if(this->ui->checkBox->checkState() == Qt::Checked){
-            emit desenharFigura(POLIGONOPREENCHIDO, pontosPoligono, scene->backgroundBrush().color());
+            emit construirFigura(POLIGONOPREENCHIDO, pontosPoligono, scene->backgroundBrush().color());
         }
         else{
-            emit desenharFigura(POLIGONO, pontosPoligono, scene->backgroundBrush().color());
+            emit construirFigura(POLIGONO, pontosPoligono, scene->backgroundBrush().color());
         }
         pontosPoligono.clear();
 
@@ -110,15 +117,17 @@ void Dialog::adicionarPontoCurva(){
 }
 
 void Dialog::construirCurva(){
-    for(int i = 0; i < ui->tableWidget->rowCount(); i++){
-        pontosCurva.push_back(new Ponto(ui->tableWidget->item(i,0)->text().toDouble(), ui->tableWidget->item(i,1)->text().toDouble()));
-    }
-    emit desenharCurva(CURVABEZIER, pontosCurva, scene->backgroundBrush().color());
+    if(ui->tableWidget->rowCount()>=4){
+        for(int i = 0; i < ui->tableWidget->rowCount(); i++){
+            pontosCurva.push_back(new Ponto(ui->tableWidget->item(i,0)->text().toDouble(), ui->tableWidget->item(i,1)->text().toDouble()));
+        }
+        emit construirFigura(CURVABEZIER, pontosCurva, scene->backgroundBrush().color());
 
-    pontosCurva.clear();
-    ui->tableWidget->clear();
-    while(ui->tableWidget->rowCount())
-        ui->tableWidget->removeRow(0);
+        pontosCurva.clear();
+        ui->tableWidget->clear();
+        while(ui->tableWidget->rowCount())
+            ui->tableWidget->removeRow(0);
+    }
 }
 
 void Dialog::escolherCor(){

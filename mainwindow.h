@@ -7,6 +7,7 @@
 #include <string>
 #include <iostream>
 #include <math.h>
+#include <vector>
 #include "Clipping.h"
 #include "canvas.h"
 #include "dialog.h"
@@ -65,6 +66,7 @@ public slots:
 
 private:
     void iniciar();
+    void construirMatrizes();
     void desenharFiguras();
     void desenharSubViewport();
     double transformadaViewportX(double);
@@ -79,6 +81,7 @@ private:
     Canvas *detectorDeEventos;
     Clipping *clipador;
     unsigned int deslocamentoClipador;
+    double matrizBezier[4][4];
 };
 
 #endif // MAINWINDOW_H
