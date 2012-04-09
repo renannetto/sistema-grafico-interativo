@@ -181,7 +181,7 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
     double m;
     switch(borda) {
     case BESQUERDA:
-        if(ponto1->obterX()>xMin && ponto2->obterX()>xMin) { // dentro -> dentro
+        if(ponto1->obterX()>=xMin && ponto2->obterX()>=xMin) { // dentro -> dentro
             nPontos.push_back(ponto2);
         } else
             if(ponto1->obterX()<xMin && ponto2->obterX()>xMin) { // fora -> dentro
@@ -199,7 +199,7 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
                 }
         break;
     case BDIREITA:
-        if(ponto1->obterX()<xMax && ponto2->obterX()<xMax) { // dentro -> dentro
+        if(ponto1->obterX()<=xMax && ponto2->obterX()<=xMax) { // dentro -> dentro
             nPontos.push_back(ponto2);
         } else
             if(ponto1->obterX()>xMax && ponto2->obterX()<xMax) { // fora -> dentro
@@ -217,7 +217,7 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
                 }
         break;
     case BCIMA:
-        if(ponto1->obterY()<yMax && ponto2->obterY()<yMax) { // dentro -> dentro
+        if(ponto1->obterY()<=yMax && ponto2->obterY()<=yMax) { // dentro -> dentro
             nPontos.push_back(ponto2);
         } else
             if(ponto1->obterY()>yMax && ponto2->obterY()<yMax) { // fora -> dentro
@@ -235,7 +235,7 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
                 }
         break;
     case BBAIXO:
-        if(ponto1->obterY()>yMin && ponto2->obterY()>yMin) { // dentro -> dentro
+        if(ponto1->obterY()>=yMin && ponto2->obterY()>=yMin) { // dentro -> dentro
             nPontos.push_back(ponto2);
         } else
             if(ponto1->obterY()<yMin && ponto2->obterY()>yMin) { // fora -> dentro
