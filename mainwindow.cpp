@@ -158,6 +158,9 @@ void MainWindow::desenharFiguras() {
                 x1 = x2;
                 y1 = y2;
             }
+
+            pontosCurva.clear();
+            pontosClipping.clear();
         } else{
             QPolygonF poligono;
             list<Ponto*> npontos;
@@ -177,6 +180,7 @@ void MainWindow::desenharFiguras() {
                 else{
                     viewport->addPolygon(poligono, QPen(qCor));
                 }
+                npontos.clear();
             }
         }
         figuras.pop_back();
