@@ -68,6 +68,7 @@ private:
     void iniciar();
     void construirMatrizes();
     void desenharFiguras();
+    bool cliparReta(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2);
     void desenharSubViewport();
     double transformadaViewportX(double);
     double transformadaViewportY(double);

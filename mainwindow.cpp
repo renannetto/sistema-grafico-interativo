@@ -137,28 +137,22 @@ void MainWindow::desenharFiguras() {
         } else if(figura->obterTipo() == RETA){
             Ponto np1(0, 0);
             Ponto np2(0, 0);
-            if (ui->radioCohen->isChecked()) {
-                if(clipador->clippingDeLinhaCohen(*pontos.front(),*pontos.back(),np1,np2)){
-                    double x1 = transformadaViewportX(np1.obterX());
-                    double y1 = transformadaViewportY(np1.obterY());
-                    double x2 = transformadaViewportX(np2.obterX());
-                    double y2 = transformadaViewportY(np2.obterY());
-                    viewport->addLine(x1, y1, x2, y2, QPen(qCor));
-                }
-            } else {
-                if(clipador->clippingDeLinhaLiang(*pontos.front(),*pontos.back(),np1,np2)){
-                    double x1 = transformadaViewportX(np1.obterX());
-                    double y1 = transformadaViewportY(np1.obterY());
-                    double x2 = transformadaViewportX(np2.obterX());
-                    double y2 = transformadaViewportY(np2.obterY());
-                    viewport->addLine(x1, y1, x2, y2, QPen(qCor));
-                }
+            if (cliparReta(*pontos.front(), *pontos.back(), np1, np2)) {
+                double x1 = transformadaViewportX(np1.obterX());
+                double y1 = transformadaViewportY(np1.obterY());
+                double x2 = transformadaViewportX(np2.obterX());
+                double y2 = transformadaViewportY(np2.obterY());
+                viewport->addLine(x1, y1, x2, y2, QPen(qCor));
             }
         } else if (figura->obterTipo() == CURVABEZIER){
             list<Ponto*>::iterator it = pontos.begin();
             double constantesX[4], constantesY[4];
             //int nPassos = (100.0/sqrt(clipador->obterYMax() - clipador->obterYMin()))*3.0;
             int nPassos = 40;
+            double xMin = clipador->obterXMin();
+            double xMax = clipador->obterXMax();
+            double yMin = clipador->obterYMin();
+            double yMax = clipador->obterYMax();
             for(int i = 0; i < (pontos.size()-1)/3; i++){
                 Ponto* p1 = *it++;
                 Ponto* p2 = *it++;
@@ -185,7 +179,27 @@ void MainWindow::desenharFiguras() {
                     double passo = (double)j/(double)nPassos;
                     x2 = ((constantesX[0]*passo + constantesX[1])*passo + constantesX[2])*passo + constantesX[3];
                     y2 = ((constantesY[0]*passo + constantesY[1])*passo + constantesY[2])*passo + constantesY[3];
-                    viewport->addLine(transformadaViewportX(x1),transformadaViewportY(y1),transformadaViewportX(x2),transformadaViewportY(y2),QPen(qCor));
+                    if (x1 > xMin && x1 < xMax && y1 > yMin && y1 <yMax) { //ponto 1 dentro
+                        if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => não precisa clipar
+                            viewport->addLine(transformadaViewportX(x1),transformadaViewportY(y1),transformadaViewportX(x2),transformadaViewportY(y2),QPen(qCor));
+                        } else {
+                            Ponto p1(x1, y1);
+                            Ponto p2(x2, y2);
+                            Ponto np1(0, 0);
+                            Ponto np2(0, 0);
+                            if (cliparReta(p1, p2, np1, np2))
+                                viewport->addLine(transformadaViewportX(np1.obterX()),transformadaViewportY(np1.obterY()),transformadaViewportX(np2.obterX()),transformadaViewportY(np2.obterY()),QPen(qCor));
+                        }
+                    } else { //ponto 1 fora
+                        if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => precisa clipar
+                            Ponto p1(x1, y1);
+                            Ponto p2(x2, y2);
+                            Ponto np1(0, 0);
+                            Ponto np2(0, 0);
+                            if (cliparReta(p1, p2, np1, np2))
+                                viewport->addLine(transformadaViewportX(np1.obterX()),transformadaViewportY(np1.obterY()),transformadaViewportX(np2.obterX()),transformadaViewportY(np2.obterY()),QPen(qCor));
+                        }
+                    }
                     x1 = x2;
                     y1 = y2;
                 }
@@ -214,6 +228,13 @@ void MainWindow::desenharFiguras() {
         figuras.pop_back();
         figuras.push_front(figura);
     }
+}
+
+bool MainWindow::cliparReta(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2){
+    if (ui->radioCohen->isChecked())
+        return clipador->clippingDeLinhaCohen(p1, p2, np1, np2);
+    else
+        return clipador->clippingDeLinhaLiang(p1, p2, np1, np2);
 }
 
 void MainWindow::desenharSubViewport(){

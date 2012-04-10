@@ -26,7 +26,6 @@ class Clipping
 public:
     Clipping(double,double,double,double, double);
     bool clippingDePonto(Ponto &);
-    bool clippingDeLinhaLiam(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDeLinhaCohen(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDeLinhaLiang(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDePoligonosSutherland(list<Ponto*> &, list<Ponto*> &);
