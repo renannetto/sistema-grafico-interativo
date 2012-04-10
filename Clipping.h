@@ -28,10 +28,13 @@ public:
     bool clippingDePonto(Ponto &);
     bool clippingDeLinhaCohen(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDeLinhaLiang(Ponto const &, Ponto const &, Ponto &, Ponto &);
+    bool clippingDeLinha(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDePoligonosSutherland(list<Ponto*> &, list<Ponto*> &);
     void cliparPontosPoligono(BORDA borda, list<Ponto*> &pontos, list<Ponto*> &nPontos);
     void cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, list<Ponto*> &nPontos);
+    bool clippingDeCurvas(list<Ponto*> &pontos, list<Ponto*> &nPontos);
     void fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento);
+    void fixarAlgoritmoDeClipping(int algoritmo);
     double obterXMin();
     double obterXMax();
     double obterYMin();
@@ -40,6 +43,7 @@ private:
     int identificarRC(Ponto const &);
     bool calculaNovoPonto(double, int, Ponto const &, Ponto &);
     bool clippingDeLinhaCohenParaWeiler(Ponto const &, Ponto const &, Ponto &, Ponto &);
+    int clippingLinha;
     double xMin;
     double xMax;
     double yMin;

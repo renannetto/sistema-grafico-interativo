@@ -13,6 +13,7 @@
 #include "dialog.h"
 #include "Transformacoes.h"
 #include "windowviewport.h"
+#include "geradordecurvas.h"
 
 
 namespace Ui {
@@ -63,12 +64,13 @@ public slots:
     void rotacionarWindowParaEsquerda();
     void aumentarRegiaoDeClipping();
     void diminuirRegiaoDeClipping();
+    void fixarAlgoritmoDeClipping();
 
 private:
     void iniciar();
     void construirMatrizes();
     void desenharFiguras();
-    bool cliparReta(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2);
+    bool clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2);
     void desenharSubViewport();
     double transformadaViewportX(double);
     double transformadaViewportY(double);
@@ -82,7 +84,7 @@ private:
     Canvas *detectorDeEventos;
     Clipping *clipador;
     unsigned int deslocamentoClipador;
-    double matrizBezier[4][4];
+    GeradorDeCurvas *geradorDeCurvas;
 };
 
 #endif // MAINWINDOW_H

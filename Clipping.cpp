@@ -5,6 +5,7 @@ Clipping::Clipping(double xMin,double xMax,double yMin,double yMax, double deslo
     this->xMax = xMax - (xMax-xMin)*deslocamento/100;
     this->yMin = yMin + (yMax-yMin)*deslocamento/100;
     this->yMax = yMax - (yMax-yMin)*deslocamento/100;
+    clippingLinha = 0;
 }
 
 int Clipping::identificarRC(Ponto const &p){
@@ -151,6 +152,13 @@ bool Clipping::clippingDeLinhaLiang(Ponto const &p1, Ponto const &p2, Ponto &np1
     return true;
 }
 
+bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2) {
+    if (clippingLinha)
+        return clippingDeLinhaCohen(p1, p2, np1, np2);
+    else
+        return clippingDeLinhaLiang(p1, p2, np1, np2);
+}
+
 bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &nPontos){
     list<Ponto*> pontosEsq;
     list<Ponto*> pontosDir;
@@ -255,11 +263,57 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
     }
 }
 
+bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
+    list<Ponto*>::iterator it = pontos.begin();
+
+    double x1 = (*it)->obterX();
+    double y1 = (*it)->obterY();
+    double x2;
+    double y2;
+
+    for (++it; it!=pontos.end(); it++) {
+        x2 = (*it)->obterX();
+        y2 = (*it)->obterY();
+
+        if (x1 > xMin && x1 < xMax && y1 > yMin && y1 <yMax) { //ponto 1 dentro
+            if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => não precisa clipar
+                nPontos.push_back(new Ponto(x2, y2));
+            } else {
+                Ponto p1(x1, y1);
+                Ponto p2(x2, y2);
+                Ponto np1(0, 0);
+                Ponto np2(0, 0);
+                if (clippingDeLinha(p1, p2, np1, np2)) {
+                    nPontos.push_back(new Ponto(np2.obterX(), np2.obterY()));
+                }
+            }
+        } else { //ponto 1 fora
+            if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => precisa clipar
+                Ponto p1(x1, y1);
+                Ponto p2(x2, y2);
+                Ponto np1(0, 0);
+                Ponto np2(0, 0);
+                if (clippingDeLinha(p1, p2, np1, np2)) {
+                    nPontos.push_back(new Ponto(np1.obterX(), np1.obterY()));
+                    nPontos.push_back(new Ponto(np2.obterX(), np2.obterY()));
+                }
+            }
+        }
+
+        x1 = x2;
+        y1 = y2;
+    }
+}
+
 void Clipping::fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento) {
     this->xMin = xMin + (xMax-xMin)*deslocamento/100;
     this->xMax = xMax - (xMax-xMin)*deslocamento/100;
     this->yMin = yMin + (yMax-yMin)*deslocamento/100;
     this->yMax = yMax - (yMax-yMin)*deslocamento/100;
+}
+
+void Clipping::fixarAlgoritmoDeClipping(int algoritmo) {
+    clippingLinha = algoritmo;
 }
 
 double Clipping::obterXMax(){

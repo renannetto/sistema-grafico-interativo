@@ -980,6 +980,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>radioCohen</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fixarAlgoritmoDeClipping()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>454</x>
+     <y>37</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>310</x>
+     <y>29</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioLiang</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fixarAlgoritmoDeClipping()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>604</x>
+     <y>35</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>326</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>abrirJanelaDeCriacoes()</slot>
@@ -999,5 +1031,6 @@
   <slot>abrirJanelaDeAjuda()</slot>
   <slot>aumentarRegiaoDeClipping()</slot>
   <slot>diminuirRegiaoDeClipping()</slot>
+  <slot>fixarAlgoritmoDeClipping()</slot>
  </slots>
 </ui>

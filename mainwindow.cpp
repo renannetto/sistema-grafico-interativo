@@ -27,6 +27,9 @@ void MainWindow::iniciar(){
     deslocamentoClipador = 10;
     clipador = new Clipping(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
                             windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+
+    geradorDeCurvas = new GeradorDeCurvas();
+
     detectorDeEventos = this->ui->graphicsView;
     detectorDeEventos->fixarJanelaPrincipal(this);
     ui->graphicsView->setScene(viewport);
@@ -47,7 +50,6 @@ void MainWindow::iniciar(){
     connect(janelaDeTransformacoes, SIGNAL(sMudarCor(QColor)), this, SLOT(mudarCor(QColor)));
 
     mostrarValorDoZoom(ui->zoomSlider->value());
-    construirMatrizes();
     desenharFiguras();
 }
 
@@ -57,13 +59,6 @@ void MainWindow::reiniciar(){
     delete viewport;
 
     iniciar();
-}
-
-void MainWindow::construirMatrizes(){
-    matrizBezier[0][0] = -1; matrizBezier[0][1] = 3; matrizBezier[0][2] = -3; matrizBezier[0][3] = 1;
-    matrizBezier[1][0] = 3; matrizBezier[1][1] = -6; matrizBezier[1][2] = 3; matrizBezier[1][3] = 0;
-    matrizBezier[2][0] = -3; matrizBezier[2][1] = 3; matrizBezier[2][2] = 0; matrizBezier[2][3] = 0;
-    matrizBezier[3][0] = 1; matrizBezier[3][1] = 0; matrizBezier[3][2] = 0; matrizBezier[3][3] = 0;
 }
 
 void MainWindow::resetarWindow(){
@@ -137,7 +132,7 @@ void MainWindow::desenharFiguras() {
         } else if(figura->obterTipo() == RETA){
             Ponto np1(0, 0);
             Ponto np2(0, 0);
-            if (cliparReta(*pontos.front(), *pontos.back(), np1, np2)) {
+            if (clippingDeLinha(*pontos.front(), *pontos.back(), np1, np2)) {
                 double x1 = transformadaViewportX(np1.obterX());
                 double y1 = transformadaViewportY(np1.obterY());
                 double x2 = transformadaViewportX(np2.obterX());
@@ -145,64 +140,23 @@ void MainWindow::desenharFiguras() {
                 viewport->addLine(x1, y1, x2, y2, QPen(qCor));
             }
         } else if (figura->obterTipo() == CURVABEZIER){
-            list<Ponto*>::iterator it = pontos.begin();
-            double constantesX[4], constantesY[4];
-            //int nPassos = (100.0/sqrt(clipador->obterYMax() - clipador->obterYMin()))*3.0;
-            int nPassos = 40;
-            double xMin = clipador->obterXMin();
-            double xMax = clipador->obterXMax();
-            double yMin = clipador->obterYMin();
-            double yMax = clipador->obterYMax();
-            for(int i = 0; i < (pontos.size()-1)/3; i++){
-                Ponto* p1 = *it++;
-                Ponto* p2 = *it++;
-                Ponto* p3 = *it++;
-                Ponto* p4 = *it;
-                for(int j = 0; j < 4; j++){
-                    constantesX[j] = 0;
-                    constantesY[j] = 0;
+            list<Ponto*> pontosCurva;
+            geradorDeCurvas->gerarBezier(pontos, pontosCurva);
 
-                    constantesX[j] += matrizBezier[j][0]*p1->obterX();
-                    constantesY[j] += matrizBezier[j][0]*p1->obterY();
-                    constantesX[j] += matrizBezier[j][1]*p2->obterX();
-                    constantesY[j] += matrizBezier[j][1]*p2->obterY();
-                    constantesX[j] += matrizBezier[j][2]*p3->obterX();
-                    constantesY[j] += matrizBezier[j][2]*p3->obterY();
-                    constantesX[j] += matrizBezier[j][3]*p4->obterX();
-                    constantesY[j] += matrizBezier[j][3]*p4->obterY();
-                }
-                double x1,x2,y1,y2;
-                x1 = constantesX[3];
-                y1 = constantesY[3];
-                std::cout << nPassos << " | X1 = " << x1 << "X2 = " << y1 << std::endl;
-                for(int j = 1; j <= nPassos; j++){
-                    double passo = (double)j/(double)nPassos;
-                    x2 = ((constantesX[0]*passo + constantesX[1])*passo + constantesX[2])*passo + constantesX[3];
-                    y2 = ((constantesY[0]*passo + constantesY[1])*passo + constantesY[2])*passo + constantesY[3];
-                    if (x1 > xMin && x1 < xMax && y1 > yMin && y1 <yMax) { //ponto 1 dentro
-                        if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => não precisa clipar
-                            viewport->addLine(transformadaViewportX(x1),transformadaViewportY(y1),transformadaViewportX(x2),transformadaViewportY(y2),QPen(qCor));
-                        } else {
-                            Ponto p1(x1, y1);
-                            Ponto p2(x2, y2);
-                            Ponto np1(0, 0);
-                            Ponto np2(0, 0);
-                            if (cliparReta(p1, p2, np1, np2))
-                                viewport->addLine(transformadaViewportX(np1.obterX()),transformadaViewportY(np1.obterY()),transformadaViewportX(np2.obterX()),transformadaViewportY(np2.obterY()),QPen(qCor));
-                        }
-                    } else { //ponto 1 fora
-                        if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => precisa clipar
-                            Ponto p1(x1, y1);
-                            Ponto p2(x2, y2);
-                            Ponto np1(0, 0);
-                            Ponto np2(0, 0);
-                            if (cliparReta(p1, p2, np1, np2))
-                                viewport->addLine(transformadaViewportX(np1.obterX()),transformadaViewportY(np1.obterY()),transformadaViewportX(np2.obterX()),transformadaViewportY(np2.obterY()),QPen(qCor));
-                        }
-                    }
-                    x1 = x2;
-                    y1 = y2;
-                }
+            list<Ponto*> pontosClipping;
+            clipador->clippingDeCurvas(pontosCurva, pontosClipping);
+
+            list<Ponto*>::iterator it = pontosClipping.begin();
+            double x1 = (*it)->obterX();
+            double y1 = (*it)->obterY();
+            double x2;
+            double y2;
+            for (++it; it!=pontosClipping.end(); it++) {
+                x2 = (*it)->obterX();
+                y2 = (*it)->obterY();
+                viewport->addLine(transformadaViewportX(x1), transformadaViewportY(y1), transformadaViewportX(x2), transformadaViewportY(y2), QPen(qCor));
+                x1 = x2;
+                y1 = y2;
             }
         } else{
             QPolygonF poligono;
@@ -230,11 +184,8 @@ void MainWindow::desenharFiguras() {
     }
 }
 
-bool MainWindow::cliparReta(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2){
-    if (ui->radioCohen->isChecked())
-        return clipador->clippingDeLinhaCohen(p1, p2, np1, np2);
-    else
-        return clipador->clippingDeLinhaLiang(p1, p2, np1, np2);
+bool MainWindow::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2){
+    return clipador->clippingDeLinha(p1, p2, np1, np2);
 }
 
 void MainWindow::desenharSubViewport(){
@@ -416,4 +367,11 @@ void MainWindow::diminuirRegiaoDeClipping(){
                                    windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
         desenharFiguras();
     }
+}
+
+void MainWindow::fixarAlgoritmoDeClipping() {
+    if (ui->radioCohen->isChecked())
+        clipador->fixarAlgoritmoDeClipping(1);
+    else
+        clipador->fixarAlgoritmoDeClipping(0);
 }
