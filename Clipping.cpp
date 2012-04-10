@@ -294,6 +294,9 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
                 Ponto np1(0, 0);
                 Ponto np2(0, 0);
                 if (clippingDeLinha(p1, p2, np1, np2)) {
+                    if(nPontos.size() != 0){
+                        nPontos.push_back(0);
+                    }
                     nPontos.push_back(new Ponto(np1.obterX(), np1.obterY()));
                     nPontos.push_back(new Ponto(np2.obterX(), np2.obterY()));
                 }

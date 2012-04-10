@@ -152,11 +152,17 @@ void MainWindow::desenharFiguras() {
             double x2;
             double y2;
             for (++it; it!=pontosClipping.end(); it++) {
-                x2 = (*it)->obterX();
-                y2 = (*it)->obterY();
-                viewport->addLine(transformadaViewportX(x1), transformadaViewportY(y1), transformadaViewportX(x2), transformadaViewportY(y2), QPen(qCor));
-                x1 = x2;
-                y1 = y2;
+                if(*it != 0){
+                    x2 = (*it)->obterX();
+                    y2 = (*it)->obterY();
+                    viewport->addLine(transformadaViewportX(x1), transformadaViewportY(y1), transformadaViewportX(x2), transformadaViewportY(y2), QPen(qCor));
+                    x1 = x2;
+                    y1 = y2;
+                } else{
+                    it++;
+                    x1 = (*it)->obterX();
+                    y1 = (*it)->obterY();
+                }
             }
 
             pontosCurva.clear();
