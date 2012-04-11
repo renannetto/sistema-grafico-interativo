@@ -275,8 +275,11 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
         x2 = (*it)->obterX();
         y2 = (*it)->obterY();
 
-        if (x1 > xMin && x1 < xMax && y1 > yMin && y1 <yMax) { //ponto 1 dentro
-            if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => não precisa clipar
+        if (x1 >= xMin && x1 <= xMax && y1 >= yMin && y1 <= yMax) { //ponto 1 dentro
+            if(nPontos.size() == 0){
+                nPontos.push_back(new Ponto(x1,y1));
+            }
+            if (x2 >= xMin && x2 <= xMax && y2 >= yMin && y2 <= yMax) { //ponto 2 dentro => não precisa clipar
                 nPontos.push_back(new Ponto(x2, y2));
             } else {
                 Ponto p1(x1, y1);
@@ -288,7 +291,7 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
                 }
             }
         } else { //ponto 1 fora
-            if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => precisa clipar
+            if (x2 >= xMin && x2 <= xMax && y2 >= yMin && y2 <= yMax) { //ponto 2 dentro => precisa clipar
                 Ponto p1(x1, y1);
                 Ponto p2(x2, y2);
                 Ponto np1(0, 0);
