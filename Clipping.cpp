@@ -277,6 +277,9 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
 
         if (x1 > xMin && x1 < xMax && y1 > yMin && y1 <yMax) { //ponto 1 dentro
             if (x2 > xMin && x2 < xMax && y2 > yMin && y2 <yMax) { //ponto 2 dentro => não precisa clipar
+                if(nPontos.size() == 0){
+                    nPontos.push_back(new Ponto(x1, y1));
+                }
                 nPontos.push_back(new Ponto(x2, y2));
             } else {
                 Ponto p1(x1, y1);
