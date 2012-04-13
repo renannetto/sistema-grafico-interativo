@@ -141,7 +141,8 @@ void MainWindow::desenharFiguras() {
             }
         } else if (figura->obterTipo() == CURVABEZIER){
             list<Ponto*> pontosCurva;
-            geradorDeCurvas->gerarBezier(pontos, pontosCurva);
+            //geradorDeCurvas->gerarBezier(pontos, pontosCurva);
+            geradorDeCurvas->gerarBSplineBlending(pontos, pontosCurva);
 
             list<Ponto*> pontosClipping;
             clipador->clippingDeCurvas(pontosCurva, pontosClipping);
