@@ -8,6 +8,7 @@ Canvas::Canvas(QWidget *parent) : QGraphicsView(parent)
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event)
 {
+    this->janelaPrincipal->arrastarCamera(event->x(),event->y());
 }
 
 void Canvas::mousePressEvent(QMouseEvent *event)

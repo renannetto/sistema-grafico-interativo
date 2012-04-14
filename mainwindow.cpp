@@ -273,6 +273,10 @@ void MainWindow::receberPonto(double x, double y){
         janelaDeTransformacoes->receberPontoX(x);
         janelaDeTransformacoes->receberPontoY(y);
     }
+    if(!(janelaDeCriacoes->isVisible() || janelaDeTransformacoes->isVisible())){
+        deslocamentoXDaCamera = x;
+        deslocamentoYDaCamera = y;
+    }
 }
 
 void MainWindow::zoomIn(){
@@ -406,4 +410,21 @@ void MainWindow::fixarAlgoritmoDeClipping() {
         clipador->fixarAlgoritmoDeClipping(1);
     else
         clipador->fixarAlgoritmoDeClipping(0);
+}
+
+void MainWindow::arrastarCamera(double x, double y){
+    double xn = transformadaInversaViewportX(x);
+    double yn = transformadaInversaViewportY(y);
+    double teta = (360-windowViewport->obterAnguloDaWindow())*M_PI/180;
+    double centroXDaWindowPPC = windowViewport->obterCentroXDaWindow();
+    double centroYDaWindowPPC = windowViewport->obterCentroYDaWindow();
+
+    x = xn*cos(teta)-yn*sin(teta) + centroXDaWindowPPC;
+    y = yn*cos(teta)+xn*sin(teta) + centroYDaWindowPPC;
+
+    windowViewport->transladar2D("Window", deslocamentoXDaCamera - x, deslocamentoYDaCamera - y);
+    windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+    desenharFiguras();
 }

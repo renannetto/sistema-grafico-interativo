@@ -65,6 +65,7 @@ public slots:
     void aumentarRegiaoDeClipping();
     void diminuirRegiaoDeClipping();
     void fixarAlgoritmoDeClipping();
+    void arrastarCamera(double, double);
 
 private:
     void iniciar();
@@ -85,6 +86,8 @@ private:
     Clipping *clipador;
     unsigned int deslocamentoClipador;
     GeradorDeCurvas *geradorDeCurvas;
+    double deslocamentoXDaCamera;
+    double deslocamentoYDaCamera;
 };
 
 #endif // MAINWINDOW_H
