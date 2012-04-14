@@ -152,7 +152,7 @@ void MainWindow::desenharFiguras() {
             if(tipoDaFigura == CURVABEZIER)
                 geradorDeCurvas->gerarBezier(pontos, pontosCurva);
             if(tipoDaFigura == CURVASPLINE)
-                geradorDeCurvas->gerarBSplineBlending(pontos, pontosCurva);
+                geradorDeCurvas->gerarBSpline(pontos, pontosCurva);
 
             list<Ponto*> pontosClipping;
 
