@@ -23,6 +23,10 @@ public:
     void receberPontoY(double);
 
 private slots:
+    void aumentarEscalonamentoX();
+    void diminuirEscalonamentoX();
+    void aumentarEscalonamentoY();
+    void diminuirEscalonamentoY();
     void transladar2D();
     void escalonar2D();
     void rotacionar2D();

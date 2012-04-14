@@ -78,3 +78,28 @@ void Transformacoes::mudarCor()
     emit sMudarCor(scene->backgroundBrush().color());
 }
 
+void Transformacoes::aumentarEscalonamentoX(){
+    stringstream novoValor;
+    novoValor << ui->escalonamentoXEdit->text().toDouble()+0.1;
+    ui->escalonamentoXEdit->setText(novoValor.str().c_str());
+}
+
+void Transformacoes::diminuirEscalonamentoX(){
+    stringstream novoValor;
+    novoValor << ui->escalonamentoXEdit->text().toDouble()-0.1;
+    ui->escalonamentoXEdit->setText(novoValor.str().c_str());
+}
+
+void Transformacoes::aumentarEscalonamentoY(){
+    stringstream novoValor;
+    novoValor << ui->escalonamentoYEdit->text().toDouble()+0.1;
+    ui->escalonamentoYEdit->setText(novoValor.str().c_str());
+}
+
+void Transformacoes::diminuirEscalonamentoY(){
+    stringstream novoValor;
+    novoValor << ui->escalonamentoYEdit->text().toDouble()-0.1;
+    ui->escalonamentoYEdit->setText(novoValor.str().c_str());
+}
+
+

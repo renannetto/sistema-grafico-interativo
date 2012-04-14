@@ -7,6 +7,7 @@ DisplayFile::DisplayFile()
     nPoligonos = 0;
     nPoligonosP = 0;
     nBeziers = 0;
+    nSplines = 0;
 
     window = criarWindow();
     figuras.push_back(window);
@@ -102,6 +103,13 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, Cor cor)
         nome = nomeInt.str();
         figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
         nBeziers++;
+        break;
+    case CURVASPLINE :
+        nome = "Spline ";
+        nomeInt << nome << nSplines;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, cor, wcX, wcY, teta);
+        nSplines++;
         break;
     case EIXO: break;
     case WINDOW: break;

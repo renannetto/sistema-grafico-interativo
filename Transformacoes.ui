@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tabTransalacao">
      <attribute name="title">
@@ -194,7 +194,7 @@
        <property name="geometry">
         <rect>
          <x>50</x>
-         <y>50</y>
+         <y>40</y>
          <width>21</width>
          <height>21</height>
         </rect>
@@ -207,7 +207,7 @@
        <property name="geometry">
         <rect>
          <x>70</x>
-         <y>50</y>
+         <y>40</y>
          <width>101</width>
          <height>21</height>
         </rect>
@@ -220,7 +220,7 @@
        <property name="geometry">
         <rect>
          <x>270</x>
-         <y>50</y>
+         <y>40</y>
          <width>21</width>
          <height>21</height>
         </rect>
@@ -233,13 +233,65 @@
        <property name="geometry">
         <rect>
          <x>290</x>
-         <y>50</y>
+         <y>40</y>
          <width>101</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
         <string>1</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="geometry">
+        <rect>
+         <x>78</x>
+         <y>67</y>
+         <width>41</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>+</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="geometry">
+        <rect>
+         <x>122</x>
+         <y>67</y>
+         <width>41</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>-</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_8">
+       <property name="geometry">
+        <rect>
+         <x>298</x>
+         <y>67</y>
+         <width>41</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>+</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_9">
+       <property name="geometry">
+        <rect>
+         <x>342</x>
+         <y>67</y>
+         <width>41</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>-</string>
        </property>
       </widget>
      </widget>
@@ -644,8 +696,8 @@
    <slot>escolherCor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>348</y>
+     <x>142</x>
+     <y>187</y>
     </hint>
     <hint type="destinationlabel">
      <x>100</x>
@@ -660,12 +712,76 @@
    <slot>mudarCor()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>308</x>
-     <y>342</y>
+     <x>310</x>
+     <y>281</y>
     </hint>
     <hint type="destinationlabel">
      <x>590</x>
      <y>343</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_6</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>aumentarEscalonamentoX()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>141</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>540</x>
+     <y>280</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_7</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>diminuirEscalonamentoX()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>194</x>
+     <y>241</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_8</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>aumentarEscalonamentoY()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>370</x>
+     <y>241</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_9</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>diminuirEscalonamentoY()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>414</x>
+     <y>241</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>183</y>
     </hint>
    </hints>
   </connection>
@@ -679,5 +795,9 @@
   <slot>rotacionar2D()</slot>
   <slot>escolherCor()</slot>
   <slot>mudarCor()</slot>
+  <slot>aumentarEscalonamentoX()</slot>
+  <slot>diminuirEscalonamentoX()</slot>
+  <slot>aumentarEscalonamentoY()</slot>
+  <slot>diminuirEscalonamentoY()</slot>
  </slots>
 </ui>

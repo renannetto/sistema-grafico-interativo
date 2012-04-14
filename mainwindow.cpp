@@ -63,6 +63,8 @@ void MainWindow::reiniciar(){
 
 void MainWindow::resetarWindow(){
     windowViewport->resetarWindow();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -106,6 +108,7 @@ void MainWindow::desenharFiguras() {
         pontos = figura->obterPontosPPC();
 
         Cor cor = figura->obterCor();
+        Tipo tipoDaFigura = figura->obterTipo();
 
         QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul());
 
@@ -123,28 +126,41 @@ void MainWindow::desenharFiguras() {
 //        }
 //        viewport->addLine(x,y,xP,yP, QPen(qCor));
 
-        if(figura->obterTipo() == PONTO){
-            if(clipador->clippingDePonto(*pontos.front())){
+        if(tipoDaFigura == PONTO){
+            if(!ui->checkBox->isChecked() || clipador->clippingDePonto(*pontos.front())){
                 double x = transformadaViewportX(pontos.front()->obterX());
                 double y = transformadaViewportY(pontos.front()->obterY());
                 viewport->addLine(x,y,x,y, QPen(qCor));
             }
-        } else if(figura->obterTipo() == RETA){
+        } else if(tipoDaFigura == RETA){
             Ponto np1(0, 0);
             Ponto np2(0, 0);
-            if (clippingDeLinha(*pontos.front(), *pontos.back(), np1, np2)) {
+            if (!ui->checkBox->isChecked() || clippingDeLinha(*pontos.front(), *pontos.back(), np1, np2)) {
+                if(!ui->checkBox->isChecked()){
+                    np1 = *pontos.front();
+                    np2 = *pontos.back();
+                }
                 double x1 = transformadaViewportX(np1.obterX());
                 double y1 = transformadaViewportY(np1.obterY());
                 double x2 = transformadaViewportX(np2.obterX());
                 double y2 = transformadaViewportY(np2.obterY());
                 viewport->addLine(x1, y1, x2, y2, QPen(qCor));
             }
-        } else if (figura->obterTipo() == CURVABEZIER){
+        } else if (tipoDaFigura == CURVABEZIER || tipoDaFigura == CURVASPLINE){
             list<Ponto*> pontosCurva;
-            geradorDeCurvas->gerarBezier(pontos, pontosCurva);
+
+            if(tipoDaFigura == CURVABEZIER)
+                geradorDeCurvas->gerarBezier(pontos, pontosCurva);
+            if(tipoDaFigura == CURVASPLINE)
+                geradorDeCurvas->gerarBSplineBlending(pontos, pontosCurva);
 
             list<Ponto*> pontosClipping;
-            clipador->clippingDeCurvas(pontosCurva, pontosClipping);
+
+            if(ui->checkBox->isChecked())
+                clipador->clippingDeCurvas(pontosCurva, pontosClipping);
+            else {
+                pontosClipping = pontosCurva;
+            }
 
             list<Ponto*>::iterator it = pontosClipping.begin();
             double x1 = (*it)->obterX();
@@ -169,24 +185,30 @@ void MainWindow::desenharFiguras() {
             pontosClipping.clear();
         } else{
             QPolygonF poligono;
-            list<Ponto*> npontos;
+            list<Ponto*> nPontos;
 
-            if(clipador->clippingDePoligonosSutherland(pontos, npontos)){
-                int size = npontos.size();
+            if(!ui->checkBox->isChecked() || clipador->clippingDePoligonosSutherland(pontos, nPontos)){
+                if(!ui->checkBox->isChecked())
+                    nPontos = pontos;
+                int size = nPontos.size();
                 for (int i=0; i<size; i++) {
-                    Ponto* ponto = npontos.front();
+                    Ponto* ponto = nPontos.front();
                     poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
 
-                    npontos.pop_front();
-                    npontos.push_back(ponto);
+                    nPontos.pop_front();
+                    nPontos.push_back(ponto);
                 }
                 if(figura->obterTipo() == POLIGONOPREENCHIDO){
-                    viewport->addPolygon(poligono, QPen(qCor), QBrush(qCor));
+                    int rPreenchimento = cor.obterVermelho() / 2;
+                    int gPreenchimento = cor.obterVerde() / 2;
+                    int bPreenchimento = cor.obterAzul() / 2;
+
+                    viewport->addPolygon(poligono, QPen(QColor::fromRgb(rPreenchimento,gPreenchimento,bPreenchimento)), QBrush(qCor));
                 }
                 else{
                     viewport->addPolygon(poligono, QPen(qCor));
                 }
-                npontos.clear();
+                nPontos.clear();
             }
         }
         figuras.pop_back();

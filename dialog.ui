@@ -589,7 +589,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="radioBezier">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -603,6 +603,19 @@
       </property>
       <property name="checked">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioSpline">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>6</y>
+        <width>109</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>B-Spline</string>
       </property>
      </widget>
     </widget>

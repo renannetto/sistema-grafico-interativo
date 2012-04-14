@@ -121,10 +121,13 @@ void Dialog::construirCurva(){
         for(int i = 0; i < ui->tableWidget->rowCount(); i++){
             pontosCurva.push_back(new Ponto(ui->tableWidget->item(i,0)->text().toDouble(), ui->tableWidget->item(i,1)->text().toDouble()));
         }
-        emit construirFigura(CURVABEZIER, pontosCurva, scene->backgroundBrush().color());
+        if(ui->radioBezier->isChecked())
+            emit construirFigura(CURVABEZIER, pontosCurva, scene->backgroundBrush().color());
+        if(ui->radioSpline->isChecked())
+            emit construirFigura(CURVASPLINE, pontosCurva, scene->backgroundBrush().color());
 
         pontosCurva.clear();
-        ui->tableWidget->clear();
+        //ui->tableWidget->clear();
         while(ui->tableWidget->rowCount())
             ui->tableWidget->removeRow(0);
     }

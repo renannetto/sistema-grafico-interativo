@@ -12,9 +12,11 @@ public:
     GeradorDeCurvas();
     void construirMatrizes();
     void gerarBezier(list<Ponto*> &pontos, list<Ponto*> &nPontos);
+    void gerarBSplineBlending(list<Ponto*> &pontos, list<Ponto*> &nPontos);
 private:
     int nPassos;
     double matrizBezier[4][4];
+    double matrizBSpline[4][4];
 };
 
 #endif // GERADORDECURVAS_H
