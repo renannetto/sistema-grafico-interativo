@@ -272,11 +272,9 @@ void MainWindow::receberPonto(double x, double y){
     if(janelaDeTransformacoes->isVisible()){
         janelaDeTransformacoes->receberPontoX(x);
         janelaDeTransformacoes->receberPontoY(y);
-    }
-    if(!(janelaDeCriacoes->isVisible() || janelaDeTransformacoes->isVisible())){
-        deslocamentoXDaCamera = x;
-        deslocamentoYDaCamera = y;
-    }
+    }    
+    deslocamentoXDaCamera = x;
+    deslocamentoYDaCamera = y;
 }
 
 void MainWindow::zoomIn(){
