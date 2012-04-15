@@ -62,8 +62,8 @@ void GeradorDeCurvas::gerarBSpline(list<Ponto *> &pontos, list<Ponto *> &nPontos
             deltaf0y = deltinha3*constantesY[0] + deltinha2*constantesY[1] + deltinha*constantesY[2];
             delta2f0x = deltinha3_2*constantesX[0] + deltinha2_2*constantesX[1];
             delta2f0y = deltinha3_2*constantesY[0] + deltinha2_2*constantesY[1];
-            delta3f0x = deltinha3*constantesX[0];
-            delta3f0y = deltinha3*constantesY[0];
+            delta3f0x = deltinha3_2*constantesX[0];
+            delta3f0y = deltinha3_2*constantesY[0];
             Ponto ponto(f0x, f0y);
             Ponto delta(deltaf0x, deltaf0y);
             Ponto delta2(delta2f0x, delta2f0y);
