@@ -28,10 +28,12 @@ private:
     } Tecla;
     bool ctrlAtivado;
     bool shiftAtivado;
+    bool clicado;
 
 protected:
     virtual void mouseReleaseEvent (QMouseEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
 
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void keyReleaseEvent(QKeyEvent *event);

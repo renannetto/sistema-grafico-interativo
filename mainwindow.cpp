@@ -428,3 +428,10 @@ void MainWindow::arrastarCamera(double x, double y){
 	desenharFiguras();
     }
 }
+
+void MainWindow::fixarForward(){
+    if (ui->check_forward->isChecked())
+        geradorDeCurvas->fixarForward(true);
+    else
+        geradorDeCurvas->fixarForward(false);
+}

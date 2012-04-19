@@ -66,6 +66,8 @@ public slots:
     void diminuirRegiaoDeClipping();
     void fixarAlgoritmoDeClipping();
     void arrastarCamera(double, double);
+    void fixarForward();
+
 
 private:
     void iniciar();

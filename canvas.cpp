@@ -4,16 +4,25 @@ Canvas::Canvas(QWidget *parent) : QGraphicsView(parent)
 {
     ctrlAtivado = false;
     shiftAtivado = false;
+    clicado = false;
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event)
 {
-    this->janelaPrincipal->arrastarCamera(event->x(),event->y());
+//    this->janelaPrincipal->arrastarCamera(event->x(),event->y());
+    clicado = false;
 }
 
 void Canvas::mousePressEvent(QMouseEvent *event)
 {
     this->janelaPrincipal->receberPonto(event->x(), event->y());
+    clicado = true;
+}
+
+void Canvas::mouseMoveEvent(QMouseEvent *event){
+    if(clicado){
+        this->janelaPrincipal->arrastarCamera(event->x(),event->y());
+    }
 }
 
 void Canvas::fixarJanelaPrincipal(QMainWindow *janelaPrincipal)

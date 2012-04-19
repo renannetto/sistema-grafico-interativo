@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>886</width>
-    <height>699</height>
+    <height>742</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>201</width>
-      <height>651</height>
+      <height>701</height>
      </rect>
     </property>
     <property name="minimumSize">
@@ -61,7 +61,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>250</y>
+       <y>280</y>
        <width>181</width>
        <height>391</height>
       </rect>
@@ -355,7 +355,7 @@
         <rect>
          <x>85</x>
          <y>210</y>
-         <width>21</width>
+         <width>16</width>
          <height>21</height>
         </rect>
        </property>
@@ -427,7 +427,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>550</y>
+      <y>580</y>
       <width>661</width>
       <height>91</height>
      </rect>
@@ -486,7 +486,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>30</y>
+      <y>60</y>
       <width>660</width>
       <height>500</height>
      </rect>
@@ -517,7 +517,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>10</y>
+      <y>40</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -530,7 +530,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>530</y>
+      <y>560</y>
       <width>641</width>
       <height>16</height>
      </rect>
@@ -542,9 +542,9 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>710</x>
-      <y>7</y>
-      <width>31</width>
+      <x>784</x>
+      <y>32</y>
+      <width>32</width>
       <height>18</height>
      </rect>
     </property>
@@ -555,9 +555,9 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>743</x>
-      <y>7</y>
-      <width>31</width>
+      <x>818</x>
+      <y>32</y>
+      <width>32</width>
       <height>18</height>
      </rect>
     </property>
@@ -568,9 +568,9 @@
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
-      <x>780</x>
-      <y>5</y>
-      <width>88</width>
+      <x>772</x>
+      <y>9</y>
+      <width>91</width>
       <height>21</height>
      </rect>
     </property>
@@ -584,9 +584,9 @@
      <property name="geometry">
       <rect>
        <x>5</x>
-       <y>-10</y>
+       <y>2</y>
        <width>91</width>
-       <height>41</height>
+       <height>19</height>
       </rect>
      </property>
      <property name="text">
@@ -600,21 +600,24 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>360</x>
+      <x>478</x>
       <y>5</y>
-      <width>341</width>
-      <height>21</height>
+      <width>291</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="title">
-     <string>Algoritmo:</string>
+     <string>                      Clipping de Retas:</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
     </property>
     <widget class="QRadioButton" name="radioCohen">
      <property name="geometry">
       <rect>
-       <x>85</x>
-       <y>0</y>
-       <width>141</width>
+       <x>10</x>
+       <y>20</y>
+       <width>151</width>
        <height>22</height>
       </rect>
      </property>
@@ -628,8 +631,8 @@
     <widget class="QRadioButton" name="radioLiang">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>0</y>
+       <x>170</x>
+       <y>20</y>
        <width>116</width>
        <height>22</height>
       </rect>
@@ -639,6 +642,83 @@
      </property>
     </widget>
    </widget>
+   <widget class="QCheckBox" name="check_forward">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>28</y>
+      <width>161</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Forward Differences</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>348</x>
+      <y>11</y>
+      <width>71</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>B-Splines:</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>5</y>
+      <width>181</width>
+      <height>49</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_3">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>5</y>
+      <width>390</width>
+      <height>49</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <zorder>frame_3</zorder>
+   <zorder>grupoOpcoes</zorder>
+   <zorder>logText</zorder>
+   <zorder>graphicsView</zorder>
+   <zorder>labelViewport</zorder>
+   <zorder>line2</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>frame</zorder>
+   <zorder>check_forward</zorder>
+   <zorder>label</zorder>
+   <zorder>frame_2</zorder>
+   <zorder>groupBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -748,7 +828,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>101</x>
-     <y>365</y>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -764,7 +844,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>127</x>
-     <y>405</y>
+     <y>437</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -780,7 +860,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>150</x>
-     <y>385</y>
+     <y>417</y>
     </hint>
     <hint type="destinationlabel">
      <x>203</x>
@@ -796,7 +876,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>69</x>
-     <y>385</y>
+     <y>417</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -812,7 +892,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>92</x>
-     <y>455</y>
+     <y>487</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -828,7 +908,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>114</x>
-     <y>475</y>
+     <y>507</y>
     </hint>
     <hint type="destinationlabel">
      <x>205</x>
@@ -876,7 +956,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
-     <y>504</y>
+     <y>536</y>
     </hint>
     <hint type="destinationlabel">
      <x>204</x>
@@ -892,7 +972,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>158</x>
-     <y>641</y>
+     <y>673</y>
     </hint>
     <hint type="destinationlabel">
      <x>208</x>
@@ -908,7 +988,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>565</y>
+     <y>597</y>
     </hint>
     <hint type="destinationlabel">
      <x>202</x>
@@ -924,7 +1004,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>54</x>
-     <y>560</y>
+     <y>597</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -1012,6 +1092,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>check_forward</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fixarForward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>331</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>296</x>
+     <y>57</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>abrirJanelaDeCriacoes()</slot>
@@ -1032,5 +1128,6 @@
   <slot>aumentarRegiaoDeClipping()</slot>
   <slot>diminuirRegiaoDeClipping()</slot>
   <slot>fixarAlgoritmoDeClipping()</slot>
+  <slot>fixarForward()</slot>
  </slots>
 </ui>

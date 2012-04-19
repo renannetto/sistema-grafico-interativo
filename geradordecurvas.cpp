@@ -3,7 +3,7 @@
 GeradorDeCurvas::GeradorDeCurvas()
 {
     nPassos = 10;
-    forward = true;
+    forward = false;
     construirMatrizes();
 }
 
@@ -156,4 +156,8 @@ void GeradorDeCurvas::forwardDifferences(Ponto &ponto, Ponto &delta, Ponto &delt
         delta2y += delta3y;
         nPontos.push_back(new Ponto(x, y));
     }
+}
+
+void GeradorDeCurvas::fixarForward(bool vForward) {
+    forward = vForward;
 }
