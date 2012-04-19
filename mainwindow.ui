@@ -706,6 +706,7 @@
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
+   <zorder>frame_2</zorder>
    <zorder>frame_3</zorder>
    <zorder>grupoOpcoes</zorder>
    <zorder>logText</zorder>
@@ -717,7 +718,6 @@
    <zorder>frame</zorder>
    <zorder>check_forward</zorder>
    <zorder>label</zorder>
-   <zorder>frame_2</zorder>
    <zorder>groupBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">

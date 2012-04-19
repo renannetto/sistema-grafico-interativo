@@ -21,8 +21,9 @@ public:
     string obterNome();
     Tipo obterTipo();
     Cor obterCor();
-    void transladar2D(double,double);
-    void escalonar2D(double,double);
+    void transladar(double,double);
+    void escalonar(double,double);
+    void rotacionar(double);
     void rotacionarNaOrigem2D(double);
     void rotacionarNoCentro2D(double);
     void rotacionarNoPonto2D(double,double,double);
@@ -31,7 +32,7 @@ public:
     Ponto obterCentro();
 private:
     double** matrizT;
-    void transformar2D();
+    void transformar();
     string nome;
     Tipo tipo;
     list<Ponto*> pontos;

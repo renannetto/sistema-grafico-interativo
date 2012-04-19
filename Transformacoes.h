@@ -27,15 +27,15 @@ private slots:
     void diminuirEscalonamentoX();
     void aumentarEscalonamentoY();
     void diminuirEscalonamentoY();
-    void transladar2D();
-    void escalonar2D();
+    void transladar();
+    void escalonar();
     void rotacionar2D();
     void escolherCor();
     void mudarCor();
 
 signals:
-    void sTransladar2D(double,double);
-    void sEscalonar2D(double,double);
+    void sTransladar(double,double);
+    void sEscalonar(double,double);
     void sRotacionarNaOrigem(double);
     void sRotacionarNoCentro(double);
     void sRotacionarNoPonto(double,double,double);

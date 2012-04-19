@@ -38,8 +38,8 @@ public:
     double obterYMaxDaWindowPPC();
     double obterCentroXDaWindow();
     double obterCentroYDaWindow();
-    void transladar2D(string,double,double);
-    void escalonar2D(string,double,double);
+    void transladar(string,double,double);
+    void escalonar(string,double,double);
     void rotacionarNaOrigem2D(string,double);
     void rotacionarNoCentro2D(string,double);
     void rotacionarNoPonto2D(string,double,double,double);

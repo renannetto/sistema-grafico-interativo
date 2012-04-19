@@ -37,10 +37,10 @@ void MainWindow::iniciar(){
 
     connect(janelaDeCriacoes, SIGNAL(construirFigura(Tipo, list<Ponto*>, QColor)),
     this, SLOT(construirFigura(Tipo, list<Ponto*>, QColor)));
-    connect(janelaDeTransformacoes, SIGNAL(sTransladar2D(double,double)),
-    this, SLOT(transladar2D(double,double)));
-    connect(janelaDeTransformacoes, SIGNAL(sEscalonar2D(double,double)),
-    this, SLOT(escalonar2D(double,double)));
+    connect(janelaDeTransformacoes, SIGNAL(sTransladar(double,double)),
+    this, SLOT(transladar(double,double)));
+    connect(janelaDeTransformacoes, SIGNAL(sEscalonar(double,double)),
+    this, SLOT(escalonar(double,double)));
     connect(janelaDeTransformacoes, SIGNAL(sRotacionarNaOrigem(double)),
     this, SLOT(rotacionarNaOrigem2D(double)));
     connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoCentro(double)),
@@ -332,14 +332,14 @@ void MainWindow::moverParaCima(){
     desenharFiguras();
 }
 
-void MainWindow::transladar2D(double vX, double vY){
-    windowViewport->transladar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+void MainWindow::transladar(double vX, double vY){
+    windowViewport->transladar(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
-void MainWindow::escalonar2D(double vX, double vY){
-    windowViewport->escalonar2D(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
+void MainWindow::escalonar(double vX, double vY){
+    windowViewport->escalonar(ui->listaObjetos->currentItem()->text().toStdString(),vX,vY);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
@@ -421,7 +421,7 @@ void MainWindow::arrastarCamera(double x, double y){
 	x = xn*cos(teta)-yn*sin(teta) + centroXDaWindowPPC;
 	y = yn*cos(teta)+xn*sin(teta) + centroYDaWindowPPC;
 
-	windowViewport->transladar2D("Window", deslocamentoXDaCamera - x, deslocamentoYDaCamera - y);
+        windowViewport->transladar("Window", deslocamentoXDaCamera - x, deslocamentoYDaCamera - y);
 	windowViewport->gerarDescricoesPPC();
 	clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
 				   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);

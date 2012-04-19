@@ -9,9 +9,9 @@ Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, Cor vCor, double
 
     pontosPPC = pontos;
 
-    matrizT = new double*[3];
-    for(int i = 0; i < 3; i++)
-        matrizT[i] = new double[3];
+    matrizT = new double*[4];
+    for(int i = 0; i < 4; i++)
+        matrizT[i] = new double[4];
 
     gerarDescricaoPPC(wcX, wcY, teta);
 }
@@ -40,31 +40,46 @@ Cor Figura::obterCor(){
     return cor;
 }
 
-void Figura::transladar2D(double vX, double vY) {
-    matrizT[0][0] = 1; matrizT[0][1] = 0; matrizT[0][2] = 0;
-    matrizT[1][0] = 0; matrizT[1][1] = 1; matrizT[1][2] = 0;
-    matrizT[2][0] = vX; matrizT[2][1] = vY; matrizT[2][2] = 1;
-    transformar2D();
+void Figura::transladar(double vX, double vY) {
+    double vZ = 0;
+    matrizT[0][0] = 1; matrizT[0][1] = 0; matrizT[0][2] = 0; matrizT[0][3] = 0;
+    matrizT[1][0] = 0; matrizT[1][1] = 1; matrizT[1][2] = 0; matrizT[0][3] = 0;
+    matrizT[2][0] = 0; matrizT[2][1] = 0; matrizT[2][2] = 1; matrizT[2][3] = 0;
+    matrizT[3][0] = vX; matrizT[3][1] = vY; matrizT[3][2] = vZ; matrizT[3][3] = 1;
+    transformar();
 }
 
-void Figura::escalonar2D(double vX, double vY){
+void Figura::escalonar(double vX, double vY){
     Ponto centro = obterCentro();
     double xMedio = centro.obterX();
     double yMedio = centro.obterY();
+    double zMedio = centro.obterZ();
 
-    matrizT[0][0] = vX; matrizT[0][1] = 0; matrizT[0][2] = 0;
-    matrizT[1][0] = 0; matrizT[1][1] = vY; matrizT[1][2] = 0;
-    matrizT[2][0] = xMedio*(1-vX); matrizT[2][1] = yMedio*(1-vY); matrizT[2][2] = 1;
-    transformar2D();
+    double vZ = 0;
+
+    matrizT[0][0] = vX; matrizT[0][1] = 0; matrizT[0][2] = 0; matrizT[0][3] = 0;
+    matrizT[1][0] = 0; matrizT[1][1] = vY; matrizT[1][2] = 0; matrizT[1][3] = 0;
+    matrizT[2][0] = 0; matrizT[2][1] = 0; matrizT[2][2] = vZ; matrizT[2][3] = 0;
+    matrizT[3][0] = xMedio*(1-vX); matrizT[3][1] = yMedio*(1-vY); matrizT[3][2] = zMedio*(1-vZ); matrizT[3][3] = 1;
+    transformar();
 }
 
-void Figura::rotacionarNaOrigem2D(double teta){
+void Figura::rotacionarNaOrigem2D(double teta) {
+    teta = teta*M_PI/180;
+    matrizT[0][0] = cos(teta); matrizT[0][1] = sin(teta); matrizT[0][2] = 0; matrizT[0][3] = 0;
+    matrizT[1][0] = -sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0; matrizT[1][3] = 0;
+    matrizT[2][0] = 0; matrizT[2][1] = 0; matrizT[2][2] = 1; matrizT[2][3] = 0;
+    matrizT[3][0] = 0; matrizT[3][1] = 0; matrizT[3][2] = 0; matrizT[3][3] = 1;
+    transformar();
+}
+
+/*void Figura::rotacionarNaOrigem2D(double teta){
     teta = teta*M_PI/180;
     matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
     matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
     matrizT[2][0] = 0; matrizT[2][1] = 0; matrizT[2][2] = 1;
-    transformar2D();
-}
+    transformar();
+}*/
 
 void Figura::rotacionarNoCentro2D(double teta){
     Ponto centro = obterCentro();
@@ -75,7 +90,7 @@ void Figura::rotacionarNoCentro2D(double teta){
     matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
     matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
     matrizT[2][0] = xMedio*(1-cos(teta)) - yMedio*sin(teta); matrizT[2][1] = yMedio*(1-cos(teta)) + xMedio*sin(teta); matrizT[2][2] = 1;
-    transformar2D();
+    transformar();
 }
 
 void Figura::rotacionarNoPonto2D(double teta, double pX, double pY){
@@ -83,13 +98,13 @@ void Figura::rotacionarNoPonto2D(double teta, double pX, double pY){
     matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
     matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
     matrizT[2][0] = pX*(1-cos(teta)) - pY*sin(teta); matrizT[2][1] = pY*(1-cos(teta)) + pX*sin(teta); matrizT[2][2] = 1;
-    transformar2D();
+    transformar();
 }
 
-void Figura::transformar2D(){
+void Figura::transformar(){
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
-        (*it)->transformar2D(matrizT);
+        (*it)->transformar(matrizT);
     }
 }
 
@@ -112,23 +127,21 @@ void Figura::gerarDescricaoPPC(double wcX, double wcY, double teta){
 //    for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
 //        (*it)->transformar2D(matrizT);
 //    }
-
-    Ponto centro = obterCentro();
-    double xMedio = centro.obterX();
-    double yMedio = centro.obterY();
-
+/*
     teta = -teta*M_PI/180;
 
     matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
     matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
-    matrizT[2][0] = -cos(teta)*wcX - sin(teta)*wcY; matrizT[2][1] = -cos(teta)*wcY + sin(teta)*wcX; matrizT[2][2] = 1;
+    matrizT[2][0] = -cos(teta)*wcX - sin(teta)*wcY; matrizT[2][1] = -cos(teta)*wcY + sin(teta)*wcX; matrizT[2][2] = 1;*/
 //    matrizT[0][0] = cos(teta); matrizT[0][1] = -sin(teta); matrizT[0][2] = 0;
 //    matrizT[1][0] = sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0;
 //    matrizT[2][0] = xMedio*(1-cos(teta)) - yMedio*sin(teta); matrizT[2][1] = yMedio*(1-cos(teta)) + xMedio*sin(teta); matrizT[2][2] = 1;
 
-    for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
-        (*it)->transformar2D(matrizT);
-    }
+    /*for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
+        (*it)->transformar(matrizT);
+    }*/
+
+    transladar(-wcX, -wcY);
 }
 
 Ponto Figura::obterCentro(){

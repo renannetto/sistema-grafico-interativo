@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tabTransalacao">
      <attribute name="title">
@@ -642,38 +642,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>Transformacoes</receiver>
-   <slot>transladar2D()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>298</x>
-     <y>288</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>80</x>
-     <y>335</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>Transformacoes</receiver>
-   <slot>escalonar2D()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>293</x>
-     <y>286</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>65</x>
-     <y>346</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton_3</sender>
    <signal>clicked()</signal>
    <receiver>Transformacoes</receiver>
@@ -785,10 +753,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>escalonar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>231</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>28</x>
+     <y>350</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>transladar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>274</x>
+     <y>284</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>30</x>
+     <y>346</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>transladar2D()</slot>
-  <slot>escalonar2D()</slot>
+  <slot>transladar()</slot>
+  <slot>escalonar()</slot>
   <slot>rotacionarNaOrigem2D()</slot>
   <slot>rotacionarNoCentro2D()</slot>
   <slot>rotacionarNoPonto2D()</slot>

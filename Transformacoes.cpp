@@ -29,16 +29,16 @@ void Transformacoes::receberPontoY(double y){
     this->ui->rotacaoPontoY->setText(ssY.str().c_str());
 }
 
-void Transformacoes::transladar2D(){
+void Transformacoes::transladar(){
     double vX = ui->deslocamentoXEdit->text().toDouble();
     double vY = ui->deslocamentoYEdit->text().toDouble();
-    emit sTransladar2D(vX,vY);
+    emit sTransladar(vX,vY);
 }
 
-void Transformacoes::escalonar2D(){
+void Transformacoes::escalonar(){
     double vX = ui->escalonamentoXEdit->text().toDouble();
     double vY = ui->escalonamentoYEdit->text().toDouble();
-    emit sEscalonar2D(vX,vY);
+    emit sEscalonar(vX,vY);
 }
 
 void Transformacoes::rotacionarNaOrigem2D(){
