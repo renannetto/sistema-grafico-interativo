@@ -384,7 +384,7 @@ void MainWindow::rotacionarWindowParaEsquerda() {
 }
 
 void MainWindow::aumentarRegiaoDeClipping(){
-    if(this->ui->checkBox->checkState() == Qt::Checked){
+    if(this->ui->checkBox->isChecked()){
         if(deslocamentoClipador > 5)
             deslocamentoClipador -= 3;
         clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
@@ -394,7 +394,7 @@ void MainWindow::aumentarRegiaoDeClipping(){
 }
 
 void MainWindow::diminuirRegiaoDeClipping(){
-    if(this->ui->checkBox->checkState() == Qt::Checked){
+    if(this->ui->checkBox->isChecked()){
         if(deslocamentoClipador < 45)
             deslocamentoClipador += 3;
         clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
@@ -411,18 +411,20 @@ void MainWindow::fixarAlgoritmoDeClipping() {
 }
 
 void MainWindow::arrastarCamera(double x, double y){
-    double xn = transformadaInversaViewportX(x);
-    double yn = transformadaInversaViewportY(y);
-    double teta = (360-windowViewport->obterAnguloDaWindow())*M_PI/180;
-    double centroXDaWindowPPC = windowViewport->obterCentroXDaWindow();
-    double centroYDaWindowPPC = windowViewport->obterCentroYDaWindow();
+    if(!janelaDeCriacoes->isVisible() && !janelaDeTransformacoes->isVisible()){
+	double xn = transformadaInversaViewportX(x);
+	double yn = transformadaInversaViewportY(y);
+	double teta = (360-windowViewport->obterAnguloDaWindow())*M_PI/180;
+	double centroXDaWindowPPC = windowViewport->obterCentroXDaWindow();
+	double centroYDaWindowPPC = windowViewport->obterCentroYDaWindow();
 
-    x = xn*cos(teta)-yn*sin(teta) + centroXDaWindowPPC;
-    y = yn*cos(teta)+xn*sin(teta) + centroYDaWindowPPC;
+	x = xn*cos(teta)-yn*sin(teta) + centroXDaWindowPPC;
+	y = yn*cos(teta)+xn*sin(teta) + centroYDaWindowPPC;
 
-    windowViewport->transladar2D("Window", deslocamentoXDaCamera - x, deslocamentoYDaCamera - y);
-    windowViewport->gerarDescricoesPPC();
-    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
-    desenharFiguras();
+	windowViewport->transladar2D("Window", deslocamentoXDaCamera - x, deslocamentoYDaCamera - y);
+	windowViewport->gerarDescricoesPPC();
+	clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+				   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+	desenharFiguras();
+    }
 }
