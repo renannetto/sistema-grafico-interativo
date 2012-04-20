@@ -65,10 +65,19 @@ void Figura::escalonar(double vX, double vY){
 }
 
 void Figura::rotacionarNaOrigem2D(double teta) {
+    Ponto vetor(0, 0, 1);
+    double ux = vetor.obterX();
+    double uy = vetor.obterY();
+    double uz = vetor.obterZ();
+
     teta = teta*M_PI/180;
-    matrizT[0][0] = cos(teta); matrizT[0][1] = sin(teta); matrizT[0][2] = 0; matrizT[0][3] = 0;
-    matrizT[1][0] = -sin(teta); matrizT[1][1] = cos(teta); matrizT[1][2] = 0; matrizT[1][3] = 0;
-    matrizT[2][0] = 0; matrizT[2][1] = 0; matrizT[2][2] = 1; matrizT[2][3] = 0;
+
+    double cosTeta = cos(teta);
+    double sinTeta = sin(teta);
+
+    matrizT[0][0] = cosTeta + ux*ux*(1-cosTeta); matrizT[0][1] = ux*uy*(1-cosTeta) - uz*sinTeta; matrizT[0][2] = ux*uz*(1-cosTeta) + uy*sinTeta; matrizT[0][3] = 0;
+    matrizT[1][0] = uy*ux*(1-cosTeta) + uz*sinTeta; matrizT[1][1] = cosTeta + uy*uy*(1-cosTeta); matrizT[1][2] = uy*uz*(1-cosTeta) - ux*sinTeta; matrizT[1][3] = 0;
+    matrizT[2][0] = uz*ux*(1-cosTeta) - uy*sinTeta; matrizT[2][1] = uz*uy*(1-cosTeta) + ux*sinTeta; matrizT[2][2] = cosTeta + uz*uz*(1-cosTeta); matrizT[2][3] = 0;
     matrizT[3][0] = 0; matrizT[3][1] = 0; matrizT[3][2] = 0; matrizT[3][3] = 1;
     transformar();
 }
