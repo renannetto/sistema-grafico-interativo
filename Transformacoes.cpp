@@ -41,30 +41,40 @@ void Transformacoes::escalonar(){
     emit sEscalonar(vX,vY);
 }
 
-void Transformacoes::rotacionarNaOrigem2D(){
+void Transformacoes::rotacionarNaOrigem(){
     double teta = ui->anguloRotacao->text().toDouble();
-    emit sRotacionarNaOrigem(teta);
+    double ux = ui->eixoXEdit->text().toDouble();
+    double uy = ui->eixoYEdit->text().toDouble();
+    double uz = ui->eixoZEdit->text().toDouble();
+    emit sRotacionarNaOrigem(teta, ux, uy, uz);
 }
 
-void Transformacoes::rotacionarNoCentro2D(){
+void Transformacoes::rotacionarNoCentro(){
     double teta = ui->anguloRotacao->text().toDouble();
-    emit sRotacionarNoCentro(teta);
+    double ux = ui->eixoXEdit->text().toDouble();
+    double uy = ui->eixoYEdit->text().toDouble();
+    double uz = ui->eixoZEdit->text().toDouble();
+    emit sRotacionarNoCentro(teta, ux, uy, uz);
 }
 
-void Transformacoes::rotacionarNoPonto2D(){
+void Transformacoes::rotacionarNoPonto(){
     double teta = ui->anguloRotacao->text().toDouble();
+    double ux = ui->eixoXEdit->text().toDouble();
+    double uy = ui->eixoYEdit->text().toDouble();
+    double uz = ui->eixoZEdit->text().toDouble();
     double pX = ui->rotacaoPontoX->text().toDouble();
     double pY = ui->rotacaoPontoY->text().toDouble();
-    emit sRotacionarNoPonto(teta,pX,pY);
+    double pZ = ui->rotacaoPontoZ->text().toDouble();
+    emit sRotacionarNoPonto(teta, pX, pY, pZ, ux, uy, uz);
 }
 
-void Transformacoes::rotacionar2D(){
+void Transformacoes::rotacionar(){
     if(ui->radioButton->isChecked())
-        rotacionarNaOrigem2D();
+        rotacionarNaOrigem();
     if(ui->radioButton_2->isChecked())
-        rotacionarNoCentro2D();
+        rotacionarNoCentro();
     if(ui->radioButton_3->isChecked())
-        rotacionarNoPonto2D();
+        rotacionarNoPonto();
 }
 
 void Transformacoes::escolherCor()

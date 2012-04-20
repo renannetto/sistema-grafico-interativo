@@ -29,22 +29,22 @@ private slots:
     void diminuirEscalonamentoY();
     void transladar();
     void escalonar();
-    void rotacionar2D();
+    void rotacionar();
     void escolherCor();
     void mudarCor();
 
 signals:
     void sTransladar(double,double);
     void sEscalonar(double,double);
-    void sRotacionarNaOrigem(double);
-    void sRotacionarNoCentro(double);
-    void sRotacionarNoPonto(double,double,double);
+    void sRotacionarNaOrigem(double, double, double, double);
+    void sRotacionarNoCentro(double, double, double, double);
+    void sRotacionarNoPonto(double,double,double, double, double, double, double);
     void sMudarCor(QColor cor);
 
 private:
-    void rotacionarNaOrigem2D();
-    void rotacionarNoCentro2D();
-    void rotacionarNoPonto2D();
+    void rotacionarNaOrigem();
+    void rotacionarNoCentro();
+    void rotacionarNoPonto();
     Ui::Transformacoes *ui;
     QGraphicsScene *scene;
 };

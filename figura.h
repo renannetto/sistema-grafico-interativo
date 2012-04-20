@@ -24,9 +24,9 @@ public:
     void transladar(double,double);
     void escalonar(double,double);
     void rotacionar(double);
-    void rotacionarNaOrigem2D(double);
-    void rotacionarNoCentro2D(double);
-    void rotacionarNoPonto2D(double,double,double);
+    void rotacionarNaOrigem(double, Ponto);
+    void rotacionarNoCentro(double, Ponto);
+    void rotacionarNoPonto(double,double,double, double, Ponto);
     void mudarCor(int, int, int);
     void gerarDescricaoPPC(double wcX, double wcY, double teta);
     Ponto obterCentro();

@@ -41,12 +41,12 @@ void MainWindow::iniciar(){
     this, SLOT(transladar(double,double)));
     connect(janelaDeTransformacoes, SIGNAL(sEscalonar(double,double)),
     this, SLOT(escalonar(double,double)));
-    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNaOrigem(double)),
-    this, SLOT(rotacionarNaOrigem2D(double)));
-    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoCentro(double)),
-    this, SLOT(rotacionarNoCentro2D(double)));
-    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoPonto(double,double,double)),
-    this, SLOT(rotacionarNoPonto2D(double,double,double)));
+    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNaOrigem(double, double, double, double)),
+    this, SLOT(rotacionarNaOrigem(double, double, double, double)));
+    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoCentro(double, double, double, double)),
+    this, SLOT(rotacionarNoCentro(double, double, double, double)));
+    connect(janelaDeTransformacoes, SIGNAL(sRotacionarNoPonto(double,double,double, double, double, double, double)),
+    this, SLOT(rotacionarNoPonto(double,double,double, double, double, double, double)));
     connect(janelaDeTransformacoes, SIGNAL(sMudarCor(QColor)), this, SLOT(mudarCor(QColor)));
 
     mostrarValorDoZoom(ui->zoomSlider->value());
@@ -344,20 +344,23 @@ void MainWindow::escalonar(double vX, double vY){
     desenharFiguras();
 }
 
-void MainWindow::rotacionarNaOrigem2D(double teta){
-    windowViewport->rotacionarNaOrigem2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+void MainWindow::rotacionarNaOrigem(double teta, double ux, double uy, double uz){
+    Ponto vetor(ux, uy, uz);
+    windowViewport->rotacionarNaOrigem(ui->listaObjetos->currentItem()->text().toStdString(), teta, vetor);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
-void MainWindow::rotacionarNoCentro2D(double teta){
-    windowViewport->rotacionarNoCentro2D(ui->listaObjetos->currentItem()->text().toStdString(),teta);
+void MainWindow::rotacionarNoCentro(double teta, double ux, double uy, double uz){
+    Ponto vetor(ux, uy, uz);
+    windowViewport->rotacionarNoCentro(ui->listaObjetos->currentItem()->text().toStdString(), teta, vetor);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
 
-void MainWindow::rotacionarNoPonto2D(double teta, double pX, double pY){
-    windowViewport->rotacionarNoPonto2D(ui->listaObjetos->currentItem()->text().toStdString(),teta,pX,pY);
+void MainWindow::rotacionarNoPonto(double teta, double pX, double pY, double pZ, double ux, double uy, double uz){
+    Ponto vetor(ux, uy, uz);
+    windowViewport->rotacionarNoPonto(ui->listaObjetos->currentItem()->text().toStdString(),teta, pX, pY, pZ, vetor);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
 }
@@ -368,7 +371,9 @@ void MainWindow::mudarCor(QColor cor) {
 }
 void MainWindow::rotacionarWindowParaDireita() {
 
-    windowViewport->rotacionarNoCentro2D("Window", ui->editGraus->text().toDouble());
+    Ponto vetor(0, 0, 1);
+
+    windowViewport->rotacionarNoCentro("Window", ui->editGraus->text().toDouble(), vetor);
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
                                windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
@@ -376,7 +381,10 @@ void MainWindow::rotacionarWindowParaDireita() {
 }
 
 void MainWindow::rotacionarWindowParaEsquerda() {
-    windowViewport->rotacionarNoCentro2D("Window", (double)360 - ui->editGraus->text().toDouble());
+
+    Ponto vetor(0, 0, 1);
+
+    windowViewport->rotacionarNoCentro("Window", (double)360 - ui->editGraus->text().toDouble(), vetor);
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
                                windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);

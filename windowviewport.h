@@ -40,9 +40,9 @@ public:
     double obterCentroYDaWindow();
     void transladar(string,double,double);
     void escalonar(string,double,double);
-    void rotacionarNaOrigem2D(string,double);
-    void rotacionarNoCentro2D(string,double);
-    void rotacionarNoPonto2D(string,double,double,double);
+    void rotacionarNaOrigem(string,double, Ponto);
+    void rotacionarNoCentro(string,double, Ponto);
+    void rotacionarNoPonto(string,double,double,double, double, Ponto);
     void mudarCor(string, int, int, int);
     void gerarDescricoesPPC();
     double obterAnguloDaWindow();

@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tabTransalacao">
      <attribute name="title">
@@ -317,7 +317,7 @@
       <property name="geometry">
        <rect>
         <x>370</x>
-        <y>100</y>
+        <y>40</y>
         <width>91</width>
         <height>27</height>
        </rect>
@@ -327,7 +327,7 @@
       <property name="geometry">
        <rect>
         <x>360</x>
-        <y>70</y>
+        <y>10</y>
         <width>131</width>
         <height>31</height>
        </rect>
@@ -407,9 +407,9 @@
        <widget class="QLineEdit" name="rotacaoPontoX">
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>40</x>
           <y>30</y>
-          <width>71</width>
+          <width>51</width>
           <height>21</height>
          </rect>
         </property>
@@ -420,7 +420,7 @@
        <widget class="QLabel" name="label_14">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>20</x>
           <y>30</y>
           <width>21</width>
           <height>21</height>
@@ -433,9 +433,9 @@
        <widget class="QLineEdit" name="rotacaoPontoY">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>125</x>
           <y>30</y>
-          <width>71</width>
+          <width>51</width>
           <height>21</height>
          </rect>
         </property>
@@ -446,7 +446,7 @@
        <widget class="QLabel" name="label_15">
         <property name="geometry">
          <rect>
-          <x>170</x>
+          <x>105</x>
           <y>30</y>
           <width>21</width>
           <height>21</height>
@@ -454,6 +454,32 @@
         </property>
         <property name="text">
          <string>Y : </string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="rotacaoPontoZ">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>30</y>
+          <width>51</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>0</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_18">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>30</y>
+          <width>21</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Z : </string>
         </property>
        </widget>
       </widget>
@@ -529,6 +555,58 @@
       <zorder>label_17</zorder>
       <zorder>frame_6</zorder>
       <zorder>label_16</zorder>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>80</y>
+        <width>41</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Eixo</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="eixoXEdit">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>100</y>
+        <width>31</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="eixoYEdit">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>100</y>
+        <width>31</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="eixoZEdit">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>100</y>
+        <width>31</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab">
@@ -638,22 +716,6 @@
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_3</sender>
-   <signal>clicked()</signal>
-   <receiver>Transformacoes</receiver>
-   <slot>rotacionar2D()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>465</x>
-     <y>226</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>450</x>
-     <y>6</y>
     </hint>
    </hints>
   </connection>
@@ -785,6 +847,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>Transformacoes</receiver>
+   <slot>rotacionar()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>463</x>
+     <y>227</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>542</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>transladar()</slot>
@@ -792,7 +870,7 @@
   <slot>rotacionarNaOrigem2D()</slot>
   <slot>rotacionarNoCentro2D()</slot>
   <slot>rotacionarNoPonto2D()</slot>
-  <slot>rotacionar2D()</slot>
+  <slot>rotacionar()</slot>
   <slot>escolherCor()</slot>
   <slot>mudarCor()</slot>
   <slot>aumentarEscalonamentoX()</slot>
