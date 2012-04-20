@@ -242,16 +242,23 @@ void WindowViewport::mudarCor(string nomeFigura, int vermelho, int verde, int az
 }
 
 void WindowViewport::gerarDescricoesPPC(){
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
+
+    double tetaX = 0;
+    double tetaY = 0;
+
     Ponto centro = window->obterCentro();
     double wcX = centro.obterX();
     double wcY = centro.obterY();
+    double wcZ = centro.obterZ();
 
     double teta = obterAnguloDaWindow();
 
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
-        (*it)->gerarDescricaoPPC(wcX, wcY, teta);
+        (*it)->gerarDescricaoPPC(vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
     }
 }
 

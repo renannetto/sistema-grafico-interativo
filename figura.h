@@ -14,7 +14,7 @@ enum Tipo {CURVASPLINE, CURVABEZIER, PONTO, RETA, POLIGONO, POLIGONOPREENCHIDO, 
 class Figura
 {
 public:
-    Figura(string vNome, Tipo vTipo, list<Ponto*> vPontos, Cor vCor, double wcX, double wcY, double teta);
+    Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, Cor vCor, Ponto vrp, double tetaX, double tetaY, double wcX, double wcY, double wcZ, double teta);
     ~Figura();
     list<Ponto*> obterPontos();
     list<Ponto*> obterPontosPPC();
@@ -28,7 +28,7 @@ public:
     void rotacionarNoCentro(double, Ponto);
     void rotacionarNoPonto(double,double,double, double, Ponto);
     void mudarCor(int, int, int);
-    void gerarDescricaoPPC(double wcX, double wcY, double teta);
+    void gerarDescricaoPPC(Ponto vrp, double tetaX, double tetaY, double wcX, double wcY, double wcZ, double teta);
     Ponto obterCentro();
 private:
     double** matrizT;
