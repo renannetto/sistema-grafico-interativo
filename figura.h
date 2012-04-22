@@ -6,17 +6,21 @@
 #include <math.h>
 #include "ponto.h"
 #include "cor.h"
+#include "face.h"
+
+#include <iostream>
 
 using namespace std;
 
-enum Tipo {CURVASPLINE, CURVABEZIER, PONTO, RETA, POLIGONO, POLIGONOPREENCHIDO, EIXO, WINDOW};
+enum Tipo {POLIEDRO, CURVASPLINE, CURVABEZIER, PONTO, RETA, POLIGONO, POLIGONOPREENCHIDO, EIXO, WINDOW};
 
 class Figura
 {
 public:
-    Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, Cor vCor, Ponto vrp, double tetaX, double tetaY, double wcX, double wcY, double wcZ, double teta);
+    Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFaces, Cor vCor, Ponto vrp, double tetaX, double tetaY, double wcX, double wcY, double wcZ, double teta);
     ~Figura();
     list<Ponto*> obterPontos();
+    list<Face*> obterFaces();
     list<Ponto*> obterPontosPPC();
     string obterNome();
     Tipo obterTipo();
@@ -37,6 +41,7 @@ private:
     Tipo tipo;
     list<Ponto*> pontos;
     list<Ponto*> pontosPPC;
+    list<Face*> faces;
     Cor cor;
 };
 

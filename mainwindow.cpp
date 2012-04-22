@@ -83,7 +83,8 @@ void MainWindow::abrirJanelaDeAjuda(){
 }
 
 void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos, QColor cor){
-    QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos, cor.red(), cor.green(), cor.blue()));
+    list<Face*> faces;
+    QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos, faces, cor.red(), cor.green(), cor.blue()));
     ui->listaObjetos->addItem(nome);
     desenharFiguras();
 }
@@ -103,7 +104,7 @@ void MainWindow::desenharFiguras() {
     desenharSubViewport();
     list<Figura*> figuras = windowViewport->obterFiguras();
     list<Ponto*> pontos;
-    for (int i = 1; i < figuras.size(); i++){
+    for (int i = 1; i < figuras.size(); i++){        
         Figura* figura = figuras.back();
         pontos = figura->obterPontosPPC();
 
@@ -183,7 +184,7 @@ void MainWindow::desenharFiguras() {
 
             pontosCurva.clear();
             pontosClipping.clear();
-        } else{
+        } else if(tipoDaFigura == POLIGONO || tipoDaFigura == EIXO){
             QPolygonF poligono;
             list<Ponto*> nPontos;
 
@@ -209,6 +210,43 @@ void MainWindow::desenharFiguras() {
                     viewport->addPolygon(poligono, QPen(qCor));
                 }
                 nPontos.clear();
+            }
+        }
+        else {
+            list<Face*> faces = figura->obterFaces();
+            int *pontosFace;
+            Ponto **pontosFigura = new Ponto*[pontos.size()];
+
+            QPolygonF poligono;
+
+            Ponto* ponto;
+            for (int i=0; i<pontos.size(); i++) {
+                ponto = pontos.front();
+                pontosFigura[i] = ponto;
+                pontos.pop_front();
+                pontos.push_back(ponto);
+            }
+
+            list<Face*>::iterator it;
+            int ponto1;
+            int ponto2;
+            int ponto3;
+            for (it=faces.begin(); it!=faces.end(); it++) {
+                pontosFace = (*it)->obterPontos();
+                ponto1 = pontosFace[0];
+                ponto2 = pontosFace[1];
+                ponto3 = pontosFace[2];
+                double p1x = transformadaViewportX(pontosFigura[ponto1]->obterX());
+                double p1y = transformadaViewportY(pontosFigura[ponto1]->obterY());
+                double p2x = transformadaViewportX(pontosFigura[ponto2]->obterX());
+                double p2y = transformadaViewportY(pontosFigura[ponto2]->obterY());
+                double p3x = transformadaViewportX(pontosFigura[ponto3]->obterX());
+                double p3y = transformadaViewportY(pontosFigura[ponto3]->obterY());
+                poligono << QPointF(p1x, p1y);
+                poligono << QPointF(p2x, p2y);
+                poligono << QPointF(p3x, p3y);
+                viewport->addPolygon(poligono, QPen(qCor));
+                poligono.clear();
             }
         }
         figuras.pop_back();

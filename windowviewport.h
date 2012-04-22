@@ -14,7 +14,7 @@ class WindowViewport
 public:
     WindowViewport();
     ~WindowViewport();
-    string adicionarFigura(Tipo tipo, list<Ponto*> pontos, int vermelho, int verde, int azul);
+    string adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> faces, int vermelho, int verde, int azul);
     list<Figura*> obterFiguras();
     void resetarWindow();
     void destruirFigura(string);

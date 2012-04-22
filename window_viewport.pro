@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     cor.cpp \
     canvas.cpp \
     Clipping.cpp \
-    geradordecurvas.cpp
+    geradordecurvas.cpp \
+    face.cpp
 HEADERS += mainwindow.h \
     dialog.h \
     ponto.h \
@@ -29,7 +30,8 @@ HEADERS += mainwindow.h \
     cor.h \
     canvas.h \
     Clipping.h \
-    geradordecurvas.h
+    geradordecurvas.h \
+    face.h
 FORMS += mainwindow.ui \
     dialog.ui \
     Transformacoes.ui

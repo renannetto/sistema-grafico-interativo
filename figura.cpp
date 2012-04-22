@@ -1,11 +1,12 @@
 #include "figura.h"
 
-Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, Cor vCor, Ponto vrp, double tetaX, double tetaY, double wcX, double wcY, double wcZ, double teta)
+Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFaces, Cor vCor, Ponto vrp, double tetaX, double tetaY, double wcX, double wcY, double wcZ, double teta)
     : cor(vCor)
 {
     nome = vNome;
     tipo = vTipo;
     pontos = vPontos;
+    faces = vFaces;
 
     pontosPPC = pontos;
 
@@ -22,6 +23,10 @@ Figura::~Figura()
 
 list<Ponto*> Figura::obterPontos(){
     return pontos;
+}
+
+list<Face*> Figura::obterFaces() {
+    return faces;
 }
 
 list<Ponto*> Figura::obterPontosPPC(){
