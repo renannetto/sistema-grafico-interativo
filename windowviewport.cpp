@@ -243,10 +243,24 @@ void WindowViewport::mudarCor(string nomeFigura, int vermelho, int verde, int az
 
 void WindowViewport::gerarDescricoesPPC(){
     list<Ponto*> pontosWindow = window->obterPontos();
-    Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
+    Ponto *ponto1Window = pontosWindow.front();
+    Ponto *ponto4Window = pontosWindow.back();
+    pontosWindow.pop_front();
+    Ponto *ponto2Window = pontosWindow.front();
+    pontosWindow.push_front(ponto1Window);
 
-    double tetaX = 0;
-    double tetaY = 0;
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY());
+
+    double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
+    double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
+    double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+
+    double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
+    double tetaX = acos(xOrtogonal/moduloVnp);
+    double tetaY = acos(yOrtogonal/moduloVnp);
+
+    Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
 
     Ponto centro = window->obterCentro();
     double wcX = centro.obterX();
