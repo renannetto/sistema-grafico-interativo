@@ -270,6 +270,7 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
     double y1 = (*it)->obterY();
     double x2;
     double y2;
+    bool clipou = false;
 
     for (++it; it!=pontos.end(); it++) {
         x2 = (*it)->obterX();
@@ -288,6 +289,7 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
                 Ponto np2(0, 0);
                 if (clippingDeLinha(p1, p2, np1, np2)) {
                     nPontos.push_back(new Ponto(np2.obterX(), np2.obterY()));
+		    clipou = true;
                 }
             }
         } else { //ponto 1 fora
@@ -302,6 +304,7 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
                     }
                     nPontos.push_back(new Ponto(np1.obterX(), np1.obterY()));
                     nPontos.push_back(new Ponto(np2.obterX(), np2.obterY()));
+		    clipou = true;
                 }
             }
         }
@@ -309,6 +312,7 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
         x1 = x2;
         y1 = y2;
     }
+    return clipou;
 }
 
 void Clipping::fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento) {

@@ -104,28 +104,28 @@ void MainWindow::desenharFiguras() {
     desenharSubViewport();
     list<Figura*> figuras = windowViewport->obterFiguras();
     list<Ponto*> pontos;
-    for (int i = 1; i < figuras.size(); i++){        
+    for (unsigned int i = 1; i < figuras.size(); i++){
         Figura* figura = figuras.back();
         pontos = figura->obterPontosPPC();
 
         Cor cor = figura->obterCor();
         Tipo tipoDaFigura = figura->obterTipo();
 
-        QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul());
+	QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul(),200);
 
-//        double xP,yP,xa,ya,x,y;
-//        xP = xa = transformadaViewportX(pontos.front()->obterX());
-//        yP = ya = transformadaViewportY(pontos.front()->obterY());
-//
-//        list<Ponto*>::iterator it;
-//        for(it = pontos.begin(); it != pontos.end(); it++){
-//            x = transformadaViewportX((*it)->obterX());
-//            y = transformadaViewportY((*it)->obterY());
-//            viewport->addLine(xa,ya,x,y, QPen(qCor));
-//            xa = x;
-//            ya = y;
-//        }
-//        viewport->addLine(x,y,xP,yP, QPen(qCor));
+	//        double xP,yP,xa,ya,x,y;
+	//        xP = xa = transformadaViewportX(pontos.front()->obterX());
+	//        yP = ya = transformadaViewportY(pontos.front()->obterY());
+	//
+	//        list<Ponto*>::iterator it;
+	//        for(it = pontos.begin(); it != pontos.end(); it++){
+	//            x = transformadaViewportX((*it)->obterX());
+	//            y = transformadaViewportY((*it)->obterY());
+	//            viewport->addLine(xa,ya,x,y, QPen(qCor));
+	//            xa = x;
+	//            ya = y;
+	//        }
+	//        viewport->addLine(x,y,xP,yP, QPen(qCor));
 
         if(tipoDaFigura == PONTO){
             if(!ui->checkBox->isChecked() || clipador->clippingDePonto(*pontos.front())){
@@ -133,6 +133,7 @@ void MainWindow::desenharFiguras() {
                 double y = transformadaViewportY(pontos.front()->obterY());
                 viewport->addLine(x,y,x,y, QPen(qCor));
             }
+
         } else if(tipoDaFigura == RETA){
             Ponto np1(0, 0);
             Ponto np2(0, 0);
@@ -147,6 +148,7 @@ void MainWindow::desenharFiguras() {
                 double y2 = transformadaViewportY(np2.obterY());
                 viewport->addLine(x1, y1, x2, y2, QPen(qCor));
             }
+
         } else if (tipoDaFigura == CURVABEZIER || tipoDaFigura == CURVASPLINE){
             list<Ponto*> pontosCurva;
 
@@ -184,73 +186,92 @@ void MainWindow::desenharFiguras() {
 
             pontosCurva.clear();
             pontosClipping.clear();
-        } else if(tipoDaFigura == POLIGONO || tipoDaFigura == EIXO){
-            QPolygonF poligono;
-            list<Ponto*> nPontos;
 
-            if(!ui->checkBox->isChecked() || clipador->clippingDePoligonosSutherland(pontos, nPontos)){
-                if(!ui->checkBox->isChecked())
-                    nPontos = pontos;
-                int size = nPontos.size();
-                for (int i=0; i<size; i++) {
-                    Ponto* ponto = nPontos.front();
-                    poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
+	} else if(tipoDaFigura == POLIEDRO){
+	    list<Face*> faces = figura->obterFaces();
+	    int *pontosFace;
+	    Ponto **pontosFigura = new Ponto*[pontos.size()];
+	    list<Ponto*> pontosParaClippar;
+	    list<Ponto*> nPontos;
 
-                    nPontos.pop_front();
-                    nPontos.push_back(ponto);
-                }
-                if(figura->obterTipo() == POLIGONOPREENCHIDO){
-                    int rPreenchimento = cor.obterVermelho() / 2;
-                    int gPreenchimento = cor.obterVerde() / 2;
-                    int bPreenchimento = cor.obterAzul() / 2;
+	    QPolygonF poligono;
 
-                    viewport->addPolygon(poligono, QPen(QColor::fromRgb(rPreenchimento,gPreenchimento,bPreenchimento)), QBrush(qCor));
-                }
-                else{
-                    viewport->addPolygon(poligono, QPen(qCor));
-                }
-                nPontos.clear();
-            }
-        }
-        else {
-            list<Face*> faces = figura->obterFaces();
-            int *pontosFace;
-            Ponto **pontosFigura = new Ponto*[pontos.size()];
+	    Ponto* ponto;
+	    for (unsigned int i=0; i<pontos.size(); i++) {
+		ponto = pontos.front();
+		pontosFigura[i] = ponto;
+		pontos.pop_front();
+		pontos.push_back(ponto);
+	    }
 
-            QPolygonF poligono;
+	    list<Face*>::iterator it;
+	    int ponto1;
+	    int ponto2;
+	    int ponto3;
+	    for (it=faces.begin(); it!=faces.end(); it++) {
+		pontosFace = (*it)->obterPontos();
+		ponto1 = pontosFace[0];
+		ponto2 = pontosFace[1];
+		ponto3 = pontosFace[2];
+		pontosParaClippar.push_back(pontosFigura[ponto1-1]);
+		pontosParaClippar.push_back(pontosFigura[ponto2-1]);
+		pontosParaClippar.push_back(pontosFigura[ponto3-1]);
 
-            Ponto* ponto;
-            for (int i=0; i<pontos.size(); i++) {
-                ponto = pontos.front();
-                pontosFigura[i] = ponto;
-                pontos.pop_front();
-                pontos.push_back(ponto);
-            }
+		if(!ui->checkBox->isChecked() || clipador->clippingDePoligonosSutherland(pontosParaClippar, nPontos)){
+		    if(!ui->checkBox->isChecked())
+			nPontos = pontos;
+		    int size = nPontos.size();
+		    for (int i=0; i<size; i++) {
+			Ponto* ponto = nPontos.front();
+			poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
 
-            list<Face*>::iterator it;
-            int ponto1;
-            int ponto2;
-            int ponto3;
-            for (it=faces.begin(); it!=faces.end(); it++) {
-                pontosFace = (*it)->obterPontos();
-                ponto1 = pontosFace[0];
-                ponto2 = pontosFace[1];
-                ponto3 = pontosFace[2];
-                double p1x = transformadaViewportX(pontosFigura[ponto1]->obterX());
-                double p1y = transformadaViewportY(pontosFigura[ponto1]->obterY());
-                double p2x = transformadaViewportX(pontosFigura[ponto2]->obterX());
-                double p2y = transformadaViewportY(pontosFigura[ponto2]->obterY());
-                double p3x = transformadaViewportX(pontosFigura[ponto3]->obterX());
-                double p3y = transformadaViewportY(pontosFigura[ponto3]->obterY());
-                poligono << QPointF(p1x, p1y);
-                poligono << QPointF(p2x, p2y);
-                poligono << QPointF(p3x, p3y);
-                viewport->addPolygon(poligono, QPen(qCor));
-                poligono.clear();
-            }
-        }
-        figuras.pop_back();
-        figuras.push_front(figura);
+			nPontos.pop_front();
+		    }
+		    //		double p1x = transformadaViewportX(pontosFigura[ponto1-1]->obterX());
+		    //		double p1y = transformadaViewportY(pontosFigura[ponto1-1]->obterY());
+		    //		double p2x = transformadaViewportX(pontosFigura[ponto2-1]->obterX());
+		    //		double p2y = transformadaViewportY(pontosFigura[ponto2-1]->obterY());
+		    //		double p3x = transformadaViewportX(pontosFigura[ponto3-1]->obterX());
+		    //		double p3y = transformadaViewportY(pontosFigura[ponto3-1]->obterY());
+		    //		poligono << QPointF(p1x, p1y);
+		    //		poligono << QPointF(p2x, p2y);
+		    //		poligono << QPointF(p3x, p3y);
+		    viewport->addPolygon(poligono, QPen(qCor));
+		    poligono.clear();
+		}
+		nPontos.clear();
+		pontosParaClippar.clear();
+	    }
+	} else{
+	    QPolygonF poligono;
+	    list<Ponto*> nPontos;
+
+	    if(!ui->checkBox->isChecked() || clipador->clippingDePoligonosSutherland(pontos, nPontos)){
+		if(!ui->checkBox->isChecked())
+		    nPontos = pontos;
+		int size = nPontos.size();
+		for (int i=0; i<size; i++) {
+		    Ponto* ponto = nPontos.front();
+		    poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
+
+		    nPontos.pop_front();
+		    nPontos.push_back(ponto);
+		}
+		if(figura->obterTipo() == POLIGONOPREENCHIDO){
+		    int rPreenchimento = cor.obterVermelho() / 2;
+		    int gPreenchimento = cor.obterVerde() / 2;
+		    int bPreenchimento = cor.obterAzul() / 2;
+
+		    viewport->addPolygon(poligono, QPen(QColor::fromRgb(rPreenchimento,gPreenchimento,bPreenchimento)), QBrush(qCor));
+		}
+		else{
+		    viewport->addPolygon(poligono, QPen(qCor));
+		}
+		nPontos.clear();
+	    }
+	}
+	figuras.pop_back();
+	figuras.push_front(figura);
     }
 }
 

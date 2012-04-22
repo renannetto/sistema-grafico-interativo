@@ -8,6 +8,7 @@ DisplayFile::DisplayFile()
     nPoligonosP = 0;
     nBeziers = 0;
     nSplines = 0;
+    nPoliedros = 0;
 
     window = criarWindow();
     figuras.push_back(window);
@@ -68,14 +69,14 @@ void DisplayFile::construirEixosNaOrigem(){
 
     //Teste poliedro
     list<Ponto*> pontosPoliedro;
-    Ponto *ponto1 = new Ponto(0, 0, 0);
-    Ponto *ponto2 = new Ponto(50, 0, 0);
-    Ponto *ponto3 = new Ponto(50, 50, 0);
-    Ponto *ponto4 = new Ponto(0, 50, 0);
-    Ponto *ponto5 = new Ponto(10, 10, -50);
-    Ponto *ponto6 = new Ponto(60, 10, -50);
-    Ponto *ponto7 = new Ponto(60, 60, -50);
-    Ponto *ponto8 = new Ponto(10, 60, -50);
+    Ponto *ponto1 = new Ponto(5, 5, 5);
+    Ponto *ponto2 = new Ponto(50, 5, 5);
+    Ponto *ponto3 = new Ponto(50, 50, 5);
+    Ponto *ponto4 = new Ponto(5, 50, 5);
+    Ponto *ponto5 = new Ponto(15, 15, -50);
+    Ponto *ponto6 = new Ponto(55, 15, -50);
+    Ponto *ponto7 = new Ponto(55, 55, -50);
+    Ponto *ponto8 = new Ponto(15, 55, -50);
     pontosPoliedro.push_back(ponto1);
     pontosPoliedro.push_back(ponto2);
     pontosPoliedro.push_back(ponto3);
@@ -85,15 +86,17 @@ void DisplayFile::construirEixosNaOrigem(){
     pontosPoliedro.push_back(ponto7);
     pontosPoliedro.push_back(ponto8);
     list<Face*> facesPoliedro;
-    facesPoliedro.push_back(new Face(1, 2, 3));
+
     facesPoliedro.push_back(new Face(4, 1, 3));
-    facesPoliedro.push_back(new Face(1, 5, 8));
+    facesPoliedro.push_back(new Face(3, 4, 8));
     facesPoliedro.push_back(new Face(4, 1, 8));
-    facesPoliedro.push_back(new Face(2, 6, 7));
-    facesPoliedro.push_back(new Face(3, 2, 7));
-    facesPoliedro.push_back(new Face(5, 6, 7));
-    facesPoliedro.push_back(new Face(8, 5, 6));
-    figuras.push_back(new Figura("Poliedro", POLIEDRO, pontosPoliedro, facesPoliedro, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    facesPoliedro.push_back(new Face(2, 6, 5));
+    facesPoliedro.push_back(new Face(6, 2, 7));
+    facesPoliedro.push_back(new Face(1, 2, 3));
+    facesPoliedro.push_back(new Face(6, 7, 8));
+    facesPoliedro.push_back(new Face(1, 5, 8));
+
+    adicionarFigura(POLIEDRO, pontosPoliedro, facesPoliedro, preto);
 
 }
 
@@ -162,6 +165,13 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
         figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
         nSplines++;
         break;
+    case POLIEDRO :
+	nome = "Poliedro ";
+	nomeInt << nome << nPoliedros;
+	nome = nomeInt.str();
+	figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+	nPoliedros++;
+	break;
     case EIXO: break;
     case WINDOW: break;
     }

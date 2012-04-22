@@ -41,7 +41,7 @@ void GeradorDeCurvas::gerarBSpline(list<Ponto *> &pontos, list<Ponto *> &nPontos
     double delta3f0x;
     double delta3f0y;
 
-    for(int i = 0; i < pontos.size()-3; i++){
+    for(unsigned int i = 0; i < pontos.size()-3; i++){
         for(int j = 0; j < 4; j++){
             constantesX[j] = 0;
             constantesY[j] = 0;
@@ -84,7 +84,7 @@ void GeradorDeCurvas::gerarBSpline(list<Ponto *> &pontos, list<Ponto *> &nPontos
 void GeradorDeCurvas::gerarBezier(list<Ponto*> &pontos, list<Ponto*> &nPontos) {
     list<Ponto*>::iterator it = pontos.begin();
     double constantesX[4], constantesY[4];
-    for(int i = 0; i < (pontos.size()-1)/3; i++){
+    for(unsigned int i = 0; i < (pontos.size()-1)/3; i++){
         Ponto* p1 = *it++;
         Ponto* p2 = *it++;
         Ponto* p3 = *it++;

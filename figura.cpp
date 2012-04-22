@@ -307,13 +307,15 @@ void Figura::gerarDescricaoPPC(Ponto vrp, double tetaX, double tetaY, double wcX
 }
 
 Ponto Figura::obterCentro(){
-    double xSum = 0, ySum = 0;
+    double xSum = 0, ySum = 0, zSum = 0;
     list<Ponto*>::iterator it;
     for(it = pontos.begin(); it != pontos.end(); it++){
         xSum += (*it)->obterX();
         ySum += (*it)->obterY();
+	zSum += (*it)->obterZ();
     }
     double xMedio = xSum/pontos.size();
     double yMedio = ySum/pontos.size();
-    return Ponto(xMedio, yMedio);
+    double zMedio = zSum/pontos.size();
+    return Ponto(xMedio, yMedio, zMedio);
 }

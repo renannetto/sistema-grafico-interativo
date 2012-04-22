@@ -9,7 +9,7 @@ Canvas::Canvas(QWidget *parent) : QGraphicsView(parent)
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event)
 {
-//    this->janelaPrincipal->arrastarCamera(event->x(),event->y());
+    this->janelaPrincipal->arrastarCamera(event->x(),event->y());
     clicado = false;
 }
 
@@ -85,18 +85,19 @@ void Canvas::keyReleaseEvent(QKeyEvent *event){
 
 void Canvas::wheelEvent(QWheelEvent *event)
 {
-    if(event->delta() > 0)
+    if(event->delta() > 0) {
         if(ctrlAtivado)
             this->janelaPrincipal->aumentarRegiaoDeClipping();
         else if (shiftAtivado)
             this->janelaPrincipal->rotacionarWindowParaDireita();
         else
             this->janelaPrincipal->zoomIn();
-    else if (event-> delta() < 0)
+    } else if (event-> delta() < 0) {
         if(ctrlAtivado)
             this->janelaPrincipal->diminuirRegiaoDeClipping();
         else if (shiftAtivado)
             this->janelaPrincipal->rotacionarWindowParaEsquerda();
         else
             this->janelaPrincipal->zoomOut();
+    }
 }
