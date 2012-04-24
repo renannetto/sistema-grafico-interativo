@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <stdio.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -252,6 +253,7 @@ void MainWindow::desenharFiguras() {
 		int size = nPontos.size();
 		for (int i=0; i<size; i++) {
 		    Ponto* ponto = nPontos.front();
+
 		    poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
 
 		    nPontos.pop_front();

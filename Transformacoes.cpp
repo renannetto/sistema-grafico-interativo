@@ -40,9 +40,9 @@ void Transformacoes::transladar(){
 
 void Transformacoes::escalonar(){
     double qtd = ui->qtdEscalonamento->text().toDouble();
-    double vX = (double)ui->escalonamentoX->value()==0 ? 1 : (double)ui->escalonamentoX->value()*qtd/100;
-    double vY = (double)ui->escalonamentoY->value()==0 ? 1 : (double)ui->escalonamentoY->value()*qtd/100;
-    double vZ = (double)ui->escalonamentoZ->value()==0 ? 1 : (double)ui->escalonamentoZ->value()*qtd/100;
+    double vX = (double)ui->escalonamentoX->value()*(qtd-1)/100 + 1;
+    double vY = (double)ui->escalonamentoY->value()*(qtd-1)/100 + 1;
+    double vZ = (double)ui->escalonamentoZ->value()*(qtd-1)/100 + 1;
     emit sEscalonar(vX,vY);
 }
 

@@ -1,4 +1,5 @@
 #include "windowviewport.h"
+#include <stdio.h>
 
 WindowViewport::WindowViewport()
 {
@@ -257,8 +258,10 @@ void WindowViewport::gerarDescricoesPPC(){
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = acos(xOrtogonal/moduloVnp);
-    double tetaY = acos(yOrtogonal/moduloVnp);
+    double tetaX = asin(xOrtogonal/moduloVnp);
+    double tetaY = asin(yOrtogonal/moduloVnp);
+    //TODO
+    //AQUI FOI ALTERADO PARA ASIN, NAO TENHO CERTEZA SE ESTA CERTO!!!
 
     Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
 

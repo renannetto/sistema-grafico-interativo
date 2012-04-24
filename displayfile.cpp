@@ -1,4 +1,5 @@
 #include "displayfile.h"
+#include <stdio.h>
 
 DisplayFile::DisplayFile()
 {
@@ -36,7 +37,8 @@ void DisplayFile::construirEixosNaOrigem(){
     Figura *window = figuras.front();
 
     list<Ponto*> pontosWindow = window->obterPontos();
-    Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
+    //Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
+    Ponto vrp(0,0,0);
 
     Ponto *ponto1Window = pontosWindow.front();
     Ponto *ponto4Window = pontosWindow.back();
@@ -52,33 +54,46 @@ void DisplayFile::construirEixosNaOrigem(){
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = acos(xOrtogonal/moduloVnp);
-    double tetaY = acos(yOrtogonal/moduloVnp);
+    double tetaX = asin(xOrtogonal/moduloVnp);
+    double tetaY = asin(yOrtogonal/moduloVnp);
 
     Ponto centro = window->obterCentro();
     double wcX = centro.obterX();
     double wcY = centro.obterY();
     double wcZ = centro.obterZ();
+    printf("Centro da window, x : %lf, y : %lf, z : %lf\n",wcX,wcY,wcZ);
+    printf("xOrt : %lf, yOrt : %lf, zOrt : %lf\n",xOrtogonal, yOrtogonal, zOrtogonal);
+    printf("teta x : %lf, teta y : %lf\n",tetaX,tetaY);
+
     double teta = 0;
 
-    list<Ponto*> pontosEixoX;
-    list<Ponto*> pontosEixoY;
-    pontosEixoX.push_back(new Ponto(-120,0));
-    pontosEixoX.push_back(new Ponto(120,0));
-    pontosEixoX.push_back(new Ponto(110,4));
-    pontosEixoX.push_back(new Ponto(120,0));
-    pontosEixoX.push_back(new Ponto(110,-4));
-    pontosEixoX.push_back(new Ponto(120,0));
-    pontosEixoY.push_back(new Ponto(0,-120));
-    pontosEixoY.push_back(new Ponto(0,120));
-    pontosEixoY.push_back(new Ponto(4,110));
-    pontosEixoY.push_back(new Ponto(0,120));
-    pontosEixoY.push_back(new Ponto(-4,110));
-    pontosEixoY.push_back(new Ponto(0,120));
+    list<Ponto*> pontosEixoXPreto;
+    list<Ponto*> pontosEixoXCinza;
+    list<Ponto*> pontosEixoYPreto;
+    list<Ponto*> pontosEixoYCinza;
+    list<Ponto*> pontosEixoZPreto;
+    list<Ponto*> pontosEixoZCinza;
+    pontosEixoXPreto.push_back(new Ponto(0,0,0));
+    pontosEixoXPreto.push_back(new Ponto(120,0,0));
+    pontosEixoXCinza.push_back(new Ponto(0,0,0));
+    pontosEixoXCinza.push_back(new Ponto(-120,0,0));
+    pontosEixoYPreto.push_back(new Ponto(0,0,0));
+    pontosEixoYPreto.push_back(new Ponto(0,120,0));
+    pontosEixoYCinza.push_back(new Ponto(0,0,0));
+    pontosEixoYCinza.push_back(new Ponto(0,-120,0));
+    pontosEixoZPreto.push_back(new Ponto(0,0,0));
+    pontosEixoZPreto.push_back(new Ponto(0,0,120));
+    pontosEixoZCinza.push_back(new Ponto(0,0,0));
+    pontosEixoZCinza.push_back(new Ponto(0,0,-120));
     Cor preto(0,0,0);
+    Cor cinza(160,160,160);
     list<Face*> faces;
-    figuras.push_back(new Figura("Eixo X", EIXO, pontosEixoX, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
-    figuras.push_back(new Figura("Eixo Y", EIXO, pontosEixoY, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    figuras.push_back(new Figura("Eixo X Preto", EIXO, pontosEixoXPreto, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    figuras.push_back(new Figura("Eixo Y Preto", EIXO, pontosEixoYPreto, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    figuras.push_back(new Figura("Eixo Z Preto", EIXO, pontosEixoZPreto, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    figuras.push_back(new Figura("Eixo Y Cinza", EIXO, pontosEixoXCinza, faces, cinza, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    figuras.push_back(new Figura("Eixo X Cinza", EIXO, pontosEixoYCinza, faces, cinza, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    figuras.push_back(new Figura("Eixo Z Cinza", EIXO, pontosEixoZCinza, faces, cinza, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
 
 
     //Teste poliedro
@@ -136,8 +151,9 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = acos(xOrtogonal/moduloVnp);
-    double tetaY = acos(yOrtogonal/moduloVnp);
+    double tetaX = asin(xOrtogonal/moduloVnp);
+    double tetaY = asin(yOrtogonal/moduloVnp);
+    //AQUI TBM FOI ALTERADOOO PRA ASIN (WARNING)
 
     Ponto centro = window->obterCentro();
     double wcX = centro.obterX();
