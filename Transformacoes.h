@@ -23,13 +23,9 @@ public:
     void receberPontoY(double);
 
 private slots:
-    void aumentarEscalonamentoX();
-    void diminuirEscalonamentoX();
-    void aumentarEscalonamentoY();
-    void diminuirEscalonamentoY();
     void transladar();
     void escalonar();
-    void rotacionar();
+    void rotacionar(int);
     void escolherCor();
     void mudarCor();
 
@@ -42,11 +38,12 @@ signals:
     void sMudarCor(QColor cor);
 
 private:
-    void rotacionarNaOrigem();
-    void rotacionarNoCentro();
-    void rotacionarNoPonto();
+    void rotacionarNaOrigem(int);
+    void rotacionarNoCentro(int);
+    void rotacionarNoPonto(int);
     Ui::Transformacoes *ui;
     QGraphicsScene *scene;
+    int posicaoAnteriorDoSlider;
 };
 
 #endif // TRANSFORMACOES_H

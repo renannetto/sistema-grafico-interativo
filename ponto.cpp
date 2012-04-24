@@ -45,3 +45,10 @@ void Ponto::setarZ(double nz){
 bool Ponto::operator ==(Ponto ponto){
     return (this->x == ponto.obterX() && this->y == ponto.obterY());
 }
+
+void Ponto::normalizarVetor(){
+    double modulo = sqrt(x*x + y*y + z*z);
+    x = x/modulo;
+    y = y/modulo;
+    z = z/modulo;
+}

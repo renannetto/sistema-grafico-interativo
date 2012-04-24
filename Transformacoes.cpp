@@ -8,6 +8,7 @@ Transformacoes::Transformacoes(QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene();
     ui->graphicsView->setScene(scene);
+    posicaoAnteriorDoSlider = ui->dial->value();
 }
 
 Transformacoes::~Transformacoes()
@@ -30,35 +31,39 @@ void Transformacoes::receberPontoY(double y){
 }
 
 void Transformacoes::transladar(){
-    double vX = ui->deslocamentoXEdit->text().toDouble();
-    double vY = ui->deslocamentoYEdit->text().toDouble();
+    double qtd = ui->qtdTranslacao->text().toDouble();
+    double vX = (double)ui->translacaoX->value()*qtd/100;
+    double vY = (double)ui->translacaoY->value()*qtd/100;
+    double vZ = (double)ui->translacaoZ->value()*qtd/100;
     emit sTransladar(vX,vY);
 }
 
 void Transformacoes::escalonar(){
-    double vX = ui->escalonamentoXEdit->text().toDouble();
-    double vY = ui->escalonamentoYEdit->text().toDouble();
+    double qtd = ui->qtdEscalonamento->text().toDouble();
+    double vX = (double)ui->escalonamentoX->value()==0 ? 1 : (double)ui->escalonamentoX->value()*qtd/100;
+    double vY = (double)ui->escalonamentoY->value()==0 ? 1 : (double)ui->escalonamentoY->value()*qtd/100;
+    double vZ = (double)ui->escalonamentoZ->value()==0 ? 1 : (double)ui->escalonamentoZ->value()*qtd/100;
     emit sEscalonar(vX,vY);
 }
 
-void Transformacoes::rotacionarNaOrigem(){
-    double teta = ui->anguloRotacao->text().toDouble();
+void Transformacoes::rotacionarNaOrigem(int angulo){
+    double teta = (double) angulo;
     double ux = ui->eixoXEdit->text().toDouble();
     double uy = ui->eixoYEdit->text().toDouble();
     double uz = ui->eixoZEdit->text().toDouble();
     emit sRotacionarNaOrigem(teta, ux, uy, uz);
 }
 
-void Transformacoes::rotacionarNoCentro(){
-    double teta = ui->anguloRotacao->text().toDouble();
+void Transformacoes::rotacionarNoCentro(int angulo){
+    double teta = (double) angulo;
     double ux = ui->eixoXEdit->text().toDouble();
     double uy = ui->eixoYEdit->text().toDouble();
     double uz = ui->eixoZEdit->text().toDouble();
     emit sRotacionarNoCentro(teta, ux, uy, uz);
 }
 
-void Transformacoes::rotacionarNoPonto(){
-    double teta = ui->anguloRotacao->text().toDouble();
+void Transformacoes::rotacionarNoPonto(int angulo){
+    double teta = (double) angulo;
     double ux = ui->eixoXEdit->text().toDouble();
     double uy = ui->eixoYEdit->text().toDouble();
     double uz = ui->eixoZEdit->text().toDouble();
@@ -68,13 +73,15 @@ void Transformacoes::rotacionarNoPonto(){
     emit sRotacionarNoPonto(teta, pX, pY, pZ, ux, uy, uz);
 }
 
-void Transformacoes::rotacionar(){
+void Transformacoes::rotacionar(int anguloA){
+    int angulo = anguloA - posicaoAnteriorDoSlider;
     if(ui->radioButton->isChecked())
-        rotacionarNaOrigem();
+        rotacionarNaOrigem(angulo);
     if(ui->radioButton_2->isChecked())
-        rotacionarNoCentro();
+        rotacionarNoCentro(angulo);
     if(ui->radioButton_3->isChecked())
-        rotacionarNoPonto();
+        rotacionarNoPonto(angulo);
+    posicaoAnteriorDoSlider = anguloA;
 }
 
 void Transformacoes::escolherCor()
@@ -87,29 +94,3 @@ void Transformacoes::mudarCor()
 {
     emit sMudarCor(scene->backgroundBrush().color());
 }
-
-void Transformacoes::aumentarEscalonamentoX(){
-    stringstream novoValor;
-    novoValor << ui->escalonamentoXEdit->text().toDouble()+0.1;
-    ui->escalonamentoXEdit->setText(novoValor.str().c_str());
-}
-
-void Transformacoes::diminuirEscalonamentoX(){
-    stringstream novoValor;
-    novoValor << ui->escalonamentoXEdit->text().toDouble()-0.1;
-    ui->escalonamentoXEdit->setText(novoValor.str().c_str());
-}
-
-void Transformacoes::aumentarEscalonamentoY(){
-    stringstream novoValor;
-    novoValor << ui->escalonamentoYEdit->text().toDouble()+0.1;
-    ui->escalonamentoYEdit->setText(novoValor.str().c_str());
-}
-
-void Transformacoes::diminuirEscalonamentoY(){
-    stringstream novoValor;
-    novoValor << ui->escalonamentoYEdit->text().toDouble()-0.1;
-    ui->escalonamentoYEdit->setText(novoValor.str().c_str());
-}
-
-

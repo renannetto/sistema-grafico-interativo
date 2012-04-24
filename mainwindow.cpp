@@ -111,7 +111,7 @@ void MainWindow::desenharFiguras() {
         Cor cor = figura->obterCor();
         Tipo tipoDaFigura = figura->obterTipo();
 
-	QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul(),200);
+        QColor qCor = QColor::fromRgb(cor.obterVermelho(), cor.obterVerde(), cor.obterAzul());
 
 	//        double xP,yP,xa,ya,x,y;
 	//        xP = xa = transformadaViewportX(pontos.front()->obterX());
@@ -405,6 +405,7 @@ void MainWindow::escalonar(double vX, double vY){
 
 void MainWindow::rotacionarNaOrigem(double teta, double ux, double uy, double uz){
     Ponto vetor(ux, uy, uz);
+    vetor.normalizarVetor();
     windowViewport->rotacionarNaOrigem(ui->listaObjetos->currentItem()->text().toStdString(), teta, vetor);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
@@ -412,6 +413,7 @@ void MainWindow::rotacionarNaOrigem(double teta, double ux, double uy, double uz
 
 void MainWindow::rotacionarNoCentro(double teta, double ux, double uy, double uz){
     Ponto vetor(ux, uy, uz);
+    vetor.normalizarVetor();
     windowViewport->rotacionarNoCentro(ui->listaObjetos->currentItem()->text().toStdString(), teta, vetor);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
@@ -419,6 +421,7 @@ void MainWindow::rotacionarNoCentro(double teta, double ux, double uy, double uz
 
 void MainWindow::rotacionarNoPonto(double teta, double pX, double pY, double pZ, double ux, double uy, double uz){
     Ponto vetor(ux, uy, uz);
+    vetor.normalizarVetor();
     windowViewport->rotacionarNoPonto(ui->listaObjetos->currentItem()->text().toStdString(),teta, pX, pY, pZ, vetor);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();

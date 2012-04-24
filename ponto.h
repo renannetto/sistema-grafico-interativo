@@ -1,6 +1,8 @@
 #ifndef PONTO_H
 #define PONTO_H
 
+#include <math.h>
+
 class Ponto
 {
 public:
@@ -14,6 +16,7 @@ public:
     void setarZ(double);
     void transformar(double**);
     bool operator==(Ponto);
+    void normalizarVetor();
 private:
     double x;
     double y;
