@@ -435,7 +435,8 @@ void MainWindow::mudarCor(QColor cor) {
 }
 void MainWindow::rotacionarWindowParaDireita() {
 
-    Ponto vetor(0, 0, 1);
+    Ponto vetor(ui->rotacaoWindowX->text().toDouble(), ui->rotacaoWindowY->text().toDouble(), ui->rotacaoWindowZ->text().toDouble());
+    vetor.normalizarVetor();
 
     windowViewport->rotacionarNoCentro("Window", ui->editGraus->text().toDouble(), vetor);
     windowViewport->gerarDescricoesPPC();
@@ -446,7 +447,8 @@ void MainWindow::rotacionarWindowParaDireita() {
 
 void MainWindow::rotacionarWindowParaEsquerda() {
 
-    Ponto vetor(0, 0, 1);
+    Ponto vetor(ui->rotacaoWindowX->text().toDouble(), ui->rotacaoWindowY->text().toDouble(), ui->rotacaoWindowZ->text().toDouble());
+    vetor.normalizarVetor();
 
     windowViewport->rotacionarNoCentro("Window", (double)360 - ui->editGraus->text().toDouble(), vetor);
     windowViewport->gerarDescricoesPPC();

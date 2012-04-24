@@ -103,7 +103,10 @@
     </palette>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>2</number>
+   </property>
+   <property name="movable">
+    <bool>true</bool>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -777,6 +780,11 @@
       </property>
      </widget>
     </widget>
+   </widget>
+   <widget class="QWidget" name="tab_5">
+    <attribute name="title">
+     <string>Poliedro</string>
+    </attribute>
    </widget>
   </widget>
   <widget class="QFrame" name="frame_5">

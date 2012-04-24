@@ -376,6 +376,54 @@
         <string>&lt;-</string>
        </property>
       </widget>
+      <widget class="QLineEdit" name="rotacaoWindowX">
+       <property name="geometry">
+        <rect>
+         <x>18</x>
+         <y>240</y>
+         <width>31</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="rotacaoWindowZ">
+       <property name="geometry">
+        <rect>
+         <x>92</x>
+         <y>240</y>
+         <width>31</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="rotacaoWindowY">
+       <property name="geometry">
+        <rect>
+         <x>55</x>
+         <y>240</y>
+         <width>31</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QLabel" name="labelObjetos">
