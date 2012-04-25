@@ -119,7 +119,7 @@ void Dialog::adicionarPontoCurva(){
 void Dialog::construirCurva(){
     if(ui->tableWidget->rowCount()>=4){
         for(int i = 0; i < ui->tableWidget->rowCount(); i++){
-            pontosCurva.push_back(new Ponto(ui->tableWidget->item(i,0)->text().toDouble(), ui->tableWidget->item(i,1)->text().toDouble()));
+	    pontosCurva.push_back(new Ponto(ui->tableWidget->item(i,0)->text().toDouble(), ui->tableWidget->item(i,1)->text().toDouble(), ui->tableWidget->item(i,2)->text().toDouble()));
         }
         if(ui->radioBezier->isChecked())
             emit construirFigura(CURVABEZIER, pontosCurva, scene->backgroundBrush().color());
@@ -133,7 +133,57 @@ void Dialog::construirCurva(){
     }
 }
 
+void Dialog::adicionarPontoPoliedro(){
+    stringstream string;
+    string << ui->pontosPoliedro->rowCount();
+    QString s = "Ponto " + QString::fromStdString(string.str());
+    ui->pontosPoliedro->insertRow(ui->pontosPoliedro->rowCount());
+    ui->pontosPoliedro->setVerticalHeaderItem(ui->pontosPoliedro->rowCount()-1, new QTableWidgetItem(s));;
+    ui->pontosPoliedro->setItem(ui->pontosPoliedro->rowCount()-1, 0, new QTableWidgetItem(ui->poliedroX->text()));
+    ui->pontosPoliedro->setItem(ui->pontosPoliedro->rowCount()-1, 1, new QTableWidgetItem(ui->poliedroY->text()));
+    ui->pontosPoliedro->setItem(ui->pontosPoliedro->rowCount()-1, 2, new QTableWidgetItem(ui->poliedroZ->text()));
+}
+
+void Dialog::adicionarFacePoliedro(){
+    int qtdDePontos = ui->pontosPoliedro->rowCount();
+    if (ui->poliedroP1->text().toInt() < qtdDePontos && ui->poliedroP2->text().toInt() < qtdDePontos && ui->poliedroP3->text().toInt() < qtdDePontos){
+	QString ponto = "(";
+	ponto += ui->poliedroP1->text();
+	ponto += ", ";
+	ponto += ui->poliedroP2->text();
+	ponto += ", ";
+	ponto += ui->poliedroP3->text();
+	ponto += ")";
+	ui->facesPoliedro->addItem(ponto);
+    }
+}
+
+void Dialog::construirPoliedro(){
+    list<Ponto*> pontosPoliedro;
+    list<Face*> facesPoliedro;
+    if(ui->pontosPoliedro->rowCount()>=3 && ui->facesPoliedro->count()>=1){
+	for(int i = 0; i < ui->pontosPoliedro->rowCount(); i++){
+	    pontosPoliedro.push_back(new Ponto(ui->pontosPoliedro->item(i,0)->text().toDouble(), ui->pontosPoliedro->item(i,1)->text().toDouble(), ui->pontosPoliedro->item(i,2)->text().toDouble()));
+	}
+	for(int i = 0; i < ui->facesPoliedro->count(); i++){
+	    //add faces
+	}
+	//emit construirFigura(POLIEDRO, pontosPoliedro, facesPoliedro, scene->backgroundBrush().color());
+
+	ui->facesPoliedro->clear();
+	while(ui->pontosPoliedro->rowCount())
+	    ui->pontosPoliedro->removeRow(0);
+    }
+}
+
 void Dialog::escolherCor(){
     QColor cor = QColorDialog::getColor(Qt::black, this);
     scene->setBackgroundBrush(QBrush(cor));
+}
+
+void Dialog::limparTudo(){
+    ui->listWidget->clear();
+    pontosPoligono.clear();
+    while(ui->tableWidget->rowCount())
+	ui->tableWidget->removeRow(0);
 }

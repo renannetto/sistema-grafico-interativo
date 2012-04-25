@@ -25,8 +25,8 @@ public:
     string obterNome();
     Tipo obterTipo();
     Cor obterCor();
-    void transladar(double,double);
-    void escalonar(double,double);
+    void transladar(double,double,double);
+    void escalonar(double,double,double);
     void rotacionar(double);
     void rotacionarNaOrigem(double, Ponto);
     void rotacionarNoCentro(double, Ponto);

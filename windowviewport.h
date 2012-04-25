@@ -38,8 +38,8 @@ public:
     double obterYMaxDaWindowPPC();
     double obterCentroXDaWindow();
     double obterCentroYDaWindow();
-    void transladar(string,double,double);
-    void escalonar(string,double,double);
+    void transladar(string,double,double,double);
+    void escalonar(string,double,double,double);
     void rotacionarNaOrigem(string,double, Ponto);
     void rotacionarNoCentro(string,double, Ponto);
     void rotacionarNoPonto(string,double,double,double, double, Ponto);

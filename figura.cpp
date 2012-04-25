@@ -45,8 +45,7 @@ Cor Figura::obterCor(){
     return cor;
 }
 
-void Figura::transladar(double vX, double vY) {
-    double vZ = 0;
+void Figura::transladar(double vX, double vY, double vZ) {
     matrizT[0][0] = 1; matrizT[0][1] = 0; matrizT[0][2] = 0; matrizT[0][3] = 0;
     matrizT[1][0] = 0; matrizT[1][1] = 1; matrizT[1][2] = 0; matrizT[0][3] = 0;
     matrizT[2][0] = 0; matrizT[2][1] = 0; matrizT[2][2] = 1; matrizT[2][3] = 0;
@@ -54,13 +53,11 @@ void Figura::transladar(double vX, double vY) {
     transformar();
 }
 
-void Figura::escalonar(double vX, double vY){
+void Figura::escalonar(double vX, double vY, double vZ){
     Ponto centro = obterCentro();
     double xMedio = centro.obterX();
     double yMedio = centro.obterY();
     double zMedio = centro.obterZ();
-
-    double vZ = 0;
 
     matrizT[0][0] = vX; matrizT[0][1] = 0; matrizT[0][2] = 0; matrizT[0][3] = 0;
     matrizT[1][0] = 0; matrizT[1][1] = vY; matrizT[1][2] = 0; matrizT[1][3] = 0;
@@ -274,10 +271,10 @@ void Figura::gerarDescricaoPPC(Ponto vrp, double tetaX, double tetaY, double wcX
     sinTeta = sin(teta);
 
     //Rotaciona na direção contrária da window para o PPC
-    matrizT[0][0] = cosTeta + ux*ux*(1-cosTeta); matrizT[0][1] = ux*uy*(1-cosTeta) - uz*sinTeta; matrizT[0][2] = ux*uz*(1-cosTeta) + uy*sinTeta; matrizT[0][3] = 0;
-    matrizT[1][0] = uy*ux*(1-cosTeta) + uz*sinTeta; matrizT[1][1] = cosTeta + uy*uy*(1-cosTeta); matrizT[1][2] = uy*uz*(1-cosTeta) - ux*sinTeta; matrizT[1][3] = 0;
-    matrizT[2][0] = uz*ux*(1-cosTeta) - uy*sinTeta; matrizT[2][1] = uz*uy*(1-cosTeta) + ux*sinTeta; matrizT[2][2] = cosTeta + uz*uz*(1-cosTeta); matrizT[2][3] = 0;
-    matrizT[3][0] = pX*(1-matrizT[0][0]) - pY*matrizT[1][0] - pZ*matrizT[2][0]; matrizT[3][1] = -pX*matrizT[0][1] + pY*(1-matrizT[1][1]) - pZ*matrizT[2][1];
+    matrizT[0][0] = cosTeta + ux*ux*(1-cosTeta);    matrizT[0][1] = ux*uy*(1-cosTeta) - uz*sinTeta; matrizT[0][2] = ux*uz*(1-cosTeta) + uy*sinTeta; matrizT[0][3] = 0;
+    matrizT[1][0] = uy*ux*(1-cosTeta) + uz*sinTeta; matrizT[1][1] = cosTeta + uy*uy*(1-cosTeta);    matrizT[1][2] = uy*uz*(1-cosTeta) - ux*sinTeta; matrizT[1][3] = 0;
+    matrizT[2][0] = uz*ux*(1-cosTeta) - uy*sinTeta; matrizT[2][1] = uz*uy*(1-cosTeta) + ux*sinTeta; matrizT[2][2] = cosTeta + uz*uz*(1-cosTeta);    matrizT[2][3] = 0;
+    matrizT[3][0] = pX*(1-matrizT[0][0]) - pY*matrizT[1][0] - pZ*matrizT[2][0];	matrizT[3][1] = -pX*matrizT[0][1] + pY*(1-matrizT[1][1]) - pZ*matrizT[2][1];
     matrizT[3][2] = -pX*matrizT[0][2] - pY*matrizT[1][2] + pZ*(1-matrizT[2][2]); matrizT[3][3] = 1;
 
     for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){

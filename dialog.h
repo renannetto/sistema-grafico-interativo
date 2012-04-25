@@ -31,7 +31,11 @@ public slots:
     void construirPoligono();
     void adicionarPontoCurva();
     void construirCurva();
+    void adicionarPontoPoliedro();
+    void adicionarFacePoliedro();
+    void construirPoliedro();
     void escolherCor();
+    void limparTudo();
 
 signals:
     void construirFigura(Tipo, list<Ponto*>, QColor cor);

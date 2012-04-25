@@ -30,8 +30,8 @@ private slots:
     void mudarCor();
 
 signals:
-    void sTransladar(double,double);
-    void sEscalonar(double,double);
+    void sTransladar(double,double,double);
+    void sEscalonar(double,double,double);
     void sRotacionarNaOrigem(double, double, double, double);
     void sRotacionarNoCentro(double, double, double, double);
     void sRotacionarNoPonto(double,double,double, double, double, double, double);

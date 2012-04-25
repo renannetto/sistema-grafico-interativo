@@ -35,7 +35,7 @@ void Transformacoes::transladar(){
     double vX = (double)ui->translacaoX->value()*qtd/100;
     double vY = (double)ui->translacaoY->value()*qtd/100;
     double vZ = (double)ui->translacaoZ->value()*qtd/100;
-    emit sTransladar(vX,vY);
+    emit sTransladar(vX,vY,vZ);
 }
 
 void Transformacoes::escalonar(){
@@ -43,7 +43,7 @@ void Transformacoes::escalonar(){
     double vX = (double)ui->escalonamentoX->value()*(qtd-1)/100 + 1;
     double vY = (double)ui->escalonamentoY->value()*(qtd-1)/100 + 1;
     double vZ = (double)ui->escalonamentoZ->value()*(qtd-1)/100 + 1;
-    emit sEscalonar(vX,vY);
+    emit sEscalonar(vX,vY,vZ);
 }
 
 void Transformacoes::rotacionarNaOrigem(int angulo){

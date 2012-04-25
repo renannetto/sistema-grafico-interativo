@@ -54,8 +54,8 @@ public slots:
     void moverParaDireita();
     void moverParaCima();
     void moverParaBaixo();
-    void transladar(double,double);
-    void escalonar(double,double);
+    void transladar(double,double,double);
+    void escalonar(double,double,double);
     void rotacionarNaOrigem(double, double, double, double);
     void rotacionarNoCentro(double, double, double, double);
     void rotacionarNoPonto(double,double,double, double, double, double, double);

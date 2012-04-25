@@ -34,13 +34,13 @@ void WindowViewport::destruirFigura(string nome){
 
 void WindowViewport::zoomIn(int percent)
 {
-    window->escalonar(1-(double)percent/100, 1-(double)percent/100);
+    window->escalonar(1-(double)percent/100, 1-(double)percent/100,0);
     //window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
 }
 
 void WindowViewport::zoomOut(int percent)
 {
-    window->escalonar((double)100/(100-percent), (double)100/(100-percent));
+    window->escalonar((double)100/(100-percent), (double)100/(100-percent),0);
     //window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
 }
 
@@ -51,7 +51,7 @@ void WindowViewport::moverParaEsquerda()
     double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    window->transladar(vX, vY);
+    window->transladar(vX, vY,0);
 }
 
 void WindowViewport::moverParaDireita()
@@ -61,7 +61,7 @@ void WindowViewport::moverParaDireita()
     double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    window->transladar(vX, vY);
+    window->transladar(vX, vY,0);
 }
 
 void WindowViewport::moverParaBaixo()
@@ -71,7 +71,7 @@ void WindowViewport::moverParaBaixo()
     double modulo = 0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    window->transladar(vX, vY);
+    window->transladar(vX, vY,0);
 }
 
 void WindowViewport::moverParaCima()
@@ -81,7 +81,7 @@ void WindowViewport::moverParaCima()
     double modulo = 0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC());
     double vY = modulo*cos(teta);
     double vX = modulo*sin(teta);
-    window->transladar(vX, vY);
+    window->transladar(vX, vY,0);
 }
 
 double WindowViewport::obterXMinDaWindow(list<Ponto*> pontos){
@@ -176,23 +176,23 @@ double WindowViewport::obterCentroYDaWindow(){
     return window->obterCentro().obterY();
 }
 
-void WindowViewport::transladar(string nomeFigura, double vX, double vY){
+void WindowViewport::transladar(string nomeFigura, double vX, double vY, double vZ){
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
         if((*it)->obterNome()==nomeFigura){
-            (*it)->transladar(vX,vY);
+	    (*it)->transladar(vX,vY,vZ);
             break;
         }
     }
 }
 
-void WindowViewport::escalonar(string nomeFigura, double vX, double vY){
+void WindowViewport::escalonar(string nomeFigura, double vX, double vY, double vZ){
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
         if((*it)->obterNome()==nomeFigura){
-            (*it)->escalonar(vX,vY);
+	    (*it)->escalonar(vX,vY,vZ);
             break;
         }
     }

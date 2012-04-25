@@ -57,7 +57,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tabTransalacao">
      <attribute name="title">
@@ -131,6 +131,9 @@
          <width>113</width>
          <height>27</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>10</string>
        </property>
       </widget>
       <widget class="QSlider" name="translacaoZ">
@@ -313,6 +316,12 @@
          <width>113</width>
          <height>27</height>
         </rect>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
       </widget>
       <widget class="QLabel" name="label_25">
