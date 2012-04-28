@@ -191,7 +191,7 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
     double m;
     switch(borda) {
     case TELA:
-        if(ponto1->obterZ() <= 0 && ponto2->obterZ() <= 0) { // dentro -> dentro
+        if(ponto1->obterZ() <= 0 && ponto2->obterZ() <= 0 && ponto1->obterZ() > -600 && ponto2->obterZ() > -600) { // dentro -> dentro
             nPontos.push_back(ponto2);
         }
         break;

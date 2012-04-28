@@ -22,10 +22,10 @@ DisplayFile::~ DisplayFile(){
 
 Figura* DisplayFile::criarWindow(){
     list<Ponto*> pontosWindow;
-    pontosWindow.push_back(new Ponto(-320, -240));
-    pontosWindow.push_back(new Ponto(320, -240));
-    pontosWindow.push_back(new Ponto(320, 240));
-    pontosWindow.push_back(new Ponto(-320, 240));
+    pontosWindow.push_back(new Ponto(-320, -240, 100));
+    pontosWindow.push_back(new Ponto(320, -240, 100));
+    pontosWindow.push_back(new Ponto(320, 240, 100));
+    pontosWindow.push_back(new Ponto(-320, 240, 100));
     Cor preto(0, 0, 0);
     list<Face*> faces;
     Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());

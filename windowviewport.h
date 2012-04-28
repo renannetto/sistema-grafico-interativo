@@ -24,6 +24,8 @@ public:
     void moverParaDireita();
     void moverParaCima();
     void moverParaBaixo();
+    void moverParaFrente();
+    void moverParaTras();
     double obterXMinDaWindow(list<Ponto*> pontos);
     double obterYMinDaWindow(list<Ponto*> pontos);
     double obterXMaxDaWindow(list<Ponto*> pontos);

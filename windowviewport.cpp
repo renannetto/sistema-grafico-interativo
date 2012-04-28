@@ -36,54 +36,124 @@ void WindowViewport::zoomIn(int percent)
 {
 //    window->escalonar(1-(double)percent/100, 1-(double)percent/100,0);
     //window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
-    window->transladar(0, 0,-10);
+//    window->transladar(0, 0,-10);
 }
 
 void WindowViewport::zoomOut(int percent)
 {
-//    window->escalonar((double)100/(100-percent), (double)100/(100-percent),0);
+    window->escalonar((double)100/(100-percent), (double)100/(100-percent),0);
     //window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
-    window->transladar(0, 0,10);
+//    window->transladar(0, 0,10);
 }
 
 void WindowViewport::moverParaEsquerda()
 {
-    double teta = obterAnguloDaWindow();
-    teta = (teta+270)*M_PI/180;
-    double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
-    double vY = modulo*cos(teta);
-    double vX = modulo*sin(teta);
-    window->transladar(vX, vY,0);
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    pontosWindow.pop_front();
+    Ponto *ponto2Window = pontosWindow.front();
+    pontosWindow.push_front(ponto1Window);
+
+    Ponto vetor(ponto1Window->obterX()-ponto2Window->obterX(), ponto1Window->obterY()-ponto2Window->obterY(), ponto1Window->obterZ()-ponto2Window->obterZ());
+
+    double vX = 0.1*vetor.obterX();
+    double vY = 0.1*vetor.obterY();
+    double vZ = 0.1*vetor.obterZ();
+    window->transladar(vX, vY, vZ);
 }
 
 void WindowViewport::moverParaDireita()
 {
-    double teta = obterAnguloDaWindow();
-    teta = (teta+90)*M_PI/180;
-    double modulo = 0.1*(obterXMaxDaWindowPPC()-obterXMinDaWindowPPC());
-    double vY = modulo*cos(teta);
-    double vX = modulo*sin(teta);
-    window->transladar(vX, vY,0);
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    pontosWindow.pop_front();
+    Ponto *ponto2Window = pontosWindow.front();
+    pontosWindow.push_front(ponto1Window);
+
+    Ponto vetor(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+
+    double vX = 0.1*vetor.obterX();
+    double vY = 0.1*vetor.obterY();
+    double vZ = 0.1*vetor.obterZ();
+    window->transladar(vX, vY, vZ);
 }
 
 void WindowViewport::moverParaBaixo()
 {
-    double teta = obterAnguloDaWindow();
-    teta = (teta+180)*M_PI/180;
-    double modulo = 0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC());
-    double vY = modulo*cos(teta);
-    double vX = modulo*sin(teta);
-    window->transladar(vX, vY,0);
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    Ponto *ponto2Window = pontosWindow.back();
+
+    Ponto vetor(ponto1Window->obterX()-ponto2Window->obterX(), ponto1Window->obterY()-ponto2Window->obterY(), ponto1Window->obterZ()-ponto2Window->obterZ());
+
+    double vX = 0.1*vetor.obterX();
+    double vY = 0.1*vetor.obterY();
+    double vZ = 0.1*vetor.obterZ();
+    window->transladar(vX, vY, vZ);
 }
 
 void WindowViewport::moverParaCima()
 {
-    double teta = obterAnguloDaWindow();
-    teta = teta*M_PI/180;
-    double modulo = 0.1*(obterYMaxDaWindowPPC()-obterYMinDaWindowPPC());
-    double vY = modulo*cos(teta);
-    double vX = modulo*sin(teta);
-    window->transladar(vX, vY,0);
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    Ponto *ponto2Window = pontosWindow.back();
+
+    Ponto vetor(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+
+    double vX = 0.1*vetor.obterX();
+    double vY = 0.1*vetor.obterY();
+    double vZ = 0.1*vetor.obterZ();
+    window->transladar(vX, vY, vZ);
+}
+
+void WindowViewport::moverParaFrente(){
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    Ponto *ponto4Window = pontosWindow.back();
+    pontosWindow.pop_front();
+    Ponto *ponto2Window = pontosWindow.front();
+    pontosWindow.push_front(ponto1Window);
+
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
+
+    double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
+    double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
+    double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+
+    cout << "Passando aqui : " << xOrtogonal << " " << yOrtogonal << " " << zOrtogonal << " " << endl;
+
+    Ponto vetor(-xOrtogonal, -yOrtogonal, -zOrtogonal);
+    vetor.normalizarVetor();
+
+    double vX = 5*vetor.obterX();
+    double vY = 5*vetor.obterY();
+    double vZ = 5*vetor.obterZ();
+    window->transladar(vX, vY, vZ);
+}
+
+void WindowViewport::moverParaTras(){
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    Ponto *ponto4Window = pontosWindow.back();
+    pontosWindow.pop_front();
+    Ponto *ponto2Window = pontosWindow.front();
+    pontosWindow.push_front(ponto1Window);
+
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
+
+    double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
+    double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
+    double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+
+    Ponto vetor(xOrtogonal, yOrtogonal, zOrtogonal);
+    vetor.normalizarVetor();
+
+    double vX = 5*vetor.obterX();
+    double vY = 5*vetor.obterY();
+    double vZ = 5*vetor.obterZ();
+    window->transladar(vX, vY, vZ);
 }
 
 double WindowViewport::obterXMinDaWindow(list<Ponto*> pontos){
@@ -258,7 +328,6 @@ void WindowViewport::gerarDescricoesPPC(){
     double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
-    Ponto vetor3(xOrtogonal,yOrtogonal,zOrtogonal);
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
     double moduloZX = sqrt(xOrtogonal*xOrtogonal + zOrtogonal*zOrtogonal);

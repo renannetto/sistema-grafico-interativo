@@ -385,6 +385,22 @@ void MainWindow::moverParaBaixo(){
     desenharFiguras();
 }
 
+void MainWindow::moverParaFrente(){
+windowViewport->moverParaFrente();
+windowViewport->gerarDescricoesPPC();
+clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                           windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+desenharFiguras();
+}
+
+void MainWindow::moverParaTras(){
+    windowViewport->moverParaTras();
+    windowViewport->gerarDescricoesPPC();
+    clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+    desenharFiguras();
+}
+
 void MainWindow::moverParaCima(){
     windowViewport->moverParaCima();
     windowViewport->gerarDescricoesPPC();

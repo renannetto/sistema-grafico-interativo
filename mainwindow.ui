@@ -142,26 +142,26 @@
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>50</y>
+         <y>70</y>
          <width>61</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
-        <string>DOWN</string>
+        <string>D</string>
        </property>
       </widget>
       <widget class="QPushButton" name="buttonRight">
        <property name="geometry">
         <rect>
-         <x>70</x>
+         <x>100</x>
          <y>30</y>
-         <width>61</width>
-         <height>21</height>
+         <width>31</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="text">
-        <string>RIGHT</string>
+        <string>R</string>
        </property>
       </widget>
       <widget class="QPushButton" name="buttonLeft">
@@ -169,12 +169,12 @@
         <rect>
          <x>10</x>
          <y>30</y>
-         <width>61</width>
-         <height>21</height>
+         <width>31</width>
+         <height>41</height>
         </rect>
        </property>
        <property name="text">
-        <string>LEFT</string>
+        <string>L</string>
        </property>
       </widget>
       <widget class="QPushButton" name="buttonUp">
@@ -187,7 +187,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>UP</string>
+        <string>U</string>
        </property>
       </widget>
       <widget class="QSlider" name="zoomSlider">
@@ -422,6 +422,32 @@
        </property>
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="buttonFront">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>61</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>F</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="buttonBack">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>50</y>
+         <width>61</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>B</string>
        </property>
       </widget>
      </widget>
@@ -876,7 +902,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>101</x>
-     <y>397</y>
+     <y>395</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -940,7 +966,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>92</x>
-     <y>487</y>
+     <y>485</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -956,7 +982,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>114</x>
-     <y>507</y>
+     <y>505</y>
     </hint>
     <hint type="destinationlabel">
      <x>205</x>
@@ -1004,7 +1030,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
-     <y>536</y>
+     <y>534</y>
     </hint>
     <hint type="destinationlabel">
      <x>204</x>
@@ -1020,7 +1046,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>158</x>
-     <y>673</y>
+     <y>671</y>
     </hint>
     <hint type="destinationlabel">
      <x>208</x>
@@ -1036,7 +1062,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>597</y>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
      <x>202</x>
@@ -1052,7 +1078,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>54</x>
-     <y>597</y>
+     <y>595</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -1083,8 +1109,8 @@
    <slot>aumentarRegiaoDeClipping()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>724</x>
-     <y>42</y>
+     <x>784</x>
+     <y>67</y>
     </hint>
     <hint type="destinationlabel">
      <x>531</x>
@@ -1099,8 +1125,8 @@
    <slot>diminuirRegiaoDeClipping()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>763</x>
-     <y>39</y>
+     <x>818</x>
+     <y>64</y>
     </hint>
     <hint type="destinationlabel">
      <x>692</x>
@@ -1115,8 +1141,8 @@
    <slot>fixarAlgoritmoDeClipping()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>454</x>
-     <y>37</y>
+     <x>488</x>
+     <y>62</y>
     </hint>
     <hint type="destinationlabel">
      <x>310</x>
@@ -1131,8 +1157,8 @@
    <slot>fixarAlgoritmoDeClipping()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>604</x>
-     <y>35</y>
+     <x>648</x>
+     <y>60</y>
     </hint>
     <hint type="destinationlabel">
      <x>326</x>
@@ -1148,11 +1174,43 @@
    <hints>
     <hint type="sourcelabel">
      <x>331</x>
-     <y>39</y>
+     <y>64</y>
     </hint>
     <hint type="destinationlabel">
      <x>296</x>
      <y>57</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonFront</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>moverParaFrente()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>116</x>
+     <y>407</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>206</x>
+     <y>507</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBack</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>moverParaTras()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>85</x>
+     <y>428</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>492</y>
     </hint>
    </hints>
   </connection>
@@ -1177,5 +1235,7 @@
   <slot>diminuirRegiaoDeClipping()</slot>
   <slot>fixarAlgoritmoDeClipping()</slot>
   <slot>fixarForward()</slot>
+  <slot>moverParaFrente()</slot>
+  <slot>moverParaTras()</slot>
  </slots>
 </ui>
