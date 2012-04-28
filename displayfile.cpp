@@ -29,7 +29,7 @@ Figura* DisplayFile::criarWindow(){
     Cor preto(0, 0, 0);
     list<Face*> faces;
     Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
-    Figura* window = new Figura("Window", WINDOW, pontosWindow, faces, preto, vrp, 0, 0, 0, 0, 0, 0);
+    Figura* window = new Figura("Window", WINDOW, pontosWindow, faces, preto, vrp, 0, 0, Ponto(0,0,0), 0);
     return window;
 }
 
@@ -46,24 +46,25 @@ void DisplayFile::construirEixosNaOrigem(){
     Ponto *ponto2Window = pontosWindow.front();
     pontosWindow.push_front(ponto1Window);
 
-    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY());
-    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY());
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
 
     double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
-    double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = asin(xOrtogonal/moduloVnp);
-    double tetaY = asin(yOrtogonal/moduloVnp);
-
     Ponto centro = window->obterCentro();
-    double wcX = centro.obterX();
-    double wcY = centro.obterY();
-    double wcZ = centro.obterZ();
-    printf("Centro da window, x : %lf, y : %lf, z : %lf\n",wcX,wcY,wcZ);
-    printf("xOrt : %lf, yOrt : %lf, zOrt : %lf\n",xOrtogonal, yOrtogonal, zOrtogonal);
-    printf("teta x : %lf, teta y : %lf\n",tetaX,tetaY);
+
+    double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
+    double tetaX = acos(xOrtogonal/moduloVnp);
+    double tetaY = acos(yOrtogonal/moduloVnp);
+    //TODO
+    //AQUI FOI ALTERADO PARA ASIN, NAO TENHO CERTEZA SE ESTA CERTO!!!
+
+    if(zOrtogonal > 0)
+        tetaX = 2*M_PI - tetaX;
+    if(xOrtogonal < 0)
+        tetaY = 2*M_PI - tetaY;
 
     double teta = 0;
 
@@ -88,12 +89,12 @@ void DisplayFile::construirEixosNaOrigem(){
     Cor preto(0,0,0);
     Cor cinza(160,160,160);
     list<Face*> faces;
-    figuras.push_back(new Figura("Eixo X Preto", EIXO, pontosEixoXPreto, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
-    figuras.push_back(new Figura("Eixo Y Preto", EIXO, pontosEixoYPreto, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
-    figuras.push_back(new Figura("Eixo Z Preto", EIXO, pontosEixoZPreto, faces, preto, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
-    figuras.push_back(new Figura("Eixo Y Cinza", EIXO, pontosEixoXCinza, faces, cinza, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
-    figuras.push_back(new Figura("Eixo X Cinza", EIXO, pontosEixoYCinza, faces, cinza, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
-    figuras.push_back(new Figura("Eixo Z Cinza", EIXO, pontosEixoZCinza, faces, cinza, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta));
+    figuras.push_back(new Figura("Eixo X Preto", EIXO, pontosEixoXPreto, faces, preto, vrp, tetaX, tetaY, centro, teta));
+    figuras.push_back(new Figura("Eixo Y Preto", EIXO, pontosEixoYPreto, faces, preto, vrp, tetaX, tetaY, centro, teta));
+    figuras.push_back(new Figura("Eixo Z Preto", EIXO, pontosEixoZPreto, faces, preto, vrp, tetaX, tetaY, centro, teta));
+    figuras.push_back(new Figura("Eixo Y Cinza", EIXO, pontosEixoXCinza, faces, cinza, vrp, tetaX, tetaY, centro, teta));
+    figuras.push_back(new Figura("Eixo X Cinza", EIXO, pontosEixoYCinza, faces, cinza, vrp, tetaX, tetaY, centro, teta));
+    figuras.push_back(new Figura("Eixo Z Cinza", EIXO, pontosEixoZCinza, faces, cinza, vrp, tetaX, tetaY, centro, teta));
 
 
     //Teste poliedro
@@ -102,10 +103,10 @@ void DisplayFile::construirEixosNaOrigem(){
     Ponto *ponto2 = new Ponto(50, 5, 5);
     Ponto *ponto3 = new Ponto(50, 50, 5);
     Ponto *ponto4 = new Ponto(5, 50, 5);
-    Ponto *ponto5 = new Ponto(15, 15, -50);
-    Ponto *ponto6 = new Ponto(55, 15, -50);
-    Ponto *ponto7 = new Ponto(55, 55, -50);
-    Ponto *ponto8 = new Ponto(15, 55, -50);
+    Ponto *ponto5 = new Ponto(5, 5, -50);
+    Ponto *ponto6 = new Ponto(50, 5, -50);
+    Ponto *ponto7 = new Ponto(50, 50, -50);
+    Ponto *ponto8 = new Ponto(5, 50, -50);
     pontosPoliedro.push_back(ponto1);
     pontosPoliedro.push_back(ponto2);
     pontosPoliedro.push_back(ponto3);
@@ -143,22 +144,25 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
     Ponto *ponto2Window = pontosWindow.front();
     pontosWindow.push_front(ponto1Window);
 
-    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY());
-    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY());
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
 
     double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = asin(xOrtogonal/moduloVnp);
-    double tetaY = asin(yOrtogonal/moduloVnp);
-    //AQUI TBM FOI ALTERADOOO PRA ASIN (WARNING)
+    double tetaX = acos(xOrtogonal/moduloVnp);
+    double tetaY = acos(yOrtogonal/moduloVnp);
+    //TODO
+    //AQUI FOI ALTERADO PARA ASIN, NAO TENHO CERTEZA SE ESTA CERTO!!!
+
+    if(zOrtogonal > 0)
+        tetaX = 2*M_PI - tetaX;
+    if(xOrtogonal < 0)
+        tetaY = 2*M_PI - tetaY;
 
     Ponto centro = window->obterCentro();
-    double wcX = centro.obterX();
-    double wcY = centro.obterY();
-    double wcZ = centro.obterZ();
 
     double teta = obterAnguloDaWindow();
 
@@ -171,51 +175,51 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
         nome = "Ponto ";
         nomeInt << nome << nPontos;
         nome = nomeInt.str();
-        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nPontos++;
         break;
     case RETA:
         nome = "Reta ";
         nomeInt << nome << nRetas;
         nome = nomeInt.str();
-        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nRetas++;
         break;
     case POLIGONO:
         nome = "Poligono ";
         nomeInt << nome << nPoligonos;
         nome = nomeInt.str();
-        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nPoligonos++;
         break;
     case POLIGONOPREENCHIDO:
         nome = "Poligono Preenchido ";
         nomeInt << nome << nPoligonosP;
         nome = nomeInt.str();
-        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nPoligonosP++;
         break;
     case CURVABEZIER :
         nome = "Bezier ";
         nomeInt << nome << nBeziers;
         nome = nomeInt.str();
-        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nBeziers++;
         break;
     case CURVASPLINE :
         nome = "Spline ";
         nomeInt << nome << nSplines;
         nome = nomeInt.str();
-        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nSplines++;
         break;
     case POLIEDRO :
-	nome = "Poliedro ";
-	nomeInt << nome << nPoliedros;
-	nome = nomeInt.str();
-	figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
-	nPoliedros++;
-	break;
+        nome = "Poliedro ";
+        nomeInt << nome << nPoliedros;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
+        nPoliedros++;
+        break;
     case EIXO: break;
     case WINDOW: break;
     }
@@ -239,7 +243,7 @@ void DisplayFile::destruirFigura(string nome){
 
 double DisplayFile::obterAnguloDaWindow()
 {
-    list<Ponto*> pontosWindow = window->obterPontos();
+    list<Ponto*> pontosWindow = window->obterPontosPPC();
     Ponto* pontoInicial = pontosWindow.front();
     Ponto* pontoFinal = pontosWindow.back();
     Ponto* vetor = new Ponto(pontoFinal->obterX()-pontoInicial->obterX(), pontoFinal->obterY()-pontoInicial->obterY());
@@ -250,7 +254,7 @@ double DisplayFile::obterAnguloDaWindow()
     double teta = acos(y/sqrt(x*x+y*y));
     teta = (teta*180)/PI;
 
-    if (pontoInicial->obterX()>pontoFinal->obterX())
+    if (pontoInicial->obterX()<pontoFinal->obterX())
         teta = 360 - teta;
 
     return teta;

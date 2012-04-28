@@ -209,40 +209,40 @@ void MainWindow::desenharFiguras() {
 	    int ponto1;
 	    int ponto2;
 	    int ponto3;
-	    for (it=faces.begin(); it!=faces.end(); it++) {
-		pontosFace = (*it)->obterPontos();
-		ponto1 = pontosFace[0];
-		ponto2 = pontosFace[1];
-		ponto3 = pontosFace[2];
-		pontosParaClippar.push_back(pontosFigura[ponto1-1]);
-		pontosParaClippar.push_back(pontosFigura[ponto2-1]);
-		pontosParaClippar.push_back(pontosFigura[ponto3-1]);
+        for (it=faces.begin(); it!=faces.end(); it++) {
+            pontosFace = (*it)->obterPontos();
+            ponto1 = pontosFace[0];
+            ponto2 = pontosFace[1];
+            ponto3 = pontosFace[2];
+            pontosParaClippar.push_back(pontosFigura[ponto1-1]);
+            pontosParaClippar.push_back(pontosFigura[ponto2-1]);
+            pontosParaClippar.push_back(pontosFigura[ponto3-1]);
 
-		if(!ui->checkBox->isChecked() || clipador->clippingDePoligonosSutherland(pontosParaClippar, nPontos)){
-		    if(!ui->checkBox->isChecked())
-			nPontos = pontos;
-		    int size = nPontos.size();
-		    for (int i=0; i<size; i++) {
-			Ponto* ponto = nPontos.front();
-			poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
+            if(!ui->checkBox->isChecked() || clipador->clippingDePoligonosSutherland(pontosParaClippar, nPontos)){
+                if(!ui->checkBox->isChecked())
+                    nPontos = pontosParaClippar;
+                int size = nPontos.size();
+                for (int i=0; i<size; i++) {
+                    Ponto* ponto = nPontos.front();
+                    poligono << QPointF(transformadaViewportX(ponto->obterX()), transformadaViewportY(ponto->obterY()));
 
-			nPontos.pop_front();
-		    }
-		    //		double p1x = transformadaViewportX(pontosFigura[ponto1-1]->obterX());
-		    //		double p1y = transformadaViewportY(pontosFigura[ponto1-1]->obterY());
-		    //		double p2x = transformadaViewportX(pontosFigura[ponto2-1]->obterX());
-		    //		double p2y = transformadaViewportY(pontosFigura[ponto2-1]->obterY());
-		    //		double p3x = transformadaViewportX(pontosFigura[ponto3-1]->obterX());
-		    //		double p3y = transformadaViewportY(pontosFigura[ponto3-1]->obterY());
-		    //		poligono << QPointF(p1x, p1y);
-		    //		poligono << QPointF(p2x, p2y);
-		    //		poligono << QPointF(p3x, p3y);
-		    viewport->addPolygon(poligono, QPen(qCor));
-		    poligono.clear();
-		}
-		nPontos.clear();
-		pontosParaClippar.clear();
-	    }
+                    nPontos.pop_front();
+                }
+                //		double p1x = transformadaViewportX(pontosFigura[ponto1-1]->obterX());
+                //		double p1y = transformadaViewportY(pontosFigura[ponto1-1]->obterY());
+                //		double p2x = transformadaViewportX(pontosFigura[ponto2-1]->obterX());
+                //		double p2y = transformadaViewportY(pontosFigura[ponto2-1]->obterY());
+                //		double p3x = transformadaViewportX(pontosFigura[ponto3-1]->obterX());
+                //		double p3y = transformadaViewportY(pontosFigura[ponto3-1]->obterY());
+                //		poligono << QPointF(p1x, p1y);
+                //		poligono << QPointF(p2x, p2y);
+                //		poligono << QPointF(p3x, p3y);
+                viewport->addPolygon(poligono, QPen(qCor));
+                poligono.clear();
+            }
+            nPontos.clear();
+            pontosParaClippar.clear();
+        }
 	} else{
 	    QPolygonF poligono;
 	    list<Ponto*> nPontos;

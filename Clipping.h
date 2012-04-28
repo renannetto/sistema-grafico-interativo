@@ -21,7 +21,7 @@ class Clipping
         BAIXODIREITA = 0x6
     };
 
-    enum BORDA {BESQUERDA, BDIREITA, BCIMA, BBAIXO};
+    enum BORDA {BESQUERDA, BDIREITA, BCIMA, BBAIXO, TELA};
 
 public:
     Clipping(double,double,double,double, double);

@@ -34,14 +34,16 @@ void WindowViewport::destruirFigura(string nome){
 
 void WindowViewport::zoomIn(int percent)
 {
-    window->escalonar(1-(double)percent/100, 1-(double)percent/100,0);
+//    window->escalonar(1-(double)percent/100, 1-(double)percent/100,0);
     //window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
+    window->transladar(0, 0,-10);
 }
 
 void WindowViewport::zoomOut(int percent)
 {
-    window->escalonar((double)100/(100-percent), (double)100/(100-percent),0);
+//    window->escalonar((double)100/(100-percent), (double)100/(100-percent),0);
     //window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
+    window->transladar(0, 0,10);
 }
 
 void WindowViewport::moverParaEsquerda()
@@ -250,33 +252,37 @@ void WindowViewport::gerarDescricoesPPC(){
     Ponto *ponto2Window = pontosWindow.front();
     pontosWindow.push_front(ponto1Window);
 
-    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY());
-    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY());
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
 
     double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+    Ponto vetor3(xOrtogonal,yOrtogonal,zOrtogonal);
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = asin(xOrtogonal/moduloVnp);
-    double tetaY = asin(yOrtogonal/moduloVnp);
-    //TODO
-    //AQUI FOI ALTERADO PARA ASIN, NAO TENHO CERTEZA SE ESTA CERTO!!!
+    double moduloZX = sqrt(xOrtogonal*xOrtogonal + zOrtogonal*zOrtogonal);
+    double tetaY = acos(xOrtogonal/moduloZX);
+    double tetaX = acos(yOrtogonal/moduloVnp);
 
-    Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
+    if(zOrtogonal > 0)
+        tetaY = 2*M_PI - tetaY;
 
     Ponto centro = window->obterCentro();
-    double wcX = centro.obterX();
-    double wcY = centro.obterY();
-    double wcZ = centro.obterZ();
-
-    double teta = obterAnguloDaWindow();
+    std::cout << "Centrooo " << centro.obterX() << " " << centro.obterY() << " " << centro.obterZ() << " " << std::endl;
 
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
-        (*it)->gerarDescricaoPPC(vrp, tetaX, tetaY, wcX, wcY, wcZ, teta);
+        (*it)->alinharComZ(tetaX, tetaY, centro);
     }
+    double teta = obterAnguloDaWindow();
+    for(it = figuras.begin(); it != figuras.end(); it++){
+        (*it)->gerarDescricaoPPC(teta);
+    }
+//    for(it = figuras.begin(); it != figuras.end(); it++){
+//        (*it)->teste(vetor1,vetor2,vetor3, centro);
+//    }
 }
 
 double WindowViewport::obterAnguloDaWindow()

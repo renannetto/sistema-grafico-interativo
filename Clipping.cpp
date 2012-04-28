@@ -160,10 +160,12 @@ bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Pon
 }
 
 bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &nPontos){
+    list<Ponto*> pontosTela;
     list<Ponto*> pontosEsq;
     list<Ponto*> pontosDir;
     list<Ponto*> pontosCima;
-    cliparPontosPoligono(BESQUERDA, pontos, pontosEsq);
+    cliparPontosPoligono(TELA, pontos, pontosTela);
+    cliparPontosPoligono(BESQUERDA, pontosTela, pontosEsq);
     cliparPontosPoligono(BDIREITA, pontosEsq, pontosDir);
     cliparPontosPoligono(BCIMA, pontosDir, pontosCima);
     cliparPontosPoligono(BBAIXO, pontosCima, nPontos);
@@ -188,6 +190,11 @@ void Clipping::cliparPontosPoligono(BORDA borda, list<Ponto *> &pontos, list<Pon
 void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, list<Ponto*> &nPontos) {
     double m;
     switch(borda) {
+    case TELA:
+        if(ponto1->obterZ() <= 0 && ponto2->obterZ() <= 0) { // dentro -> dentro
+            nPontos.push_back(ponto2);
+        }
+        break;
     case BESQUERDA:
         if(ponto1->obterX()>=xMin && ponto2->obterX()>=xMin) { // dentro -> dentro
             nPontos.push_back(ponto2);
