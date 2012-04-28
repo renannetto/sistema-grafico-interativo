@@ -121,7 +121,7 @@ void WindowViewport::moverParaFrente(){
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
-    Ponto vetor(-xOrtogonal, -yOrtogonal, -zOrtogonal);
+    Ponto vetor(xOrtogonal, yOrtogonal, zOrtogonal);
     vetor.normalizarVetor();
 
     double vX = 5*vetor.obterX();
@@ -145,7 +145,7 @@ void WindowViewport::moverParaTras(){
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
-    Ponto vetor(xOrtogonal, yOrtogonal, zOrtogonal);
+    Ponto vetor(-xOrtogonal, -yOrtogonal, -zOrtogonal);
     vetor.normalizarVetor();
 
     double vX = 5*vetor.obterX();
@@ -164,6 +164,8 @@ void WindowViewport::rotacionarWindow(Ponto vetor, double angulo){
 
     Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
     Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
+    vetor1.normalizarVetor();
+    vetor2.normalizarVetor();
 
     double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
@@ -179,7 +181,12 @@ void WindowViewport::rotacionarWindow(Ponto vetor, double angulo){
     Ponto vetorMundo(x,y,z);
     vetorMundo.normalizarVetor();
 
+    cout << x << "  " << y << "  " << z << "  "<< endl;
+    cout << "É o right? " << ((vetorMundo == vetor1)?"SIM":"NAO") << endl;
+    cout << "É o up? " << ((vetorMundo == vetor2)?"SIM":"NAO") << endl;
+    cout << "É o front? " << ((vetorMundo == vetor3)?"SIM":"NAO") << endl;
     window->rotacionarNoCentro(angulo,vetorMundo);
+
 }
 
 double WindowViewport::obterXMinDaWindow(list<Ponto*> pontos){
@@ -383,4 +390,33 @@ void WindowViewport::gerarDescricoesPPC(){
 double WindowViewport::obterAnguloDaWindow()
 {
     return displayFile->obterAnguloDaWindow();
+}
+
+void WindowViewport::transformarPontoWindowParaMundo(Ponto &ponto){
+    Ponto centro = window->obterCentro();
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    Ponto *ponto4Window = pontosWindow.back();
+    pontosWindow.pop_front();
+    Ponto *ponto2Window = pontosWindow.front();
+    pontosWindow.push_front(ponto1Window);
+
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
+    vetor1.normalizarVetor();
+    vetor2.normalizarVetor();
+
+    double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
+    double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
+    double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+
+    Ponto vetor3(xOrtogonal, yOrtogonal, zOrtogonal);
+    vetor3.normalizarVetor();
+
+    double x = vetor1.obterX()*ponto.obterX() + vetor2.obterX()*ponto.obterY() + vetor3.obterX()*ponto.obterZ() + centro.obterX();
+    double y = vetor1.obterY()*ponto.obterX() + vetor2.obterY()*ponto.obterY() + vetor3.obterY()*ponto.obterZ() + centro.obterY();
+    double z = vetor1.obterZ()*ponto.obterX() + vetor2.obterZ()*ponto.obterY() + vetor3.obterZ()*ponto.obterZ() + centro.obterZ();
+    ponto.setarX(x);
+    ponto.setarY(y);
+    ponto.setarZ(z);
 }

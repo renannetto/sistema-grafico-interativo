@@ -16,18 +16,17 @@ Transformacoes::~Transformacoes()
     delete ui;
 }
 
-void Transformacoes::receberPontoX(double x){
+void Transformacoes::receberPonto(double x, double y, double z){
     stringstream ssX;
+    stringstream ssY;
+    stringstream ssZ;
     ssX << x;
+    ssY << y;
+    ssZ << z;
 
     this->ui->rotacaoPontoX->setText(ssX.str().c_str());
-}
-
-void Transformacoes::receberPontoY(double y){
-    stringstream ssY;
-    ssY << y;
-
     this->ui->rotacaoPontoY->setText(ssY.str().c_str());
+    this->ui->rotacaoPontoZ->setText(ssZ.str().c_str());
 }
 
 void Transformacoes::transladar(){

@@ -350,7 +350,7 @@ Ponto Figura::obterCentro(){
     for(it = pontos.begin(); it != pontos.end(); it++){
         xSum += (*it)->obterX();
         ySum += (*it)->obterY();
-	zSum += (*it)->obterZ();
+        zSum += (*it)->obterZ();
     }
     double xMedio = xSum/pontos.size();
     double yMedio = ySum/pontos.size();

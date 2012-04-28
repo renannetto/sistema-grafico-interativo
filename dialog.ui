@@ -160,7 +160,7 @@
        <string>X : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="pontoX">
       <property name="geometry">
        <rect>
         <x>80</x>
@@ -186,7 +186,7 @@
        <string>Y : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_2">
+     <widget class="QLineEdit" name="pontoY">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -199,7 +199,7 @@
        <string/>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_11">
+     <widget class="QLineEdit" name="pontoZ">
       <property name="geometry">
        <rect>
         <x>400</x>
@@ -289,7 +289,7 @@
        <string>X : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_3">
+     <widget class="QLineEdit" name="retaX1">
       <property name="geometry">
        <rect>
         <x>80</x>
@@ -312,7 +312,7 @@
        <string>Y : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QLineEdit" name="retaY1">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -335,7 +335,7 @@
        <string>Z :</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_12">
+     <widget class="QLineEdit" name="retaZ1">
       <property name="geometry">
        <rect>
         <x>400</x>
@@ -394,7 +394,7 @@
        <string>X : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_5">
+     <widget class="QLineEdit" name="retaX2">
       <property name="geometry">
        <rect>
         <x>80</x>
@@ -417,7 +417,7 @@
        <string>Y : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_6">
+     <widget class="QLineEdit" name="retaY2">
       <property name="geometry">
        <rect>
         <x>240</x>
@@ -440,7 +440,7 @@
        <string>Z :</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_13">
+     <widget class="QLineEdit" name="retaZ2">
       <property name="geometry">
        <rect>
         <x>400</x>
@@ -783,7 +783,7 @@
        <string>X : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_9">
+     <widget class="QLineEdit" name="curvaX">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -809,7 +809,7 @@
        <string>Y : </string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_10">
+     <widget class="QLineEdit" name="curvaY">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -848,7 +848,7 @@
        <string>Inserir Curva</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_14">
+     <widget class="QLineEdit" name="curvaZ">
       <property name="geometry">
        <rect>
         <x>70</x>
@@ -903,21 +903,6 @@
      </attribute>
      <attribute name="verticalHeaderMinimumSectionSize">
       <number>21</number>
-     </attribute>
-     <attribute name="verticalHeaderDefaultSectionSize">
-      <number>30</number>
-     </attribute>
-     <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>27</number>
-     </attribute>
-     <attribute name="verticalHeaderMinimumSectionSize">
-      <number>21</number>
-     </attribute>
-     <attribute name="verticalHeaderHighlightSections">
-      <bool>true</bool>
-     </attribute>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>100</number>
      </attribute>
      <column>
       <property name="text">
@@ -1022,7 +1007,7 @@
       <string>Z :</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_8">
+    <widget class="QPushButton" name="poliedroBotaoPonto">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -1392,7 +1377,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_8</sender>
+   <sender>poliedroBotaoPonto</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
    <slot>adicionarPontoPoliedro()</slot>

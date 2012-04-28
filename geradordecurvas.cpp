@@ -49,42 +49,42 @@ void GeradorDeCurvas::gerarBSpline(list<Ponto *> &pontos, list<Ponto *> &nPontos
         for(int j = 0; j < 4; j++){
             constantesX[j] = 0;
             constantesY[j] = 0;
-	    constantesZ[j] = 0;
+            constantesZ[j] = 0;
 
             constantesX[j] += matrizBSpline[j][0]*p1->obterX();
             constantesY[j] += matrizBSpline[j][0]*p1->obterY();
-	    constantesZ[j] += matrizBSpline[j][0]*p1->obterZ();
+            constantesZ[j] += matrizBSpline[j][0]*p1->obterZ();
             constantesX[j] += matrizBSpline[j][1]*p2->obterX();
             constantesY[j] += matrizBSpline[j][1]*p2->obterY();
-	    constantesZ[j] += matrizBSpline[j][1]*p2->obterZ();
+            constantesZ[j] += matrizBSpline[j][1]*p2->obterZ();
             constantesX[j] += matrizBSpline[j][2]*p3->obterX();
             constantesY[j] += matrizBSpline[j][2]*p3->obterY();
-	    constantesZ[j] += matrizBSpline[j][2]*p3->obterZ();
+            constantesZ[j] += matrizBSpline[j][2]*p3->obterZ();
             constantesX[j] += matrizBSpline[j][3]*p4->obterX();
             constantesY[j] += matrizBSpline[j][3]*p4->obterY();
-	    constantesZ[j] += matrizBSpline[j][3]*p4->obterZ();
+            constantesZ[j] += matrizBSpline[j][3]*p4->obterZ();
         }
         if (forward) {
             f0x = constantesX[3];
             f0y = constantesY[3];
-	    f0z = constantesZ[3];
+            f0z = constantesZ[3];
             deltaf0x = deltinha3*constantesX[0] + deltinha2*constantesX[1] + deltinha*constantesX[2];
             deltaf0y = deltinha3*constantesY[0] + deltinha2*constantesY[1] + deltinha*constantesY[2];
-	    deltaf0z = deltinha3*constantesZ[0] + deltinha2*constantesZ[1] + deltinha*constantesZ[2];
+            deltaf0z = deltinha3*constantesZ[0] + deltinha2*constantesZ[1] + deltinha*constantesZ[2];
             delta2f0x = deltinha3_2*constantesX[0] + deltinha2_2*constantesX[1];
             delta2f0y = deltinha3_2*constantesY[0] + deltinha2_2*constantesY[1];
-	    delta2f0z = deltinha3_2*constantesZ[0] + deltinha2_2*constantesZ[1];
+            delta2f0z = deltinha3_2*constantesZ[0] + deltinha2_2*constantesZ[1];
             delta3f0x = deltinha3_2*constantesX[0];
             delta3f0y = deltinha3_2*constantesY[0];
-	    delta3f0z = deltinha3_2*constantesZ[0];
-	    Ponto ponto(f0x, f0y, f0z);
-	    Ponto delta(deltaf0x, deltaf0y, deltaf0z);
-	    Ponto delta2(delta2f0x, delta2f0y, delta2f0z);
-	    Ponto delta3(delta3f0x, delta3f0y, delta3f0z);
+            delta3f0z = deltinha3_2*constantesZ[0];
+            Ponto ponto(f0x, f0y, f0z);
+            Ponto delta(deltaf0x, deltaf0y, deltaf0z);
+            Ponto delta2(delta2f0x, delta2f0y, delta2f0z);
+            Ponto delta3(delta3f0x, delta3f0y, delta3f0z);
             forwardDifferences(ponto, delta, delta2, delta3, nPontos);
         }
         else
-	    gerarBSplineBlending(constantesX, constantesY, constantesZ, nPontos);
+            gerarBSplineBlending(constantesX, constantesY, constantesZ, nPontos);
 
         p1 = p2;
         p2 = p3;

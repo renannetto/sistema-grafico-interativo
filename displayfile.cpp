@@ -56,14 +56,11 @@ void DisplayFile::construirEixosNaOrigem(){
     Ponto centro = window->obterCentro();
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = acos(xOrtogonal/moduloVnp);
-    double tetaY = acos(yOrtogonal/moduloVnp);
-    //TODO
-    //AQUI FOI ALTERADO PARA ASIN, NAO TENHO CERTEZA SE ESTA CERTO!!!
+    double moduloZX = sqrt(xOrtogonal*xOrtogonal + zOrtogonal*zOrtogonal);
+    double tetaY = acos(xOrtogonal/moduloZX);
+    double tetaX = acos(yOrtogonal/moduloVnp);
 
     if(zOrtogonal > 0)
-        tetaX = 2*M_PI - tetaX;
-    if(xOrtogonal < 0)
         tetaY = 2*M_PI - tetaY;
 
     double teta = 0;
@@ -152,14 +149,11 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaX = acos(xOrtogonal/moduloVnp);
-    double tetaY = acos(yOrtogonal/moduloVnp);
-    //TODO
-    //AQUI FOI ALTERADO PARA ASIN, NAO TENHO CERTEZA SE ESTA CERTO!!!
+    double moduloZX = sqrt(xOrtogonal*xOrtogonal + zOrtogonal*zOrtogonal);
+    double tetaY = acos(xOrtogonal/moduloZX);
+    double tetaX = acos(yOrtogonal/moduloVnp);
 
     if(zOrtogonal > 0)
-        tetaX = 2*M_PI - tetaX;
-    if(xOrtogonal < 0)
         tetaY = 2*M_PI - tetaY;
 
     Ponto centro = window->obterCentro();

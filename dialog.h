@@ -21,7 +21,7 @@ class Dialog : public QDialog
 public:
     explicit Dialog(QWidget *parent = 0);
     ~Dialog();
-    void receberPontoX(double);
+    void receberPonto(double x, double y, double z);
     void receberPontoY(double);
 
 public slots:

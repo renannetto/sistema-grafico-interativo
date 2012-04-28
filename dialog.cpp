@@ -16,68 +16,59 @@ Dialog::~Dialog(){
 
 }
 
-void Dialog::receberPontoX(double x){
+void Dialog::receberPonto(double x, double y, double z){
     stringstream ssX;
+    stringstream ssY;
+    stringstream ssZ;
     ssX << x;
+    ssY << y;
+    ssZ << z;
 
     switch(this->ui->tabWidget->currentIndex()) {
 
     case 0 :
-        this->ui->lineEdit->setText(ssX.str().c_str());
-
+        this->ui->pontoX->setText(ssX.str().c_str());
+        this->ui->pontoY->setText(ssY.str().c_str());
+        this->ui->pontoZ->setText(ssZ.str().c_str());
         break;
     case 1 :
-        this->ui->lineEdit_3->setText(this->ui->lineEdit_5->text());
-        this->ui->lineEdit_5->setText(ssX.str().c_str());
-
+        this->ui->retaX1->setText(this->ui->retaX2->text());
+        this->ui->retaX2->setText(ssX.str().c_str());
+        this->ui->retaY1->setText(this->ui->retaY2->text());
+        this->ui->retaY2->setText(ssY.str().c_str());
+        this->ui->retaZ1->setText(this->ui->retaZ2->text());
+        this->ui->retaZ2->setText(ssZ.str().c_str());
         break;
     case 2 :
         this->ui->lineEdit_7->setText(ssX.str().c_str());
-
-        break;
-    case 3 :
-        this->ui->lineEdit_9->setText(ssX.str().c_str());
-        break;
-    }
-}
-
-void Dialog::receberPontoY(double y){
-    stringstream ssY;
-    ssY << y;
-
-    switch(this->ui->tabWidget->currentIndex()) {
-
-    case 0 :
-        this->ui->lineEdit_2->setText(ssY.str().c_str());
-
-        break;
-    case 1 :
-        this->ui->lineEdit_4->setText(this->ui->lineEdit_6->text());
-        this->ui->lineEdit_6->setText(ssY.str().c_str());
-
-        break;
-    case 2 :
         this->ui->lineEdit_8->setText(ssY.str().c_str());
         this->ui->pushButton->click();
-
         break;
     case 3 :
-        this->ui->lineEdit_10->setText(ssY.str().c_str());
+        this->ui->curvaX->setText(ssX.str().c_str());
+        this->ui->curvaY->setText(ssY.str().c_str());
+        this->ui->curvaZ->setText(ssZ.str().c_str());
         this->ui->pushButton_6->click();
+        break;
+    case 4:
+        this->ui->poliedroX->setText(ssX.str().c_str());
+        this->ui->poliedroY->setText(ssY.str().c_str());
+        this->ui->poliedroZ->setText(ssZ.str().c_str());
+        this->ui->poliedroBotaoPonto->click();
         break;
     }
 }
 
 void Dialog::construirReta(){
     list<Ponto*> pontos;
-    pontos.push_back(new Ponto(ui->lineEdit_3->text().toDouble(), ui->lineEdit_4->text().toDouble()));
-    pontos.push_back(new Ponto(ui->lineEdit_5->text().toDouble(), ui->lineEdit_6->text().toDouble()));
+    pontos.push_back(new Ponto(ui->retaX1->text().toDouble(), ui->retaY1->text().toDouble(), ui->retaZ1->text().toDouble()));
+    pontos.push_back(new Ponto(ui->retaX2->text().toDouble(), ui->retaY2->text().toDouble(), ui->retaZ2->text().toDouble()));
     emit construirFigura(RETA, pontos, scene->backgroundBrush().color());
 }
 
 void Dialog::construirPonto(){
     list<Ponto*> ponto;
-    ponto.push_back(new Ponto(ui->lineEdit->text().toDouble(), ui->lineEdit_2->text().toDouble()));
+    ponto.push_back(new Ponto(ui->pontoX->text().toDouble(), ui->pontoY->text().toDouble(), ui->pontoZ->text().toDouble()));
     emit construirFigura(PONTO, ponto, scene->backgroundBrush().color());
 }
 
@@ -111,9 +102,9 @@ void Dialog::adicionarPontoCurva(){
     QString s = "Ponto " + QString::fromStdString(string.str());
     ui->tableWidget->insertRow(ui->tableWidget->rowCount());
     ui->tableWidget->setVerticalHeaderItem(ui->tableWidget->rowCount()-1, new QTableWidgetItem(s));;
-    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 0, new QTableWidgetItem(ui->lineEdit_9->text()));
-    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 1, new QTableWidgetItem(ui->lineEdit_10->text()));
-    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 2, new QTableWidgetItem("0"));
+    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 0, new QTableWidgetItem(ui->curvaX->text()));
+    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 1, new QTableWidgetItem(ui->curvaY->text()));
+    ui->tableWidget->setItem(ui->tableWidget->rowCount()-1, 2, new QTableWidgetItem(ui->curvaZ->text()));
 }
 
 void Dialog::construirCurva(){

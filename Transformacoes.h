@@ -19,8 +19,7 @@ class Transformacoes : public QDialog
 public:
     explicit Transformacoes(QWidget *parent = 0);
     ~Transformacoes();
-    void receberPontoX(double);
-    void receberPontoY(double);
+    void receberPonto(double x, double y, double z);
 
 private slots:
     void transladar();

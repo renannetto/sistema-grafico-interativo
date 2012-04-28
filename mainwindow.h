@@ -92,6 +92,7 @@ private:
     GeradorDeCurvas *geradorDeCurvas;
     double deslocamentoXDaCamera;
     double deslocamentoYDaCamera;
+    double deslocamentoZDaCamera;
 };
 
 #endif // MAINWINDOW_H

@@ -319,23 +319,18 @@ double MainWindow::transformadaInversaViewportY(double y){
 void MainWindow::receberPonto(double x, double y){
     double xn = transformadaInversaViewportX(x);
     double yn = transformadaInversaViewportY(y);
-    double teta = (360-windowViewport->obterAnguloDaWindow())*M_PI/180;
-    double centroXDaWindowPPC = windowViewport->obterCentroXDaWindow();
-    double centroYDaWindowPPC = windowViewport->obterCentroYDaWindow();
-
-    x = xn*cos(teta)-yn*sin(teta) + centroXDaWindowPPC;
-    y = yn*cos(teta)+xn*sin(teta) + centroYDaWindowPPC;
+    Ponto ponto(xn,yn,0);
+    windowViewport->transformarPontoWindowParaMundo(ponto);
 
     if(janelaDeCriacoes->isVisible()){
-        janelaDeCriacoes->receberPontoX(x);
-        janelaDeCriacoes->receberPontoY(y);
+        janelaDeCriacoes->receberPonto(ponto.obterX(),ponto.obterY(),ponto.obterZ());
     }
     if(janelaDeTransformacoes->isVisible()){
-        janelaDeTransformacoes->receberPontoX(x);
-        janelaDeTransformacoes->receberPontoY(y);
+        janelaDeTransformacoes->receberPonto(ponto.obterX(),ponto.obterY(),ponto.obterZ());
     }    
-    deslocamentoXDaCamera = x;
-    deslocamentoYDaCamera = y;
+    deslocamentoXDaCamera = ponto.obterX();
+    deslocamentoYDaCamera = ponto.obterY();
+    deslocamentoZDaCamera = ponto.obterZ();
 }
 
 void MainWindow::zoomIn(){
@@ -504,14 +499,10 @@ void MainWindow::arrastarCamera(double x, double y){
     if(!janelaDeCriacoes->isVisible() && !janelaDeTransformacoes->isVisible()){
 	double xn = transformadaInversaViewportX(x);
 	double yn = transformadaInversaViewportY(y);
-	double teta = (360-windowViewport->obterAnguloDaWindow())*M_PI/180;
-	double centroXDaWindowPPC = windowViewport->obterCentroXDaWindow();
-	double centroYDaWindowPPC = windowViewport->obterCentroYDaWindow();
+    Ponto ponto(xn,yn,0);
+    windowViewport->transformarPontoWindowParaMundo(ponto);
 
-	x = xn*cos(teta)-yn*sin(teta) + centroXDaWindowPPC;
-	y = yn*cos(teta)+xn*sin(teta) + centroYDaWindowPPC;
-
-	windowViewport->transladar("Window", deslocamentoXDaCamera - x, deslocamentoYDaCamera - y, 0);
+    windowViewport->transladar("Window", deslocamentoXDaCamera - ponto.obterX(), deslocamentoYDaCamera - ponto.obterY(), deslocamentoZDaCamera - ponto.obterZ());
 	windowViewport->gerarDescricoesPPC();
 	clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
 				   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
