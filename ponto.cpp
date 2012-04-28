@@ -43,7 +43,7 @@ void Ponto::setarZ(double nz){
 }
 
 bool Ponto::operator ==(Ponto ponto){
-    return (this->x == ponto.obterX() && this->y == ponto.obterY());
+    return (this->x == ponto.obterX() && this->y == ponto.obterY() && this->z == ponto.obterZ());
 }
 
 void Ponto::normalizarVetor(){

@@ -34,7 +34,7 @@ void WindowViewport::destruirFigura(string nome){
 
 void WindowViewport::zoomIn(int percent)
 {
-//    window->escalonar(1-(double)percent/100, 1-(double)percent/100,0);
+    window->escalonar(1-(double)percent/100, 1-(double)percent/100,0);
     //window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
 //    window->transladar(0, 0,-10);
 }
@@ -121,8 +121,6 @@ void WindowViewport::moverParaFrente(){
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
-    cout << "Passando aqui : " << xOrtogonal << " " << yOrtogonal << " " << zOrtogonal << " " << endl;
-
     Ponto vetor(-xOrtogonal, -yOrtogonal, -zOrtogonal);
     vetor.normalizarVetor();
 
@@ -154,6 +152,34 @@ void WindowViewport::moverParaTras(){
     double vY = 5*vetor.obterY();
     double vZ = 5*vetor.obterZ();
     window->transladar(vX, vY, vZ);
+}
+
+void WindowViewport::rotacionarWindow(Ponto vetor, double angulo){
+    list<Ponto*> pontosWindow = window->obterPontos();
+    Ponto *ponto1Window = pontosWindow.front();
+    Ponto *ponto4Window = pontosWindow.back();
+    pontosWindow.pop_front();
+    Ponto *ponto2Window = pontosWindow.front();
+    pontosWindow.push_front(ponto1Window);
+
+    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
+    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
+
+    double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
+    double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
+    double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+
+    Ponto vetor3(xOrtogonal, yOrtogonal, zOrtogonal);
+    vetor3.normalizarVetor();
+
+    double x = vetor1.obterX()*vetor.obterX() + vetor2.obterX()*vetor.obterY() + vetor3.obterX()*vetor.obterZ();
+    double y = vetor1.obterY()*vetor.obterX() + vetor2.obterY()*vetor.obterY() + vetor3.obterY()*vetor.obterZ();
+    double z = vetor1.obterZ()*vetor.obterX() + vetor2.obterZ()*vetor.obterY() + vetor3.obterZ()*vetor.obterZ();
+
+    Ponto vetorMundo(x,y,z);
+    vetorMundo.normalizarVetor();
+
+    window->rotacionarNoCentro(angulo,vetorMundo);
 }
 
 double WindowViewport::obterXMinDaWindow(list<Ponto*> pontos){

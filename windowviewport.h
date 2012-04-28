@@ -26,6 +26,7 @@ public:
     void moverParaBaixo();
     void moverParaFrente();
     void moverParaTras();
+    void rotacionarWindow(Ponto vetor, double angulo);
     double obterXMinDaWindow(list<Ponto*> pontos);
     double obterYMinDaWindow(list<Ponto*> pontos);
     double obterXMaxDaWindow(list<Ponto*> pontos);

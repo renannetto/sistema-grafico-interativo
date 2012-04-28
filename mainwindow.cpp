@@ -454,7 +454,7 @@ void MainWindow::rotacionarWindowParaDireita() {
     Ponto vetor(ui->rotacaoWindowX->text().toDouble(), ui->rotacaoWindowY->text().toDouble(), ui->rotacaoWindowZ->text().toDouble());
     vetor.normalizarVetor();
 
-    windowViewport->rotacionarNoCentro("Window", ui->editGraus->text().toDouble(), vetor);
+    windowViewport->rotacionarWindow(vetor, ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
                                windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
@@ -466,7 +466,7 @@ void MainWindow::rotacionarWindowParaEsquerda() {
     Ponto vetor(ui->rotacaoWindowX->text().toDouble(), ui->rotacaoWindowY->text().toDouble(), ui->rotacaoWindowZ->text().toDouble());
     vetor.normalizarVetor();
 
-    windowViewport->rotacionarNoCentro("Window", (double)360 - ui->editGraus->text().toDouble(), vetor);
+    windowViewport->rotacionarWindow(vetor, (double)360 - ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
                                windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
