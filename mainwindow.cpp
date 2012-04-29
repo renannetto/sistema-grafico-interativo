@@ -24,6 +24,7 @@ void MainWindow::iniciar(){
     //clipador = new Clipping(SUBVIEWPORTXMIN, SUBVIEWPORTXMAX, SUBVIEWPORTYMIN, SUBVIEWPORTYMAX);
     viewport = new QGraphicsScene(0,0,VIEWPORTXSIZE,VIEWPORTYSIZE);
     windowViewport = new WindowViewport();
+    ui->listaObjetos->addItem("Poliedro 0");
 
     deslocamentoClipador = 10;
     clipador = new Clipping(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),

@@ -204,7 +204,7 @@ void Figura::alinharComZ(double tetaX, double tetaY, Ponto centroDaCamera) {
         (*it)->transformar(matrizT);
     }
 
-    tetaX = -(M_PI/2 - tetaX);
+    tetaX = (M_PI/2 - tetaX);
 
     cosTeta = cos(tetaX);
     sinTeta = sin(tetaX);
