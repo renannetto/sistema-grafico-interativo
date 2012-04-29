@@ -121,7 +121,7 @@ void WindowViewport::moverParaFrente(){
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
-    Ponto vetor(xOrtogonal, yOrtogonal, zOrtogonal);
+    Ponto vetor(-xOrtogonal, -yOrtogonal, -zOrtogonal);
     vetor.normalizarVetor();
 
     double vX = 5*vetor.obterX();
@@ -145,7 +145,7 @@ void WindowViewport::moverParaTras(){
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
 
-    Ponto vetor(-xOrtogonal, -yOrtogonal, -zOrtogonal);
+    Ponto vetor(xOrtogonal, yOrtogonal, zOrtogonal);
     vetor.normalizarVetor();
 
     double vX = 5*vetor.obterX();

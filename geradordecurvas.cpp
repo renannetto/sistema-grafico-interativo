@@ -2,7 +2,7 @@
 
 GeradorDeCurvas::GeradorDeCurvas()
 {
-    nPassos = 10;
+    nPassos = 8;
     forward = false;
     construirMatrizes();
 }

@@ -36,8 +36,8 @@ void MainWindow::iniciar(){
     ui->graphicsView->setScene(viewport);
     ui->zoomText->clear();
 
-    connect(janelaDeCriacoes, SIGNAL(construirFigura(Tipo, list<Ponto*>, QColor)),
-    this, SLOT(construirFigura(Tipo, list<Ponto*>, QColor)));
+    connect(janelaDeCriacoes, SIGNAL(construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor)),
+    this, SLOT(construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor)));
     connect(janelaDeTransformacoes, SIGNAL(sTransladar(double,double, double)),
     this, SLOT(transladar(double,double,double)));
     connect(janelaDeTransformacoes, SIGNAL(sEscalonar(double,double, double)),
@@ -83,8 +83,7 @@ void MainWindow::abrirJanelaDeTransformacoes(){
 void MainWindow::abrirJanelaDeAjuda(){
 }
 
-void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos, QColor cor){
-    list<Face*> faces;
+void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos, list<Face*> faces, QColor cor){
     QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos, faces, cor.red(), cor.green(), cor.blue()));
     ui->listaObjetos->addItem(nome);
     desenharFiguras();

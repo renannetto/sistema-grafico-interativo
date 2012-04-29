@@ -7,6 +7,7 @@
 #include <QColorDialog>
 #include <QGraphicsScene>
 #include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -38,7 +39,7 @@ public slots:
     void limparTudo();
 
 signals:
-    void construirFigura(Tipo, list<Ponto*>, QColor cor);
+    void construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor cor);
 
 private:
     Ui::Dialog *ui;

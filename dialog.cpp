@@ -61,15 +61,17 @@ void Dialog::receberPonto(double x, double y, double z){
 
 void Dialog::construirReta(){
     list<Ponto*> pontos;
+    list<Face*> faces;
     pontos.push_back(new Ponto(ui->retaX1->text().toDouble(), ui->retaY1->text().toDouble(), ui->retaZ1->text().toDouble()));
     pontos.push_back(new Ponto(ui->retaX2->text().toDouble(), ui->retaY2->text().toDouble(), ui->retaZ2->text().toDouble()));
-    emit construirFigura(RETA, pontos, scene->backgroundBrush().color());
+    emit construirFigura(RETA, pontos, faces, scene->backgroundBrush().color());
 }
 
 void Dialog::construirPonto(){
     list<Ponto*> ponto;
+    list<Face*> faces;
     ponto.push_back(new Ponto(ui->pontoX->text().toDouble(), ui->pontoY->text().toDouble(), ui->pontoZ->text().toDouble()));
-    emit construirFigura(PONTO, ponto, scene->backgroundBrush().color());
+    emit construirFigura(PONTO, ponto, faces, scene->backgroundBrush().color());
 }
 
 void Dialog::adicionarPontoPoligono(){
@@ -83,12 +85,13 @@ void Dialog::adicionarPontoPoligono(){
 }
 
 void Dialog::construirPoligono(){
+    list<Face*> faces;
     if(pontosPoligono.size()>=3){
         if(this->ui->checkBox->checkState() == Qt::Checked){
-            emit construirFigura(POLIGONOPREENCHIDO, pontosPoligono, scene->backgroundBrush().color());
+            emit construirFigura(POLIGONOPREENCHIDO, pontosPoligono, faces, scene->backgroundBrush().color());
         }
         else{
-            emit construirFigura(POLIGONO, pontosPoligono, scene->backgroundBrush().color());
+            emit construirFigura(POLIGONO, pontosPoligono, faces, scene->backgroundBrush().color());
         }
         pontosPoligono.clear();
 
@@ -108,14 +111,15 @@ void Dialog::adicionarPontoCurva(){
 }
 
 void Dialog::construirCurva(){
+    list<Face*> faces;
     if(ui->tableWidget->rowCount()>=4){
         for(int i = 0; i < ui->tableWidget->rowCount(); i++){
 	    pontosCurva.push_back(new Ponto(ui->tableWidget->item(i,0)->text().toDouble(), ui->tableWidget->item(i,1)->text().toDouble(), ui->tableWidget->item(i,2)->text().toDouble()));
         }
         if(ui->radioBezier->isChecked())
-            emit construirFigura(CURVABEZIER, pontosCurva, scene->backgroundBrush().color());
+            emit construirFigura(CURVABEZIER, pontosCurva, faces, scene->backgroundBrush().color());
         if(ui->radioSpline->isChecked())
-            emit construirFigura(CURVASPLINE, pontosCurva, scene->backgroundBrush().color());
+            emit construirFigura(CURVASPLINE, pontosCurva, faces, scene->backgroundBrush().color());
 
         pontosCurva.clear();
         //ui->tableWidget->clear();
@@ -138,28 +142,40 @@ void Dialog::adicionarPontoPoliedro(){
 void Dialog::adicionarFacePoliedro(){
     int qtdDePontos = ui->pontosPoliedro->rowCount();
     if (ui->poliedroP1->text().toInt() < qtdDePontos && ui->poliedroP2->text().toInt() < qtdDePontos && ui->poliedroP3->text().toInt() < qtdDePontos){
-	QString ponto = "(";
-	ponto += ui->poliedroP1->text();
-	ponto += ", ";
-	ponto += ui->poliedroP2->text();
-	ponto += ", ";
-	ponto += ui->poliedroP3->text();
-	ponto += ")";
-	ui->facesPoliedro->addItem(ponto);
+        QString ponto = "(";
+        ponto += ui->poliedroP1->text();
+        ponto += ", ";
+        ponto += ui->poliedroP2->text();
+        ponto += ", ";
+        ponto += ui->poliedroP3->text();
+        ponto += ")";
+        ui->facesPoliedro->addItem(ponto);
     }
 }
 
 void Dialog::construirPoliedro(){
     list<Ponto*> pontosPoliedro;
     list<Face*> facesPoliedro;
+    string faces;
+    double p1,p2,p3;
+
     if(ui->pontosPoliedro->rowCount()>=3 && ui->facesPoliedro->count()>=1){
 	for(int i = 0; i < ui->pontosPoliedro->rowCount(); i++){
 	    pontosPoliedro.push_back(new Ponto(ui->pontosPoliedro->item(i,0)->text().toDouble(), ui->pontosPoliedro->item(i,1)->text().toDouble(), ui->pontosPoliedro->item(i,2)->text().toDouble()));
 	}
 	for(int i = 0; i < ui->facesPoliedro->count(); i++){
-	    //add faces
+        faces = ui->facesPoliedro->item(i)->text().toStdString();
+        stringstream ss(faces);
+        ss.ignore();
+        ss >> p1;
+        ss.ignore();
+        ss >> p2;
+        ss.ignore();
+        ss >> p3;
+        ss.ignore();
+        facesPoliedro.push_back(new Face(++p1,++p2,++p3));
 	}
-	//emit construirFigura(POLIEDRO, pontosPoliedro, facesPoliedro, scene->backgroundBrush().color());
+    emit construirFigura(POLIEDRO, pontosPoliedro, facesPoliedro, scene->backgroundBrush().color());
 
 	ui->facesPoliedro->clear();
 	while(ui->pontosPoliedro->rowCount())

@@ -65,7 +65,7 @@ bool Clipping::calculaNovoPonto(double m, int rc, Ponto const &p, Ponto &np){
 }
 
 bool Clipping::clippingDePonto(Ponto &ponto){
-    return (ponto.obterX()>xMin && ponto.obterX()<xMax && ponto.obterY()>yMin && ponto.obterY()<yMax);
+    return (ponto.obterX()>xMin && ponto.obterX()<xMax && ponto.obterY()>yMin && ponto.obterY()<yMax && ponto.obterZ() < 1 && ponto.obterZ() > -800);
 }
 
 bool Clipping::clippingDeLinhaCohen(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2){
@@ -153,10 +153,13 @@ bool Clipping::clippingDeLinhaLiang(Ponto const &p1, Ponto const &p2, Ponto &np1
 }
 
 bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2) {
-    if (clippingLinha)
-        return clippingDeLinhaCohen(p1, p2, np1, np2);
-    else
-        return clippingDeLinhaLiang(p1, p2, np1, np2);
+    if(p1.obterZ() < 1 && p2.obterZ() < 1 && p1.obterZ() > -800 && p2.obterZ() > -800) { // dentro -> dentro
+        if (clippingLinha)
+            return clippingDeLinhaCohen(p1, p2, np1, np2);
+        else
+            return clippingDeLinhaLiang(p1, p2, np1, np2);
+    }
+    return false;
 }
 
 bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &nPontos){
@@ -191,7 +194,7 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
     double m;
     switch(borda) {
     case TELA:
-        if(ponto1->obterZ() <= 0 && ponto2->obterZ() <= 0 && ponto1->obterZ() > -600 && ponto2->obterZ() > -600) { // dentro -> dentro
+        if(ponto1->obterZ() < 1 && ponto2->obterZ() < 1 && ponto1->obterZ() > -800 && ponto2->obterZ() > -800) { // dentro -> dentro
             nPontos.push_back(ponto2);
         }
         break;
@@ -275,15 +278,18 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
 
     double x1 = (*it)->obterX();
     double y1 = (*it)->obterY();
+    double z1 = (*it)->obterZ();
     double x2;
     double y2;
+    double z2;
     bool clipou = false;
 
     for (++it; it!=pontos.end(); it++) {
         x2 = (*it)->obterX();
         y2 = (*it)->obterY();
+        z2 = (*it)->obterZ();
 
-        if (x1 >= xMin && x1 <= xMax && y1 >= yMin && y1 <= yMax) { //ponto 1 dentro
+        if (x1 >= xMin && x1 <= xMax && y1 >= yMin && y1 <= yMax && z1 < 1 && z1 > -800) { //ponto 1 dentro
             if(nPontos.size() == 0){
                 nPontos.push_back(new Ponto(x1,y1));
             }
@@ -296,11 +302,11 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
                 Ponto np2(0, 0);
                 if (clippingDeLinha(p1, p2, np1, np2)) {
                     nPontos.push_back(new Ponto(np2.obterX(), np2.obterY()));
-		    clipou = true;
+                    clipou = true;
                 }
             }
         } else { //ponto 1 fora
-            if (x2 >= xMin && x2 <= xMax && y2 >= yMin && y2 <= yMax) { //ponto 2 dentro => precisa clipar
+            if (x2 >= xMin && x2 <= xMax && y2 >= yMin && y2 <= yMax && z2 < 1 && z2 > -800) { //ponto 2 dentro => precisa clipar
                 Ponto p1(x1, y1);
                 Ponto p2(x2, y2);
                 Ponto np1(0, 0);
@@ -311,13 +317,14 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
                     }
                     nPontos.push_back(new Ponto(np1.obterX(), np1.obterY()));
                     nPontos.push_back(new Ponto(np2.obterX(), np2.obterY()));
-		    clipou = true;
+                    clipou = true;
                 }
             }
         }
 
         x1 = x2;
         y1 = y2;
+        z1 = z2;
     }
     return clipou;
 }
