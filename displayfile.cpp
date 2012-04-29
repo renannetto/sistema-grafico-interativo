@@ -37,31 +37,12 @@ void DisplayFile::construirEixosNaOrigem(){
     Figura *window = figuras.front();
 
     list<Ponto*> pontosWindow = window->obterPontos();
-    //Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
-    Ponto vrp(0,0,0);
-
-    Ponto *ponto1Window = pontosWindow.front();
-    Ponto *ponto4Window = pontosWindow.back();
-    pontosWindow.pop_front();
-    Ponto *ponto2Window = pontosWindow.front();
-    pontosWindow.push_front(ponto1Window);
-
-    Ponto vetor1(ponto2Window->obterX()-ponto1Window->obterX(), ponto2Window->obterY()-ponto1Window->obterY(), ponto2Window->obterZ()-ponto1Window->obterZ());
-    Ponto vetor2(ponto4Window->obterX()-ponto1Window->obterX(), ponto4Window->obterY()-ponto1Window->obterY(), ponto4Window->obterZ()-ponto1Window->obterZ());
-
-    double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
-    double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
-    double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+    Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
 
     Ponto centro = window->obterCentro();
 
-    double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
-    double moduloZX = sqrt(xOrtogonal*xOrtogonal + zOrtogonal*zOrtogonal);
-    double tetaY = acos(xOrtogonal/moduloZX);
-    double tetaX = acos(yOrtogonal/moduloVnp);
-
-    if(zOrtogonal > 0)
-        tetaY = 2*M_PI - tetaY;
+    double tetaY = 0;
+    double tetaX = 0;
 
     double teta = 0;
 
@@ -133,7 +114,6 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
 
     list<Ponto*> pontosWindow = window->obterPontos();
     Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
-    //Ponto vrp(-320, -240, 0);
 
     Ponto *ponto1Window = pontosWindow.front();
     Ponto *ponto4Window = pontosWindow.back();

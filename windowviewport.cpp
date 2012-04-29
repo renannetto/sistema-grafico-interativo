@@ -5,6 +5,7 @@ WindowViewport::WindowViewport()
 {
     displayFile = new DisplayFile();
     window = displayFile->obterFiguras().front();
+    gerarDescricoesPPC();
 }
 
 WindowViewport::~WindowViewport(){
@@ -34,14 +35,14 @@ void WindowViewport::destruirFigura(string nome){
 
 void WindowViewport::zoomIn(int percent)
 {
-    window->escalonar(1-(double)percent/100, 1-(double)percent/100,0);
+    window->escalonar(1-(double)percent/100, 1-(double)percent/100, 1-(double)percent/100);
     //window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
 //    window->transladar(0, 0,-10);
 }
 
 void WindowViewport::zoomOut(int percent)
 {
-    window->escalonar((double)100/(100-percent), (double)100/(100-percent),0);
+    window->escalonar((double)100/(100-percent), (double)100/(100-percent), (double)100/(100-percent));
     //window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
 //    window->transladar(0, 0,10);
 }
@@ -124,9 +125,9 @@ void WindowViewport::moverParaFrente(){
     Ponto vetor(-xOrtogonal, -yOrtogonal, -zOrtogonal);
     vetor.normalizarVetor();
 
-    double vX = 5*vetor.obterX();
-    double vY = 5*vetor.obterY();
-    double vZ = 5*vetor.obterZ();
+    double vX = 20*vetor.obterX();
+    double vY = 20*vetor.obterY();
+    double vZ = 20*vetor.obterZ();
     window->transladar(vX, vY, vZ);
 }
 
@@ -148,9 +149,9 @@ void WindowViewport::moverParaTras(){
     Ponto vetor(xOrtogonal, yOrtogonal, zOrtogonal);
     vetor.normalizarVetor();
 
-    double vX = 5*vetor.obterX();
-    double vY = 5*vetor.obterY();
-    double vZ = 5*vetor.obterZ();
+    double vX = 20*vetor.obterX();
+    double vY = 20*vetor.obterY();
+    double vZ = 20*vetor.obterZ();
     window->transladar(vX, vY, vZ);
 }
 

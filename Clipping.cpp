@@ -153,13 +153,13 @@ bool Clipping::clippingDeLinhaLiang(Ponto const &p1, Ponto const &p2, Ponto &np1
 }
 
 bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2) {
-    if(p1.obterZ() < 1 && p2.obterZ() < 1 && p1.obterZ() > -800 && p2.obterZ() > -800) { // dentro -> dentro
+   // if(p1.obterZ() < 1 && p2.obterZ() < 1 && p1.obterZ() > -800 && p2.obterZ() > -800) { // dentro -> dentro
         if (clippingLinha)
             return clippingDeLinhaCohen(p1, p2, np1, np2);
         else
             return clippingDeLinhaLiang(p1, p2, np1, np2);
-    }
-    return false;
+    //}
+    //return false;
 }
 
 bool Clipping::clippingDePoligonosSutherland(list<Ponto *> &pontos, list<Ponto *> &nPontos){
@@ -194,9 +194,9 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
     double m;
     switch(borda) {
     case TELA:
-        if(ponto1->obterZ() < 1 && ponto2->obterZ() < 1 && ponto1->obterZ() > -800 && ponto2->obterZ() > -800) { // dentro -> dentro
+        //if(ponto1->obterZ() < 1 && ponto2->obterZ() < 1 && ponto1->obterZ() > -800 && ponto2->obterZ() > -800) { // dentro -> dentro
             nPontos.push_back(ponto2);
-        }
+        //}
         break;
     case BESQUERDA:
         if(ponto1->obterX()>=xMin && ponto2->obterX()>=xMin) { // dentro -> dentro
