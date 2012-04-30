@@ -263,8 +263,8 @@ void MainWindow::desenharFiguras() {
 		    int rPreenchimento = cor.obterVermelho() / 2;
 		    int gPreenchimento = cor.obterVerde() / 2;
 		    int bPreenchimento = cor.obterAzul() / 2;
-
-		    viewport->addPolygon(poligono, QPen(QColor::fromRgb(rPreenchimento,gPreenchimento,bPreenchimento)), QBrush(qCor));
+            qCor.setAlpha(150);
+            viewport->addPolygon(poligono, QPen(QColor::fromRgb(rPreenchimento,gPreenchimento,bPreenchimento)), QBrush(qCor));
 		}
 		else{
 		    viewport->addPolygon(poligono, QPen(qCor));
