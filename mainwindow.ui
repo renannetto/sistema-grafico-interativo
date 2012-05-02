@@ -1214,6 +1214,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>fixarAlgoritmoDeClipping()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>789</x>
+     <y>39</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>882</x>
+     <y>60</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>abrirJanelaDeCriacoes()</slot>

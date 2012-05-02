@@ -1,4 +1,5 @@
 #include "geradordecurvas.h"
+#include <iostream>
 
 GeradorDeCurvas::GeradorDeCurvas()
 {
@@ -182,10 +183,10 @@ void GeradorDeCurvas::forwardDifferences(Ponto &ponto, Ponto &delta, Ponto &delt
         y += deltay;
         deltay += delta2y;
         delta2y += delta3y;
-	z += deltaz;
-	deltaz += delta2z;
-	delta2z += delta3z;
-	nPontos.push_back(new Ponto(x, y, z));
+        z += deltaz;
+        deltaz += delta2z;
+        delta2z += delta3z;
+        nPontos.push_back(new Ponto(x, y, z));
     }
 }
 

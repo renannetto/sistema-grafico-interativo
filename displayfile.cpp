@@ -22,10 +22,10 @@ DisplayFile::~ DisplayFile(){
 
 Figura* DisplayFile::criarWindow(){
     list<Ponto*> pontosWindow;
-    pontosWindow.push_back(new Ponto(-640, -480, 300));
-    pontosWindow.push_back(new Ponto(640, -480, 300));
-    pontosWindow.push_back(new Ponto(640, 480, 300));
-    pontosWindow.push_back(new Ponto(-640, 480, 300));
+    pontosWindow.push_back(new Ponto(-640, -480, 200));
+    pontosWindow.push_back(new Ponto(640, -480, 200));
+    pontosWindow.push_back(new Ponto(640, 480, 200));
+    pontosWindow.push_back(new Ponto(-640, 480, 200));
     Cor preto(0, 0, 0);
     list<Face*> faces;
     Ponto vrp(pontosWindow.front()->obterX(), pontosWindow.front()->obterY(), pontosWindow.front()->obterZ());
@@ -66,6 +66,7 @@ void DisplayFile::construirEixosNaOrigem(){
     pontosEixoZCinza.push_back(new Ponto(0,0,-120));
     Cor preto(0,0,0);
     Cor cinza(160,160,160);
+    Cor azul(0,0,120);
     list<Face*> faces;
     figuras.push_back(new Figura("Eixo X Preto", EIXO, pontosEixoXPreto, faces, preto, vrp, tetaX, tetaY, centro, teta));
     figuras.push_back(new Figura("Eixo Y Preto", EIXO, pontosEixoYPreto, faces, preto, vrp, tetaX, tetaY, centro, teta));
@@ -77,10 +78,10 @@ void DisplayFile::construirEixosNaOrigem(){
 
     //Teste poliedro
     list<Ponto*> pontosPoliedro;
-    Ponto *ponto1 = new Ponto(5, 5, 5);
-    Ponto *ponto2 = new Ponto(50, 5, 5);
-    Ponto *ponto3 = new Ponto(50, 50, 5);
-    Ponto *ponto4 = new Ponto(5, 50, 5);
+    Ponto *ponto1 = new Ponto(5, 5, -5);
+    Ponto *ponto2 = new Ponto(50, 5, -5);
+    Ponto *ponto3 = new Ponto(50, 50, -5);
+    Ponto *ponto4 = new Ponto(5, 50, -5);
     Ponto *ponto5 = new Ponto(5, 5, -50);
     Ponto *ponto6 = new Ponto(50, 5, -50);
     Ponto *ponto7 = new Ponto(50, 50, -50);
@@ -95,16 +96,20 @@ void DisplayFile::construirEixosNaOrigem(){
     pontosPoliedro.push_back(ponto8);
     list<Face*> facesPoliedro;
 
-    facesPoliedro.push_back(new Face(4, 1, 3));
-    facesPoliedro.push_back(new Face(3, 4, 8));
-    facesPoliedro.push_back(new Face(4, 1, 8));
-    facesPoliedro.push_back(new Face(2, 6, 5));
-    facesPoliedro.push_back(new Face(6, 2, 7));
-    facesPoliedro.push_back(new Face(1, 2, 3));
-    facesPoliedro.push_back(new Face(6, 7, 8));
-    facesPoliedro.push_back(new Face(1, 5, 8));
+    facesPoliedro.push_back(new Face(1, 2, 5));
+    facesPoliedro.push_back(new Face(2, 4, 1));
+    facesPoliedro.push_back(new Face(1, 4, 5));
+    facesPoliedro.push_back(new Face(6, 7, 2));
+    facesPoliedro.push_back(new Face(2, 5, 6));
+    facesPoliedro.push_back(new Face(5, 6, 7));
+    facesPoliedro.push_back(new Face(2, 3, 4));
+    facesPoliedro.push_back(new Face(2, 3, 7));
+    facesPoliedro.push_back(new Face(3, 4, 7));
+    facesPoliedro.push_back(new Face(5, 7, 8));
+    facesPoliedro.push_back(new Face(4, 5, 8));
+    facesPoliedro.push_back(new Face(7, 8, 4));
 
-    adicionarFigura(POLIEDRO, pontosPoliedro, facesPoliedro, preto);
+    adicionarFigura(POLIEDRO, pontosPoliedro, facesPoliedro, azul);
 
 }
 

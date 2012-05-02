@@ -372,7 +372,7 @@ void WindowViewport::gerarDescricoesPPC(){
         tetaY = 2*M_PI - tetaY;
 
     Ponto centro = window->obterCentro();
-    std::cout << "Centrooo " << centro.obterX() << " " << centro.obterY() << " " << centro.obterZ() << " " << std::endl;
+//    std::cout << "Centrooo " << centro.obterX() << " " << centro.obterY() << " " << centro.obterZ() << " " << std::endl;
 
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
