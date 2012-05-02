@@ -103,7 +103,7 @@
     </palette>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>2</number>
    </property>
    <property name="movable">
     <bool>true</bool>
@@ -488,7 +488,7 @@
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>10</y>
+        <y>0</y>
         <width>71</width>
         <height>31</height>
        </rect>
@@ -508,7 +508,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>50</y>
+        <y>30</y>
         <width>21</width>
         <height>31</height>
        </rect>
@@ -521,7 +521,7 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>50</y>
+        <y>30</y>
         <width>111</width>
         <height>31</height>
        </rect>
@@ -534,7 +534,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>100</y>
+        <y>70</y>
         <width>21</width>
         <height>31</height>
        </rect>
@@ -547,7 +547,7 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>100</y>
+        <y>70</y>
         <width>111</width>
         <height>31</height>
        </rect>
@@ -560,9 +560,9 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>140</y>
+        <y>150</y>
         <width>111</width>
-        <height>27</height>
+        <height>25</height>
        </rect>
       </property>
       <property name="text">
@@ -573,13 +573,39 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>176</y>
+        <y>180</y>
         <width>171</width>
         <height>31</height>
        </rect>
       </property>
       <property name="text">
        <string>Inserir Polígono</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_9">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>110</y>
+        <width>111</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>110</y>
+        <width>21</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Z :</string>
       </property>
      </widget>
     </widget>

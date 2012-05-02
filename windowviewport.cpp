@@ -182,10 +182,6 @@ void WindowViewport::rotacionarWindow(Ponto vetor, double angulo){
     Ponto vetorMundo(x,y,z);
     vetorMundo.normalizarVetor();
 
-    cout << x << "  " << y << "  " << z << "  "<< endl;
-    cout << "É o right? " << ((vetorMundo == vetor1)?"SIM":"NAO") << endl;
-    cout << "É o up? " << ((vetorMundo == vetor2)?"SIM":"NAO") << endl;
-    cout << "É o front? " << ((vetorMundo == vetor3)?"SIM":"NAO") << endl;
     window->rotacionarNoCentro(angulo,vetorMundo);
 
 }

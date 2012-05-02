@@ -42,6 +42,7 @@ void Dialog::receberPonto(double x, double y, double z){
     case 2 :
         this->ui->lineEdit_7->setText(ssX.str().c_str());
         this->ui->lineEdit_8->setText(ssY.str().c_str());
+        this->ui->lineEdit_9->setText(ssZ.str().c_str());
         this->ui->pushButton->click();
         break;
     case 3 :
@@ -79,9 +80,11 @@ void Dialog::adicionarPontoPoligono(){
     ponto += ui->lineEdit_7->text();
     ponto += ", ";
     ponto += ui->lineEdit_8->text();
+    ponto += ", ";
+    ponto += ui->lineEdit_9->text();
     ponto += ")";
     ui->listWidget->addItem(ponto);
-    pontosPoligono.push_back(new Ponto(ui->lineEdit_7->text().toDouble(), ui->lineEdit_8->text().toDouble()));
+    pontosPoligono.push_back(new Ponto(ui->lineEdit_7->text().toDouble(), ui->lineEdit_8->text().toDouble(), ui->lineEdit_9->text().toDouble()));
 }
 
 void Dialog::construirPoligono(){
