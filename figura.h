@@ -32,10 +32,13 @@ public:
     void rotacionarNoCentro(double, Ponto);
     void rotacionarNoPonto(double,double,double, double, Ponto);
     void mudarCor(int, int, int);
-    void alinharComZ(double tetaX, double tetaY, Ponto centroDaCamera);
+    void alinharComZ(double tetaX, double tetaY, Ponto copDaCamera);
     void gerarDescricaoPPC(double teta);
     void teste(Ponto vX, Ponto vY, Ponto vZ, Ponto centro);
     Ponto obterCentro();
+    void mudarDistanciaCop(double qtd);
+    void atualizarCop(Ponto vetor);
+    Ponto obterCop();
 private:
     double** matrizT;
     void transformar();
@@ -45,6 +48,8 @@ private:
     list<Ponto*> pontosPPC;
     list<Face*> faces;
     Cor cor;
+    Ponto copWindow;
+    double distanciaCop;
 };
 
 #endif // FIGURA_H

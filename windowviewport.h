@@ -49,6 +49,7 @@ public:
     void mudarCor(string, int, int, int);
     void gerarDescricoesPPC();
     double obterAnguloDaWindow();
+    void arrastarCam(Ponto vetor);
     void transformarPontoWindowParaMundo(Ponto &ponto);
 private:
     DisplayFile *displayFile;

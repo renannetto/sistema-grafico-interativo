@@ -507,9 +507,17 @@ void MainWindow::arrastarCamera(double x, double y){
 	double yn = transformadaInversaViewportY(y);
     Ponto ponto(xn,yn,0);
     windowViewport->transformarPontoWindowParaMundo(ponto);
+    Ponto vetorDeslocamento(ponto.obterX() - deslocamentoXDaCamera, ponto.obterY() - deslocamentoYDaCamera, ponto.obterZ() - deslocamentoZDaCamera);
 
+    /* DESCOMENTE ESSA LINHA PARA MACUMBAR
+    windowViewport->arrastarCam(vetorDeslocamento);
+    */
+
+    //E COMENTE ESSA
     windowViewport->transladar("Window", deslocamentoXDaCamera - ponto.obterX(), deslocamentoYDaCamera - ponto.obterY(), deslocamentoZDaCamera - ponto.obterZ());
-	windowViewport->gerarDescricoesPPC();
+    //E COMENTE ESSA
+
+    windowViewport->gerarDescricoesPPC();
 	clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
 				   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
 	desenharFiguras();

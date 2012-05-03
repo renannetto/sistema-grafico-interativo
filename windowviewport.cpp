@@ -35,15 +35,17 @@ void WindowViewport::destruirFigura(string nome){
 
 void WindowViewport::zoomIn(int percent)
 {
-    window->escalonar(1-(double)percent/100, 1-(double)percent/100, 1-(double)percent/100);
-    //window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
+    window->mudarDistanciaCop(percent*5);
+//    window->escalonar(1-(double)percent/100, 1-(double)percent/100, 1-(double)percent/100);
+//    window->escalonar2D((double)100/(percent+100), (double)100/(percent+100));
 //    window->transladar(0, 0,-10);
 }
 
 void WindowViewport::zoomOut(int percent)
 {
-    window->escalonar((double)100/(100-percent), (double)100/(100-percent), (double)100/(100-percent));
-    //window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
+    window->mudarDistanciaCop(-percent*5);
+//    window->escalonar((double)100/(100-percent), (double)100/(100-percent), (double)100/(100-percent));
+//    window->escalonar2D(1+(double)percent/100, 1+(double)percent/100);
 //    window->transladar(0, 0,10);
 }
 
@@ -181,8 +183,9 @@ void WindowViewport::rotacionarWindow(Ponto vetor, double angulo){
 
     Ponto vetorMundo(x,y,z);
     vetorMundo.normalizarVetor();
+    Ponto cop = window->obterCop();
 
-    window->rotacionarNoCentro(angulo,vetorMundo);
+    window->rotacionarNoPonto(angulo,cop.obterX(),cop.obterY(),cop.obterZ(),vetorMundo);
 
 }
 
@@ -358,6 +361,9 @@ void WindowViewport::gerarDescricoesPPC(){
     double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
+    Ponto vetor3(-xOrtogonal,-yOrtogonal,-zOrtogonal);
+    vetor3.normalizarVetor();
+    window->atualizarCop(vetor3);
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
     double moduloZX = sqrt(xOrtogonal*xOrtogonal + zOrtogonal*zOrtogonal);
@@ -367,26 +373,37 @@ void WindowViewport::gerarDescricoesPPC(){
     if(zOrtogonal > 0)
         tetaY = 2*M_PI - tetaY;
 
-    Ponto centro = window->obterCentro();
+    Ponto cop = window->obterCop();
 //    std::cout << "Centrooo " << centro.obterX() << " " << centro.obterY() << " " << centro.obterZ() << " " << std::endl;
 
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
     for(it = figuras.begin(); it != figuras.end(); it++){
-        (*it)->alinharComZ(tetaX, tetaY, centro);
+        (*it)->alinharComZ(tetaX, tetaY, cop);
     }
     double teta = obterAnguloDaWindow();
     for(it = figuras.begin(); it != figuras.end(); it++){
         (*it)->gerarDescricaoPPC(teta);
     }
-//    for(it = figuras.begin(); it != figuras.end(); it++){
-//        (*it)->teste(vetor1,vetor2,vetor3, centro);
-//    }
 }
 
 double WindowViewport::obterAnguloDaWindow()
 {
     return displayFile->obterAnguloDaWindow();
+}
+
+void WindowViewport::arrastarCam(Ponto vetorDirecao)
+{
+    Ponto centroDaCam = window->obterCentro();
+    Ponto cop = window->obterCop();
+    Ponto vetorCop(centroDaCam.obterX() - cop.obterX(),centroDaCam.obterY() - cop.obterY(),centroDaCam.obterZ() - cop.obterZ());
+
+    double xOrtogonal = vetorCop.obterY()*vetorDirecao.obterZ() - vetorCop.obterZ()*vetorDirecao.obterY();
+    double yOrtogonal = vetorCop.obterZ()*vetorDirecao.obterX() - vetorCop.obterX()*vetorDirecao.obterZ();
+    double zOrtogonal = vetorCop.obterX()*vetorDirecao.obterY() - vetorCop.obterY()*vetorDirecao.obterX();
+    Ponto vetor(xOrtogonal,yOrtogonal,zOrtogonal);
+
+    rotacionarWindow(vetor,20);
 }
 
 void WindowViewport::transformarPontoWindowParaMundo(Ponto &ponto){
