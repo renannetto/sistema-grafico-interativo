@@ -7,7 +7,7 @@ Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFac
     tipo = vTipo;
     pontos = vPontos;
     faces = vFaces;
-    distanciaCop = 500;
+    distanciaCop = -300;
 
     pontosPPC = pontos;
 
@@ -280,7 +280,8 @@ Ponto Figura::obterCentro(){
 
 void Figura::mudarDistanciaCop(double qtd)
 {
-    distanciaCop += qtd;
+    if(distanciaCop + qtd < -50 && distanciaCop + qtd > -600)
+        distanciaCop += qtd;
 }
 
 void Figura::atualizarCop(Ponto vetor)
