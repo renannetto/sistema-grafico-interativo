@@ -154,10 +154,42 @@ bool Clipping::clippingDeLinhaLiang(Ponto const &p1, Ponto const &p2, Ponto &np1
 
 bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Ponto &np2) {
   //  if(p1.obterZ() < 0 && p2.obterZ() < 0 && p1.obterZ() > -800 && p2.obterZ() > -800) { // dentro -> dentro
-        if (clippingLinha)
-            return clippingDeLinhaCohen(p1, p2, np1, np2);
-        else
-            return clippingDeLinhaLiang(p1, p2, np1, np2);
+    Ponto cp1 = p1;
+    Ponto cp2 = p2;
+
+    if ((p1.obterZ()>0 || p1.obterZ()<-800) && (p2.obterZ()>0 || p2.obterZ()<-800))
+        return false;
+    else
+        if (p1.obterZ()>0 || p1.obterZ()<-800) {
+            double z1 = p1.obterZ();
+            double z2 = p2.obterZ();
+            double s = z1/(z1-z2);
+
+            double intersecaoX = p1.obterX() + s*(p2.obterX()-p1.obterX());
+            double intersecaoY = p1.obterY() + s*(p2.obterY()-p1.obterY());
+            double intersecaoZ = p1.obterZ() + s*(p2.obterZ()-p1.obterZ());
+
+            cp1.setarX(intersecaoX);
+            cp1.setarY(intersecaoY);
+            cp1.setarZ(intersecaoZ);
+        } else if(p2.obterZ()>0 || p2.obterZ()<-800) {
+            double z1 = p1.obterZ();
+            double z2 = p2.obterZ();
+            double s = z1/(z1-z2);
+
+            double intersecaoX = p1.obterX() + s*(p2.obterX()-p1.obterX());
+            double intersecaoY = p1.obterY() + s*(p2.obterY()-p1.obterY());
+            double intersecaoZ = p1.obterZ() + s*(p2.obterZ()-p1.obterZ());
+
+            cp2.setarX(intersecaoX);
+            cp2.setarY(intersecaoY);
+            cp2.setarZ(intersecaoZ);
+        }
+
+    if (clippingLinha)
+        return clippingDeLinhaCohen(cp1, cp2, np1, np2);
+    else
+        return clippingDeLinhaLiang(cp1, cp2, np1, np2);
   //  }
   //  return false;
 }
@@ -194,9 +226,32 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
     double m;
     switch(borda) {
     case TELA:
- //       if(ponto1->obterZ() < 0 && ponto2->obterZ() < 0 && ponto1->obterZ() > -800 && ponto2->obterZ() > -800) { // dentro -> dentro
+        if(ponto1->obterZ() < 0 && ponto2->obterZ() < 0 && ponto1->obterZ() > -800 && ponto2->obterZ() > -800) { // dentro -> dentro
             nPontos.push_back(ponto2);
- //       }
+        } else
+            if((ponto1->obterZ() > 0 || ponto1->obterZ() < -800) && ponto2->obterZ() < 0 && ponto2->obterZ() > -800) { // fora -> dentro
+                double z1 = ponto1->obterZ();
+                double z2 = ponto2->obterZ();
+                double s = z1/(z1-z2);
+
+                double intersecaoX = ponto1->obterX() + s*(ponto2->obterX()-ponto1->obterX());
+                double intersecaoY = ponto1->obterY() + s*(ponto2->obterY()-ponto1->obterY());
+                double intersecaoZ = ponto1->obterZ() + s*(ponto2->obterZ()-ponto1->obterZ());
+
+                nPontos.push_back(new Ponto(intersecaoX, intersecaoY, intersecaoZ));
+                nPontos.push_back(ponto2);
+            } else
+                if (ponto1->obterZ() < 0 && ponto1->obterZ() > -800 && (ponto2->obterZ() > 0 || ponto2->obterZ() < -800)) { // dentro -> fora
+                    double z1 = ponto1->obterZ();
+                    double z2 = ponto2->obterZ();
+                    double s = z1/(z1-z2);
+
+                    double intersecaoX = ponto1->obterX() + s*(ponto2->obterX()-ponto1->obterX());
+                    double intersecaoY = ponto1->obterY() + s*(ponto2->obterY()-ponto1->obterY());
+                    double intersecaoZ = ponto1->obterZ() + s*(ponto2->obterZ()-ponto1->obterZ());
+
+                    nPontos.push_back(new Ponto(intersecaoX, intersecaoY, intersecaoZ));
+                }
         break;
     case BESQUERDA:
         if(ponto1->obterX()>=xMin && ponto2->obterX()>=xMin) { // dentro -> dentro
