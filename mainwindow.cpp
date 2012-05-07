@@ -518,8 +518,8 @@ void MainWindow::arrastarCamera(double x, double y){
     //E COMENTE ESSA
 
     windowViewport->gerarDescricoesPPC();
-	clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-				   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+        clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
+                                   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
 	desenharFiguras();
     }
 }

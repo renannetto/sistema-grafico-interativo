@@ -5,6 +5,8 @@ Clipping::Clipping(double xMin,double xMax,double yMin,double yMax, double deslo
     this->xMax = xMax - (xMax-xMin)*deslocamento/100;
     this->yMin = yMin + (yMax-yMin)*deslocamento/100;
     this->yMax = yMax - (yMax-yMin)*deslocamento/100;
+    zWindow = 200;
+    distanciaZ = -800;
     clippingLinha = 0;
 }
 
@@ -157,10 +159,10 @@ bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Pon
     Ponto cp1 = p1;
     Ponto cp2 = p2;
 
-    if ((p1.obterZ()>0 && p2.obterZ()>0 ) || (p2.obterZ()<-800 && p1.obterZ()<-800))
+    if ((p1.obterZ()>zWindow && p2.obterZ()>zWindow ) || (p2.obterZ()<distanciaZ && p1.obterZ()<distanciaZ))
         return false;
     else
-        if (p1.obterZ()>0 || p1.obterZ()<-800) {
+        if (p1.obterZ()>zWindow || p1.obterZ()<distanciaZ) {
             double z1 = p1.obterZ();
             double z2 = p2.obterZ();
             double s = z1/(z1-z2);
@@ -172,7 +174,7 @@ bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Pon
             cp1.setarX(intersecaoX);
             cp1.setarY(intersecaoY);
             cp1.setarZ(intersecaoZ);
-        } else if(p2.obterZ()>0 || p2.obterZ()<-800) {
+        } else if(p2.obterZ()>zWindow || p2.obterZ()<distanciaZ) {
             double z1 = p1.obterZ();
             double z2 = p2.obterZ();
             double s = z1/(z1-z2);
@@ -226,10 +228,10 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
     double m;
     switch(borda) {
     case TELA:
-        if(ponto1->obterZ() < 0 && ponto2->obterZ() < 0 && ponto1->obterZ() > -800 && ponto2->obterZ() > -800) { // dentro -> dentro
+        if(ponto1->obterZ() < zWindow && ponto2->obterZ() < zWindow && ponto1->obterZ() > distanciaZ && ponto2->obterZ() > distanciaZ) { // dentro -> dentro
             nPontos.push_back(ponto2);
         } else
-            if((ponto1->obterZ() > 0 || ponto1->obterZ() < -800) && ponto2->obterZ() < 0 && ponto2->obterZ() > -800) { // fora -> dentro
+            if((ponto1->obterZ() > zWindow || ponto1->obterZ() < distanciaZ) && ponto2->obterZ() < zWindow && ponto2->obterZ() > distanciaZ) { // fora -> dentro
                 double z1 = ponto1->obterZ();
                 double z2 = ponto2->obterZ();
                 double s = z1/(z1-z2);
@@ -241,7 +243,7 @@ void Clipping::cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, lis
                 nPontos.push_back(new Ponto(intersecaoX, intersecaoY, intersecaoZ));
                 nPontos.push_back(ponto2);
             } else
-                if (ponto1->obterZ() < 0 && ponto1->obterZ() > -800 && (ponto2->obterZ() > 0 || ponto2->obterZ() < -800)) { // dentro -> fora
+                if (ponto1->obterZ() < zWindow && ponto1->obterZ() > distanciaZ && (ponto2->obterZ() > zWindow || ponto2->obterZ() < distanciaZ)) { // dentro -> fora
                     double z1 = ponto1->obterZ();
                     double z2 = ponto2->obterZ();
                     double s = z1/(z1-z2);

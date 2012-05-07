@@ -48,6 +48,8 @@ private:
     double xMax;
     double yMin;
     double yMax;
+    double zWindow;
+    double distanciaZ;
 };
 
 #endif // CLIPPING_H
