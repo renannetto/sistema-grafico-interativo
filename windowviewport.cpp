@@ -279,6 +279,11 @@ double WindowViewport::obterYMinDaWindowPPC(){
     return obterYMinDaWindow(pontos);
 }
 
+double WindowViewport::obterZWindowPPC() {
+    list<Ponto*> pontos = window->obterPontosPPC();
+    return pontos.front()->obterZ();
+}
+
 double WindowViewport::obterCentroXDaWindow(){
     return window->obterCentro().obterX();
 }

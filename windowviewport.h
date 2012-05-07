@@ -39,6 +39,7 @@ public:
     double obterYMinDaWindowPPC();
     double obterXMaxDaWindowPPC();
     double obterYMaxDaWindowPPC();
+    double obterZWindowPPC();
     double obterCentroXDaWindow();
     double obterCentroYDaWindow();
     void transladar(string,double,double,double);

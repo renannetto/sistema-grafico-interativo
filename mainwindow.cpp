@@ -28,7 +28,8 @@ void MainWindow::iniciar(){
 
     deslocamentoClipador = 10;
     clipador = new Clipping(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                            windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                            windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                            windowViewport->obterZWindowPPC(), deslocamentoClipador);
 
     geradorDeCurvas = new GeradorDeCurvas();
 
@@ -66,7 +67,8 @@ void MainWindow::reiniciar(){
 void MainWindow::resetarWindow(){
     windowViewport->resetarWindow();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -346,7 +348,8 @@ void MainWindow::zoomIn(){
     windowViewport->zoomIn(ui->zoomSlider->sliderPosition());
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -354,7 +357,8 @@ void MainWindow::zoomOut(){
     windowViewport->zoomOut(ui->zoomSlider->sliderPosition());
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -369,7 +373,8 @@ void MainWindow::moverParaEsquerda(){
     windowViewport->moverParaEsquerda();
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -377,7 +382,8 @@ void MainWindow::moverParaDireita(){
     windowViewport->moverParaDireita();
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -385,7 +391,8 @@ void MainWindow::moverParaBaixo(){
     windowViewport->moverParaBaixo();
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -393,7 +400,8 @@ void MainWindow::moverParaFrente(){
     windowViewport->moverParaFrente();
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -401,7 +409,8 @@ void MainWindow::moverParaTras(){
     windowViewport->moverParaTras();
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -409,7 +418,8 @@ void MainWindow::moverParaCima(){
     windowViewport->moverParaCima();
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -461,7 +471,8 @@ void MainWindow::rotacionarWindowParaDireita() {
     windowViewport->rotacionarWindow(vetor, ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -473,7 +484,8 @@ void MainWindow::rotacionarWindowParaEsquerda() {
     windowViewport->rotacionarWindow(vetor, (double)360 - ui->editGraus->text().toDouble());
     windowViewport->gerarDescricoesPPC();
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -481,7 +493,8 @@ void MainWindow::aumentarRegiaoDeClipping(){
     if(deslocamentoClipador > 5)
         deslocamentoClipador -= 3;
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -489,7 +502,8 @@ void MainWindow::diminuirRegiaoDeClipping(){
     if(deslocamentoClipador < 45)
         deslocamentoClipador += 3;
     clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                               windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                               windowViewport->obterZWindowPPC(), deslocamentoClipador);
     desenharFiguras();
 }
 
@@ -519,7 +533,8 @@ void MainWindow::arrastarCamera(double x, double y){
 
     windowViewport->gerarDescricoesPPC();
         clipador->fixarCoordenadas(windowViewport->obterXMinDaWindowPPC(), windowViewport->obterXMaxDaWindowPPC(),
-                                   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(), deslocamentoClipador);
+                                   windowViewport->obterYMinDaWindowPPC(), windowViewport->obterYMaxDaWindowPPC(),
+                                   windowViewport->obterZWindowPPC(), deslocamentoClipador);
 	desenharFiguras();
     }
 }

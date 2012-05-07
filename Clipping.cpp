@@ -1,11 +1,11 @@
 #include "Clipping.h"
 
-Clipping::Clipping(double xMin,double xMax,double yMin,double yMax, double deslocamento){
+Clipping::Clipping(double xMin,double xMax,double yMin,double yMax, double zWindow, double deslocamento){
     this->xMin = xMin + (xMax-xMin)*deslocamento/100;
     this->xMax = xMax - (xMax-xMin)*deslocamento/100;
     this->yMin = yMin + (yMax-yMin)*deslocamento/100;
     this->yMax = yMax - (yMax-yMin)*deslocamento/100;
-    zWindow = 200;
+    this->zWindow = zWindow;
     distanciaZ = -800;
     clippingLinha = 0;
 }
@@ -386,11 +386,12 @@ bool Clipping::clippingDeCurvas(list<Ponto *> &pontos, list<Ponto *> &nPontos) {
     return clipou;
 }
 
-void Clipping::fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento) {
+void Clipping::fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double zWindow, double deslocamento) {
     this->xMin = xMin + (xMax-xMin)*deslocamento/100;
     this->xMax = xMax - (xMax-xMin)*deslocamento/100;
     this->yMin = yMin + (yMax-yMin)*deslocamento/100;
     this->yMax = yMax - (yMax-yMin)*deslocamento/100;
+    this->zWindow = zWindow;
 }
 
 void Clipping::fixarAlgoritmoDeClipping(int algoritmo) {

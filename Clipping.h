@@ -24,7 +24,7 @@ class Clipping
     enum BORDA {BESQUERDA, BDIREITA, BCIMA, BBAIXO, TELA};
 
 public:
-    Clipping(double,double,double,double, double);
+    Clipping(double,double,double,double, double, double);
     bool clippingDePonto(Ponto &);
     bool clippingDeLinhaCohen(Ponto const &, Ponto const &, Ponto &, Ponto &);
     bool clippingDeLinhaLiang(Ponto const &, Ponto const &, Ponto &, Ponto &);
@@ -33,7 +33,7 @@ public:
     void cliparPontosPoligono(BORDA borda, list<Ponto*> &pontos, list<Ponto*> &nPontos);
     void cliparRetaPoligono(BORDA borda, Ponto *ponto1, Ponto *ponto2, list<Ponto*> &nPontos);
     bool clippingDeCurvas(list<Ponto*> &pontos, list<Ponto*> &nPontos);
-    void fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double deslocamento);
+    void fixarCoordenadas(double xMin, double xMax, double yMin, double yMax, double zWindow, double deslocamento);
     void fixarAlgoritmoDeClipping(int algoritmo);
     double obterXMin();
     double obterXMax();
