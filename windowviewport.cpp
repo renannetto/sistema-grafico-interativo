@@ -5,6 +5,7 @@ WindowViewport::WindowViewport()
 {
     displayFile = new DisplayFile();
     window = displayFile->obterFiguras().front();
+    perspectiva = true;
     gerarDescricoesPPC();
 }
 
@@ -14,8 +15,13 @@ WindowViewport::~WindowViewport(){
 }
 
 void WindowViewport::resetarWindow(){
-    delete(window);
-    window = displayFile->criarWindow();
+    list<Ponto*> &pontosWindow = window->obterPontos();
+    pontosWindow.clear();
+    pontosWindow.push_back(new Ponto(-640, -480, 200));
+    pontosWindow.push_back(new Ponto(640, -480, 200));
+    pontosWindow.push_back(new Ponto(640, 480, 200));
+    pontosWindow.push_back(new Ponto(-640, 480, 200));
+    window->setarDistanciaCop(300);
     gerarDescricoesPPC();
 }
 
@@ -361,9 +367,13 @@ void WindowViewport::gerarDescricoesPPC(){
     double xOrtogonal = vetor1.obterY()*vetor2.obterZ() - vetor1.obterZ()*vetor2.obterY();
     double yOrtogonal = vetor1.obterZ()*vetor2.obterX() - vetor1.obterX()*vetor2.obterZ();
     double zOrtogonal = vetor1.obterX()*vetor2.obterY() - vetor1.obterY()*vetor2.obterX();
-    Ponto vetor3(-xOrtogonal,-yOrtogonal,-zOrtogonal);
+    Ponto vetor3(xOrtogonal,yOrtogonal,zOrtogonal);
     vetor3.normalizarVetor();
     window->atualizarCop(vetor3);
+    cout << "XCop = " << vetor3.obterX() << endl;
+    cout << "YCop = " << vetor3.obterY() << endl;
+    cout << "ZCop = " << vetor3.obterZ() << endl;
+    Ponto centroDaWindow = window->obterCentro();
 
     double moduloVnp = sqrt(xOrtogonal*xOrtogonal + yOrtogonal*yOrtogonal + zOrtogonal*zOrtogonal);
     double moduloZX = sqrt(xOrtogonal*xOrtogonal + zOrtogonal*zOrtogonal);
@@ -378,8 +388,14 @@ void WindowViewport::gerarDescricoesPPC(){
 
     list<Figura*> figuras = displayFile->obterFiguras();
     list<Figura*>::iterator it;
-    for(it = figuras.begin(); it != figuras.end(); it++){
-        (*it)->alinharComZ(tetaX, tetaY, cop);
+    if(perspectiva) {
+        for(it = figuras.begin(); it != figuras.end(); it++){
+            (*it)->alinharComZ(tetaX, tetaY, cop, true);
+        }
+    } else {
+        for(it = figuras.begin(); it != figuras.end(); it++){
+            (*it)->alinharComZ(tetaX, tetaY, centroDaWindow, false);
+        }
     }
     double teta = obterAnguloDaWindow();
     for(it = figuras.begin(); it != figuras.end(); it++){
@@ -433,4 +449,9 @@ void WindowViewport::transformarPontoWindowParaMundo(Ponto &ponto){
     ponto.setarX(x);
     ponto.setarY(y);
     ponto.setarZ(z);
+}
+
+void WindowViewport::setarPerspectiva(bool valor) {
+    perspectiva = valor;
+    gerarDescricoesPPC();
 }

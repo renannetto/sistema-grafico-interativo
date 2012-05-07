@@ -61,9 +61,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>280</y>
+       <y>240</y>
        <width>181</width>
-       <height>391</height>
+       <height>431</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -79,7 +79,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>40</y>
+        <y>15</y>
         <width>141</width>
         <height>16</height>
        </rect>
@@ -101,9 +101,9 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>60</y>
+        <y>35</y>
         <width>141</width>
-        <height>321</height>
+        <height>315</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -451,6 +451,56 @@
        </property>
       </widget>
      </widget>
+     <widget class="QRadioButton" name="radioButton">
+      <property name="geometry">
+       <rect>
+        <x>33</x>
+        <y>368</y>
+        <width>109</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Paralela</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_2">
+      <property name="geometry">
+       <rect>
+        <x>33</x>
+        <y>392</y>
+        <width>109</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Perspectiva</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QFrame" name="frame_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>360</y>
+        <width>141</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+     </widget>
+     <zorder>frame_4</zorder>
+     <zorder>labelMovimentoDaJanela</zorder>
+     <zorder>frameMovimentoDaJanela</zorder>
+     <zorder>radioButton</zorder>
+     <zorder>radioButton_2</zorder>
     </widget>
     <widget class="QLabel" name="labelObjetos">
      <property name="geometry">
@@ -902,7 +952,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>101</x>
-     <y>395</y>
+     <y>330</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -918,7 +968,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>127</x>
-     <y>437</y>
+     <y>390</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -934,7 +984,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>150</x>
-     <y>417</y>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>203</x>
@@ -950,7 +1000,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>69</x>
-     <y>417</y>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -966,7 +1016,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>92</x>
-     <y>485</y>
+     <y>420</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -982,7 +1032,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>114</x>
-     <y>505</y>
+     <y>440</y>
     </hint>
     <hint type="destinationlabel">
      <x>205</x>
@@ -1030,7 +1080,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>70</x>
-     <y>534</y>
+     <y>469</y>
     </hint>
     <hint type="destinationlabel">
      <x>204</x>
@@ -1046,7 +1096,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>158</x>
-     <y>671</y>
+     <y>606</y>
     </hint>
     <hint type="destinationlabel">
      <x>208</x>
@@ -1062,7 +1112,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>160</x>
-     <y>595</y>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>202</x>
@@ -1078,7 +1128,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>54</x>
-     <y>595</y>
+     <y>530</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -1190,7 +1240,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>116</x>
-     <y>407</y>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
      <x>206</x>
@@ -1206,7 +1256,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>85</x>
-     <y>428</y>
+     <y>370</y>
     </hint>
     <hint type="destinationlabel">
      <x>207</x>
@@ -1227,6 +1277,38 @@
     <hint type="destinationlabel">
      <x>882</x>
      <y>60</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>desativarPerspectiva()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>107</x>
+     <y>641</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>207</x>
+     <y>638</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ativarPerspectiva()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>125</x>
+     <y>665</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>208</x>
+     <y>695</y>
     </hint>
    </hints>
   </connection>
@@ -1253,5 +1335,7 @@
   <slot>fixarForward()</slot>
   <slot>moverParaFrente()</slot>
   <slot>moverParaTras()</slot>
+  <slot>ativarPerspectiva()</slot>
+  <slot>desativarPerspectiva()</slot>
  </slots>
 </ui>

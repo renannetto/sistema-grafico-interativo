@@ -7,7 +7,7 @@ Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFac
     tipo = vTipo;
     pontos = vPontos;
     faces = vFaces;
-    distanciaCop = -300;
+    distanciaCop = 300;
 
     pontosPPC = pontos;
 
@@ -15,7 +15,7 @@ Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFac
     for(int i = 0; i < 4; i++)
         matrizT[i] = new double[4];
 
-    alinharComZ(tetaX, tetaY, centroDaCamera);
+    alinharComZ(tetaX, tetaY, centroDaCamera, true);
     gerarDescricaoPPC(teta);
 }
 
@@ -23,7 +23,7 @@ Figura::~Figura()
 {
 }
 
-list<Ponto*> Figura::obterPontos(){
+list<Ponto*>& Figura::obterPontos(){
     return pontos;
 }
 
@@ -165,7 +165,7 @@ void Figura::mudarCor(int vermelho, int verde, int azul){
     cor = Cor(vermelho, verde, azul);
 }
 
-void Figura::alinharComZ(double tetaX, double tetaY, Ponto copDaCamera) {
+void Figura::alinharComZ(double tetaX, double tetaY, Ponto copDaCamera, bool perspectiva) {
     double wcX = copDaCamera.obterX();
     double wcY = copDaCamera.obterY();
     double wcZ = copDaCamera.obterZ();
@@ -221,10 +221,13 @@ void Figura::alinharComZ(double tetaX, double tetaY, Ponto copDaCamera) {
     }
 
     Ponto* ponto;
-    for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
-        ponto = (*it);
-        ponto->setarX(ponto->obterX()*distanciaCop/(ponto->obterZ()+distanciaCop));
-        ponto->setarY(ponto->obterY()*distanciaCop/(ponto->obterZ()+distanciaCop));
+    if(perspectiva){
+        for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
+            ponto = (*it);
+            ponto->setarX(ponto->obterX()*distanciaCop/(ponto->obterZ()));
+            ponto->setarY(ponto->obterY()*distanciaCop/(ponto->obterZ()));
+            //ponto->setarZ(ponto->obterZ()-distanciaCop);
+        }
     }
 
     //Desconsidera o z
@@ -251,19 +254,6 @@ void Figura::gerarDescricaoPPC(double teta){
     }
 }
 
-void Figura::teste(Ponto vX, Ponto vY, Ponto vZ, Ponto centro)
-{
-    matrizT[0][0] = vX.obterX(); matrizT[0][1] = vY.obterX(); matrizT[0][2] = vZ.obterX(); matrizT[0][3] = 0;
-    matrizT[1][0] = vX.obterY(); matrizT[1][1] = vY.obterY(); matrizT[1][2] = vZ.obterY(); matrizT[0][3] = 0;
-    matrizT[2][0] = vX.obterZ(); matrizT[2][1] = vY.obterZ(); matrizT[2][2] = vZ.obterZ(); matrizT[2][3] = 0;
-    matrizT[3][0] = centro.obterX(); matrizT[3][1] = centro.obterY(); matrizT[3][2] = centro.obterZ(); matrizT[3][3] = 1;
-
-    list<Ponto*>::iterator it;
-    for(it = pontosPPC.begin(); it != pontosPPC.end(); it++){
-        (*it)->transformar(matrizT);
-    }
-}
-
 Ponto Figura::obterCentro(){
     double xSum = 0, ySum = 0, zSum = 0;
     list<Ponto*>::iterator it;
@@ -280,8 +270,16 @@ Ponto Figura::obterCentro(){
 
 void Figura::mudarDistanciaCop(double qtd)
 {
-    if(distanciaCop + qtd < -50 && distanciaCop + qtd > -600)
+    if(distanciaCop + qtd > 50 && distanciaCop + qtd < 800)
         distanciaCop += qtd;
+    else if (distanciaCop + qtd < 50)
+        distanciaCop = 50;
+    else if (distanciaCop + qtd > 800)
+        distanciaCop = 800;
+}
+
+void Figura::setarDistanciaCop(double distancia) {
+    distanciaCop = distancia;
 }
 
 void Figura::atualizarCop(Ponto vetor)

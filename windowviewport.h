@@ -51,6 +51,7 @@ public:
     double obterAnguloDaWindow();
     void arrastarCam(Ponto vetor);
     void transformarPontoWindowParaMundo(Ponto &ponto);
+    void setarPerspectiva(bool valor);
 private:
     DisplayFile *displayFile;
     Figura *window;
@@ -58,6 +59,7 @@ private:
     double xMax;
     double yMin;
     double yMax;
+    bool perspectiva;
 };
 
 #endif // WINDOWVIEWPORT_H

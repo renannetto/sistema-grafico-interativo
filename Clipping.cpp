@@ -157,7 +157,7 @@ bool Clipping::clippingDeLinha(Ponto const &p1, Ponto const &p2, Ponto &np1, Pon
     Ponto cp1 = p1;
     Ponto cp2 = p2;
 
-    if ((p1.obterZ()>0 || p1.obterZ()<-800) && (p2.obterZ()>0 || p2.obterZ()<-800))
+    if ((p1.obterZ()>0 && p2.obterZ()>0 ) || (p2.obterZ()<-800 && p1.obterZ()<-800))
         return false;
     else
         if (p1.obterZ()>0 || p1.obterZ()<-800) {

@@ -69,7 +69,8 @@ public slots:
     void fixarAlgoritmoDeClipping();
     void arrastarCamera(double, double);
     void fixarForward();
-
+    void ativarPerspectiva();
+    void desativarPerspectiva();
 
 private:
     void iniciar();

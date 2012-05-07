@@ -19,7 +19,7 @@ class Figura
 public:
     Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFaces, Cor vCor, Ponto vrp, double tetaX, double tetaY, Ponto centroDaCamera, double teta);
     ~Figura();
-    list<Ponto*> obterPontos();
+    list<Ponto *> &obterPontos();
     list<Face*> obterFaces();
     list<Ponto*> obterPontosPPC();
     string obterNome();
@@ -32,11 +32,11 @@ public:
     void rotacionarNoCentro(double, Ponto);
     void rotacionarNoPonto(double,double,double, double, Ponto);
     void mudarCor(int, int, int);
-    void alinharComZ(double tetaX, double tetaY, Ponto copDaCamera);
+    void alinharComZ(double tetaX, double tetaY, Ponto copDaCamera, bool perspectiva);
     void gerarDescricaoPPC(double teta);
-    void teste(Ponto vX, Ponto vY, Ponto vZ, Ponto centro);
     Ponto obterCentro();
     void mudarDistanciaCop(double qtd);
+    void setarDistanciaCop(double distancia);
     void atualizarCop(Ponto vetor);
     Ponto obterCop();
 private:

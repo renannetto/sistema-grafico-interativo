@@ -530,3 +530,13 @@ void MainWindow::fixarForward(){
     else
         geradorDeCurvas->fixarForward(false);
 }
+
+void MainWindow::ativarPerspectiva()
+{
+    windowViewport->setarPerspectiva(true);
+}
+
+void MainWindow::desativarPerspectiva()
+{
+    windowViewport->setarPerspectiva(false);
+}
