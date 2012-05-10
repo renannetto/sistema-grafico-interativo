@@ -10,6 +10,7 @@ DisplayFile::DisplayFile()
     nBeziers = 0;
     nSplines = 0;
     nPoliedros = 0;
+    nSuperficies = 0;
 
     window = criarWindow();
     figuras.push_back(window);
@@ -198,6 +199,13 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
         nome = nomeInt.str();
         figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nPoliedros++;
+        break;
+    case SUPERFICIE :
+        nome = "Superficie ";
+        nomeInt << nome << nSuperficies;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
+        nSuperficies++;
         break;
     case EIXO: break;
     case WINDOW: break;

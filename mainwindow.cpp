@@ -252,7 +252,28 @@ void MainWindow::desenharFiguras() {
                 pontosParaClippar.clear();
             }
             faces.clear();
-        } else{
+        } else if(tipoDaFigura == SUPERFICIE){
+            list<Ponto*> pontosCurva;
+            geradorDeCurvas->gerarSuperficie(pontos, pontosCurva);
+            list<Ponto*>::iterator it = pontosCurva.begin();
+            double x1 = (*it)->obterX();
+            double y1 = (*it)->obterY();
+            double x2;
+            double y2;
+            for (++it; it!=pontosCurva.end(); it++) {
+                if(*it != 0){
+                    x2 = (*it)->obterX();
+                    y2 = (*it)->obterY();
+                    viewport->addLine(transformadaViewportX(x1), transformadaViewportY(y1), transformadaViewportX(x2), transformadaViewportY(y2), QPen(qCor));
+                    x1 = x2;
+                    y1 = y2;
+                } else{
+                    it++;
+                    x1 = (*it)->obterX();
+                    y1 = (*it)->obterY();
+                }
+            }
+        } else {
             QPolygonF poligono;
             list<Ponto*> nPontos;
 

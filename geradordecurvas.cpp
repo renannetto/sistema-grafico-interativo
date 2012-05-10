@@ -161,6 +161,63 @@ void GeradorDeCurvas::gerarBSplineBlending(double constantesX[], double constant
     }
 }
 
+void GeradorDeCurvas::gerarSuperficie(list<Ponto *> &pontosSup, list<Ponto *> &nPontos) {
+    Ponto** pontos = new Ponto*[pontosSup.size()];
+
+    for (int i=0; i<pontosSup.size(); i++) {
+        pontos[i] = pontosSup.front();
+        pontosSup.pop_front();
+        pontosSup.push_back(pontos[i]);
+    }
+
+    double passoS = 0.2;
+    double passoT = 0.2;
+
+    double s, s2, s3;
+    double t, t2, t3;
+    double smX[4], smY[4], smZ[4];
+    double nX, nY, nZ;
+
+    for (int i=0; i<nPassos; i++) {
+        s = (double)i/(double)nPassos;
+        s2 = s*s;
+        s3 = s2*s;
+
+        for (int j=0; j<4; j++) {
+            smX[j] = ((-s3+3*s2-3*s+1)/6)*pontos[j]->obterX() +
+                    ((3*s3-6*s2+4)/6)*pontos[j+4]->obterX() +
+                    ((-3*s3+3*s2+3*s+1)/6)*pontos[j+8]->obterX() +
+                    (s3/6)*pontos[j+12]->obterX();
+
+            smY[j] = ((-s3+3*s2-3*s+1)/6)*pontos[j]->obterY() +
+                    ((3*s3-6*s2+4)/6)*pontos[j+4]->obterY() +
+                    ((-3*s3+3*s2+3*s+1)/6)*pontos[j+8]->obterY() +
+                    (s3/6)*pontos[j+12]->obterY();
+
+            smZ[j] = ((-s3+3*s2-3*s+1)/6)*pontos[j]->obterZ() +
+                    ((3*s3-6*s2+4)/6)*pontos[j+4]->obterZ() +
+                    ((-3*s3+3*s2+3*s+1)/6)*pontos[j+8]->obterZ() +
+                    (s3/6)*pontos[j+12]->obterZ();
+        }
+
+        for (int k=0; k<nPassos; k++) {
+            t = (double)k/(double)nPassos;
+            t2 = t*t;
+            t3 = t2*t;
+
+            nX = smX[0]*((-t3+3*t2-3*t+1)/6) + smX[1]*((3*t3-6*t2+4)/6) + smX[2]*((-3*t3+3*t2+3*t+1)/6) + smX[3]*(t3/6);
+            nY = smY[0]*((-t3+3*t2-3*t+1)/6) + smY[1]*((3*t3-6*t2+4)/6) + smY[2]*((-3*t3+3*t2+3*t+1)/6) + smY[3]*(t3/6);
+            nZ = smZ[0]*((-t3+3*t2-3*t+1)/6) + smZ[1]*((3*t3-6*t2+4)/6) + smZ[2]*((-3*t3+3*t2+3*t+1)/6) + smZ[3]*(t3/6);
+
+            nPontos.push_back(new Ponto(nX, nY, nZ));
+
+            t += passoT;
+        }
+
+        s += passoS;
+    }
+}
+
 void GeradorDeCurvas::forwardDifferences(Ponto &ponto, Ponto &delta, Ponto &delta2, Ponto &delta3, list<Ponto *> &nPontos) {
     double x = ponto.obterX();
     double y = ponto.obterY();

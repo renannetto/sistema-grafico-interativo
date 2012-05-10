@@ -29,6 +29,7 @@ private:
     int nBeziers;
     int nSplines;
     int nPoliedros;
+    int nSuperficies;
     list<Figura*> figuras;
     Figura* window;
 };
