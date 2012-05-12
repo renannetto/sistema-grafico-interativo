@@ -20,7 +20,7 @@ public:
     void gerarSuperficie(list<Ponto*> &pontosSup, list<Ponto*> &nPontos);
     void forwardDifferences(Ponto &ponto, Ponto &delta, Ponto &delta2, Ponto &delta3, list<Ponto*> &nPontos);
     void fixarForward(bool vForward);
-
+    int obterNPassos();
 private:
     int nPassos;
     double matrizBezier[4][4];

@@ -255,16 +255,25 @@ void MainWindow::desenharFiguras() {
         } else if(tipoDaFigura == SUPERFICIE){
             list<Ponto*> pontosCurva;
             geradorDeCurvas->gerarSuperficie(pontos, pontosCurva);
+
             list<Ponto*>::iterator it = pontosCurva.begin();
             double x1 = (*it)->obterX();
             double y1 = (*it)->obterY();
             double x2;
             double y2;
+            int nPassos = geradorDeCurvas->obterNPassos();
+            int i=1;
             for (++it; it!=pontosCurva.end(); it++) {
                 if(*it != 0){
                     x2 = (*it)->obterX();
                     y2 = (*it)->obterY();
-                    viewport->addLine(transformadaViewportX(x1), transformadaViewportY(y1), transformadaViewportX(x2), transformadaViewportY(y2), QPen(qCor));
+                    Ponto p1(x1, y1, -400);
+                    Ponto p2(x2, y2, -400);
+                    Ponto np1(0, 0, 0);
+                    Ponto np2(0, 0, 0);
+                    if (i%nPassos!=0 && clipador->clippingDeLinha(p1, p2, np1, np2))
+                        viewport->addLine(transformadaViewportX(np1.obterX()), transformadaViewportY(np1.obterY()),
+                                          transformadaViewportX(np2.obterX()), transformadaViewportY(np2.obterY()), QPen(qCor));
                     x1 = x2;
                     y1 = y2;
                 } else{
@@ -272,6 +281,7 @@ void MainWindow::desenharFiguras() {
                     x1 = (*it)->obterX();
                     y1 = (*it)->obterY();
                 }
+                i++;
             }
         } else {
             QPolygonF poligono;

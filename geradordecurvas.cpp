@@ -175,7 +175,9 @@ void GeradorDeCurvas::gerarSuperficie(list<Ponto *> &pontosSup, list<Ponto *> &n
 
     double s, s2, s3;
     double t, t2, t3;
-    double smX[4], smY[4], smZ[4];
+    double sm[4];
+    double tm[4];
+    double sPX[4], sPY[4], sPZ[4];
     double nX, nY, nZ;
 
     for (int i=0; i<nPassos; i++) {
@@ -183,21 +185,26 @@ void GeradorDeCurvas::gerarSuperficie(list<Ponto *> &pontosSup, list<Ponto *> &n
         s2 = s*s;
         s3 = s2*s;
 
+        sm[0] = (-s3+3*s2-3*s+1)/6;
+        sm[1] = (3*s3-6*s2+4)/6;
+        sm[2] = (-3*s3+3*s2+3*s+1)/6;
+        sm[3] = s3/6;
+
         for (int j=0; j<4; j++) {
-            smX[j] = ((-s3+3*s2-3*s+1)/6)*pontos[j]->obterX() +
-                    ((3*s3-6*s2+4)/6)*pontos[j+4]->obterX() +
-                    ((-3*s3+3*s2+3*s+1)/6)*pontos[j+8]->obterX() +
-                    (s3/6)*pontos[j+12]->obterX();
+            sPX[j] = sm[0]*pontos[j]->obterX() +
+                    sm[1]*pontos[j+4]->obterX() +
+                    sm[2]*pontos[j+8]->obterX() +
+                    sm[3]*pontos[j+12]->obterX();
 
-            smY[j] = ((-s3+3*s2-3*s+1)/6)*pontos[j]->obterY() +
-                    ((3*s3-6*s2+4)/6)*pontos[j+4]->obterY() +
-                    ((-3*s3+3*s2+3*s+1)/6)*pontos[j+8]->obterY() +
-                    (s3/6)*pontos[j+12]->obterY();
+            sPY[j] = sm[0]*pontos[j]->obterY() +
+                    sm[1]*pontos[j+4]->obterY() +
+                    sm[2]*pontos[j+8]->obterY() +
+                    sm[3]*pontos[j+12]->obterY();
 
-            smZ[j] = ((-s3+3*s2-3*s+1)/6)*pontos[j]->obterZ() +
-                    ((3*s3-6*s2+4)/6)*pontos[j+4]->obterZ() +
-                    ((-3*s3+3*s2+3*s+1)/6)*pontos[j+8]->obterZ() +
-                    (s3/6)*pontos[j+12]->obterZ();
+            sPZ[j] = sm[0]*pontos[j]->obterZ() +
+                    sm[1]*pontos[j+4]->obterZ() +
+                    sm[2]*pontos[j+8]->obterZ() +
+                    sm[3]*pontos[j+12]->obterZ();
         }
 
         for (int k=0; k<nPassos; k++) {
@@ -205,9 +212,14 @@ void GeradorDeCurvas::gerarSuperficie(list<Ponto *> &pontosSup, list<Ponto *> &n
             t2 = t*t;
             t3 = t2*t;
 
-            nX = smX[0]*((-t3+3*t2-3*t+1)/6) + smX[1]*((3*t3-6*t2+4)/6) + smX[2]*((-3*t3+3*t2+3*t+1)/6) + smX[3]*(t3/6);
-            nY = smY[0]*((-t3+3*t2-3*t+1)/6) + smY[1]*((3*t3-6*t2+4)/6) + smY[2]*((-3*t3+3*t2+3*t+1)/6) + smY[3]*(t3/6);
-            nZ = smZ[0]*((-t3+3*t2-3*t+1)/6) + smZ[1]*((3*t3-6*t2+4)/6) + smZ[2]*((-3*t3+3*t2+3*t+1)/6) + smZ[3]*(t3/6);
+            tm[0] = (-t3+3*t2-3*t+1)/6;
+            tm[1] = (3*t3-6*t2+4)/6;
+            tm[2] = (-3*t3+3*t2+3*t+1)/6;
+            tm[3] = t3/6;
+
+            nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
+            nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
+            nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
 
             nPontos.push_back(new Ponto(nX, nY, nZ));
 
@@ -215,6 +227,55 @@ void GeradorDeCurvas::gerarSuperficie(list<Ponto *> &pontosSup, list<Ponto *> &n
         }
 
         s += passoS;
+    }
+
+    for (int i=0; i<nPassos; i++) {
+        t = (double)i/(double)nPassos;
+        t2 = t*t;
+        t3 = t2*t;
+
+        tm[0] = (-t3+3*t2-3*t+1)/6;
+        tm[1] = (3*t3-6*t2+4)/6;
+        tm[2] = (-3*t3+3*t2+3*t+1)/6;
+        tm[3] = t3/6;
+
+        for (int k=0; k<nPassos; k++) {
+            s = (double)k/(double)nPassos;
+            s2 = s*s;
+            s3 = s2*s;
+
+            sm[0] = (-s3+3*s2-3*s+1)/6;
+            sm[1] = (3*s3-6*s2+4)/6;
+            sm[2] = (-3*s3+3*s2+3*s+1)/6;
+            sm[3] = s3/6;
+
+            for (int j=0; j<4; j++) {
+                sPX[j] = sm[0]*pontos[j]->obterX() +
+                        sm[1]*pontos[j+4]->obterX() +
+                        sm[2]*pontos[j+8]->obterX() +
+                        sm[3]*pontos[j+12]->obterX();
+
+                sPY[j] = sm[0]*pontos[j]->obterY() +
+                        sm[1]*pontos[j+4]->obterY() +
+                        sm[2]*pontos[j+8]->obterY() +
+                        sm[3]*pontos[j+12]->obterY();
+
+                sPZ[j] = sm[0]*pontos[j]->obterZ() +
+                        sm[1]*pontos[j+4]->obterZ() +
+                        sm[2]*pontos[j+8]->obterZ() +
+                        sm[3]*pontos[j+12]->obterZ();
+            }
+
+            nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
+            nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
+            nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
+
+            nPontos.push_back(new Ponto(nX, nY, nZ));
+
+            s += passoT;
+        }
+
+        t += passoS;
     }
 }
 
@@ -249,4 +310,8 @@ void GeradorDeCurvas::forwardDifferences(Ponto &ponto, Ponto &delta, Ponto &delt
 
 void GeradorDeCurvas::fixarForward(bool vForward) {
     forward = vForward;
+}
+
+int GeradorDeCurvas::obterNPassos() {
+    return nPassos;
 }
