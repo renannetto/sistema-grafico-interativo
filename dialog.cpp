@@ -94,7 +94,7 @@ void Dialog::construirPoligono(){
             emit construirFigura(POLIGONOPREENCHIDO, pontosPoligono, faces, scene->backgroundBrush().color());
         }
         else{
-            emit construirFigura(POLIGONO, pontosPoligono, faces, scene->backgroundBrush().color());
+            emit construirFigura(SUPERFICIEBEZIER, pontosPoligono, faces, scene->backgroundBrush().color());
         }
         pontosPoligono.clear();
 
