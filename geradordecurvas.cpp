@@ -161,7 +161,125 @@ void GeradorDeCurvas::gerarBSplineBlending(double constantesX[], double constant
     }
 }
 
-void GeradorDeCurvas::gerarSuperficie(list<Ponto *> &pontosSup, list<Ponto *> &nPontos) {
+void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto *> &nPontos) {
+    Ponto** pontos = new Ponto*[pontosSup.size()];
+
+    for (int i=0; i<pontosSup.size(); i++) {
+        pontos[i] = pontosSup.front();
+        pontosSup.pop_front();
+        pontosSup.push_back(pontos[i]);
+    }
+
+    double passoS = 0.2;
+    double passoT = 0.2;
+
+    double s, s2, s3;
+    double t, t2, t3;
+    double sm[4];
+    double tm[4];
+    double sPX[4], sPY[4], sPZ[4];
+    double nX, nY, nZ;
+
+    for (int i=0; i<nPassos; i++) {
+        s = (double)i/(double)nPassos;
+        s2 = s*s;
+        s3 = s2*s;
+
+        sm[0] = -s3+3*s2-3*s+1;
+        sm[1] = 3*s3-6*s2+3*s;
+        sm[2] = -3*s3+3*s2;
+        sm[3] = s3;
+
+        for (int j=0; j<4; j++) {
+            sPX[j] = sm[0]*pontos[j]->obterX() +
+                    sm[1]*pontos[j+4]->obterX() +
+                    sm[2]*pontos[j+8]->obterX() +
+                    sm[3]*pontos[j+12]->obterX();
+
+            sPY[j] = sm[0]*pontos[j]->obterY() +
+                    sm[1]*pontos[j+4]->obterY() +
+                    sm[2]*pontos[j+8]->obterY() +
+                    sm[3]*pontos[j+12]->obterY();
+
+            sPZ[j] = sm[0]*pontos[j]->obterZ() +
+                    sm[1]*pontos[j+4]->obterZ() +
+                    sm[2]*pontos[j+8]->obterZ() +
+                    sm[3]*pontos[j+12]->obterZ();
+        }
+
+        for (int k=0; k<nPassos; k++) {
+            t = (double)k/(double)nPassos;
+            t2 = t*t;
+            t3 = t2*t;
+
+            tm[0] = -t3+3*t2-3*t+1;
+            tm[1] = 3*t3-6*t2+3*t;
+            tm[2] = -3*t3+3*t2;
+            tm[3] = t3;
+
+            nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
+            nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
+            nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
+
+            nPontos.push_back(new Ponto(nX, nY, nZ));
+
+            t += passoT;
+        }
+
+        s += passoS;
+    }
+
+    for (int i=0; i<nPassos; i++) {
+        t = (double)i/(double)nPassos;
+        t2 = t*t;
+        t3 = t2*t;
+
+        tm[0] = -t3+3*t2-3*t+1;
+        tm[1] = 3*t3-6*t2+3*t;
+        tm[2] = -3*t3+3*t2;
+        tm[3] = t3;
+
+        for (int k=0; k<nPassos; k++) {
+            s = (double)k/(double)nPassos;
+            s2 = s*s;
+            s3 = s2*s;
+
+            sm[0] = -s3+3*s2-3*s+1;
+            sm[1] = 3*s3-6*s2+3*s;
+            sm[2] = -3*s3+3*s2;
+            sm[3] = s3;
+
+            for (int j=0; j<4; j++) {
+                sPX[j] = sm[0]*pontos[j]->obterX() +
+                        sm[1]*pontos[j+4]->obterX() +
+                        sm[2]*pontos[j+8]->obterX() +
+                        sm[3]*pontos[j+12]->obterX();
+
+                sPY[j] = sm[0]*pontos[j]->obterY() +
+                        sm[1]*pontos[j+4]->obterY() +
+                        sm[2]*pontos[j+8]->obterY() +
+                        sm[3]*pontos[j+12]->obterY();
+
+                sPZ[j] = sm[0]*pontos[j]->obterZ() +
+                        sm[1]*pontos[j+4]->obterZ() +
+                        sm[2]*pontos[j+8]->obterZ() +
+                        sm[3]*pontos[j+12]->obterZ();
+            }
+
+            nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
+            nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
+            nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
+
+            nPontos.push_back(new Ponto(nX, nY, nZ));
+
+            s += passoT;
+        }
+
+        t += passoS;
+    }
+}
+
+void GeradorDeCurvas::gerarSuperficieBSpline(list<Ponto *> &pontosSup, list<Ponto *> &nPontos) {
     Ponto** pontos = new Ponto*[pontosSup.size()];
 
     for (int i=0; i<pontosSup.size(); i++) {

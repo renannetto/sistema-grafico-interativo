@@ -27,7 +27,26 @@ WindowViewport::WindowViewport()
     pontosSup.push_back(new Ponto(-50, -50, 200));
     list<Face*> faces;
     Cor preto(0, 0, 0);
-    displayFile->adicionarFigura(SUPERFICIE, pontosSup, faces, preto);
+    displayFile->adicionarFigura(SUPERFICIESPLINE, pontosSup, faces, preto);
+
+    list<Ponto*> pontosSup2;
+    pontosSup2.push_back(new Ponto(200, -200, 200));
+    pontosSup2.push_back(new Ponto(150, -200, 200));
+    pontosSup2.push_back(new Ponto(100, -200, 200));
+    pontosSup2.push_back(new Ponto(50, -200, 200));
+    pontosSup2.push_back(new Ponto(200, -150, 200));
+    pontosSup2.push_back(new Ponto(150, -150, 200));
+    pontosSup2.push_back(new Ponto(100, -150, 200));
+    pontosSup2.push_back(new Ponto(50, -100, 200));
+    pontosSup2.push_back(new Ponto(200, -100, 200));
+    pontosSup2.push_back(new Ponto(150, -100, 200));
+    pontosSup2.push_back(new Ponto(100, -100, 200));
+    pontosSup2.push_back(new Ponto(50, -100, 200));
+    pontosSup2.push_back(new Ponto(200, -50, 200));
+    pontosSup2.push_back(new Ponto(150, -50, 200));
+    pontosSup2.push_back(new Ponto(100, -50, 200));
+    pontosSup2.push_back(new Ponto(50, -50, 200));
+    displayFile->adicionarFigura(SUPERFICIEBEZIER, pontosSup2, faces, preto);
 
     gerarDescricoesPPC();
 }

@@ -252,10 +252,12 @@ void MainWindow::desenharFiguras() {
                 pontosParaClippar.clear();
             }
             faces.clear();
-        } else if(tipoDaFigura == SUPERFICIE){
+        } else if(tipoDaFigura == SUPERFICIEBEZIER || tipoDaFigura == SUPERFICIESPLINE){
             list<Ponto*> pontosCurva;
-            geradorDeCurvas->gerarSuperficie(pontos, pontosCurva);
-
+            if (tipoDaFigura == SUPERFICIEBEZIER)
+                geradorDeCurvas->gerarSuperficieBezier(pontos, pontosCurva);
+            else
+                geradorDeCurvas->gerarSuperficieBSpline(pontos, pontosCurva);
             list<Ponto*>::iterator it = pontosCurva.begin();
             double x1 = (*it)->obterX();
             double y1 = (*it)->obterY();

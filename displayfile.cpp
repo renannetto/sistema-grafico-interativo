@@ -200,7 +200,14 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
         figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
         nPoliedros++;
         break;
-    case SUPERFICIE :
+    case SUPERFICIESPLINE :
+        nome = "Superficie ";
+        nomeInt << nome << nSuperficies;
+        nome = nomeInt.str();
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
+        nSuperficies++;
+        break;
+    case SUPERFICIEBEZIER :
         nome = "Superficie ";
         nomeInt << nome << nSuperficies;
         nome = nomeInt.str();
