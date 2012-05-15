@@ -162,12 +162,12 @@ void GeradorDeCurvas::gerarBSplineBlending(double constantesX[], double constant
 }
 
 void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto *> &nPontos) {
-    Ponto** pontos = new Ponto*[pontosSup.size()];
+    Ponto** pontos = new Ponto*[16];
 
-    for (int i=0; i<pontosSup.size(); i++) {
-        pontos[i] = pontosSup.front();
-        pontosSup.pop_front();
-        pontosSup.push_back(pontos[i]);
+    list<Ponto*>::iterator it = pontosSup.begin();
+
+    for (int i=0; i<16; i++) {
+        pontos[i] = *it++;
     }
 
     double passoS = 0.2;
@@ -179,8 +179,9 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
     double tm[4];
     double sPX[4], sPY[4], sPZ[4];
     double nX, nY, nZ;
+    int n=0;
 
-    for (int l=0; l<pontosSup.size()/16; l++) {
+    for (int l=0; l<(pontosSup.size()-4)/12; l++) {
         for (int i=0; i<nPassos; i++) {
             s = (double)i/(double)nPassos;
             s2 = s*s;
@@ -192,20 +193,20 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
             sm[3] = s3;
 
             for (int j=0; j<4; j++) {
-                sPX[j] = sm[0]*pontos[j+16*l]->obterX() +
-                         sm[1]*pontos[j+4+16*l]->obterX() +
-                         sm[2]*pontos[j+8+16*l]->obterX() +
-                         sm[3]*pontos[j+12+16*l]->obterX();
+                sPX[j] = sm[0]*pontos[j]->obterX() +
+                         sm[1]*pontos[j+4]->obterX() +
+                         sm[2]*pontos[j+8]->obterX() +
+                         sm[3]*pontos[j+12]->obterX();
 
-                sPY[j] = sm[0]*pontos[j+16*l]->obterY() +
-                         sm[1]*pontos[j+4+16*l]->obterY() +
-                         sm[2]*pontos[j+8+16*l]->obterY() +
-                         sm[3]*pontos[j+12+16*l]->obterY();
+                sPY[j] = sm[0]*pontos[j]->obterY() +
+                         sm[1]*pontos[j+4]->obterY() +
+                         sm[2]*pontos[j+8]->obterY() +
+                         sm[3]*pontos[j+12]->obterY();
 
                 sPZ[j] = sm[0]*pontos[j]->obterZ() +
-                         sm[1]*pontos[j+4+16*l]->obterZ() +
-                         sm[2]*pontos[j+8+16*l]->obterZ() +
-                         sm[3]*pontos[j+12+16*l]->obterZ();
+                         sm[1]*pontos[j+4]->obterZ() +
+                         sm[2]*pontos[j+8]->obterZ() +
+                         sm[3]*pontos[j+12]->obterZ();
             }
 
             for (int k=0; k<nPassos; k++) {
@@ -251,20 +252,20 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
                 sm[3] = s3;
 
                 for (int j=0; j<4; j++) {
-                    sPX[j] = sm[0]*pontos[j+16*l]->obterX() +
-                             sm[1]*pontos[j+4+16*l]->obterX() +
-                             sm[2]*pontos[j+8+16*l]->obterX() +
-                             sm[3]*pontos[j+12+16*l]->obterX();
+                    sPX[j] = sm[0]*pontos[j]->obterX() +
+                             sm[1]*pontos[j+4]->obterX() +
+                             sm[2]*pontos[j+8]->obterX() +
+                             sm[3]*pontos[j+12]->obterX();
 
-                    sPY[j] = sm[0]*pontos[j+16*l]->obterY() +
-                             sm[1]*pontos[j+4+16*l]->obterY() +
-                             sm[2]*pontos[j+8+16*l]->obterY() +
-                             sm[3]*pontos[j+12+16*l]->obterY();
+                    sPY[j] = sm[0]*pontos[j]->obterY() +
+                             sm[1]*pontos[j+4]->obterY() +
+                             sm[2]*pontos[j+8]->obterY() +
+                             sm[3]*pontos[j+12]->obterY();
 
-                    sPZ[j] = sm[0]*pontos[j+16*l]->obterZ() +
-                             sm[1]*pontos[j+4+16*l]->obterZ() +
-                             sm[2]*pontos[j+8+16*l]->obterZ() +
-                             sm[3]*pontos[j+12+16*l]->obterZ();
+                    sPZ[j] = sm[0]*pontos[j]->obterZ() +
+                             sm[1]*pontos[j+4]->obterZ() +
+                             sm[2]*pontos[j+8]->obterZ() +
+                             sm[3]*pontos[j+12]->obterZ();
                 }
 
                 nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
@@ -278,6 +279,28 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
 
             t += passoS;
         }
+        n+=12;
+
+        pontos[0] = pontos[3];
+        pontos[4] = pontos[7];
+        pontos[8] = pontos[11];
+        pontos[12] = pontos[15];
+
+        pontos[1] = *it++;
+        pontos[2] = *it++;
+        pontos[3] = *it++;
+
+        pontos[5] = *it++;
+        pontos[6] = *it++;
+        pontos[7] = *it++;
+
+        pontos[9] = *it++;
+        pontos[10] = *it++;
+        pontos[11] = *it++;
+
+        pontos[13] = *it++;
+        pontos[14] = *it++;
+        pontos[15] = *it++;
     }
 
 }
