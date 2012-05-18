@@ -9,6 +9,8 @@ Dialog::Dialog(QWidget *parent) :
     ui->setupUi(this);
     scene = new QGraphicsScene();
     ui->graphicsView->setScene(scene);
+    linhasSup = 1;
+    colunasSup = -1;
 }
 
 Dialog::~Dialog(){
@@ -57,6 +59,12 @@ void Dialog::receberPonto(double x, double y, double z){
         this->ui->poliedroZ->setText(ssZ.str().c_str());
         this->ui->poliedroBotaoPonto->click();
         break;
+    case 5:
+        this->ui->curvaXSup->setText(ssX.str().c_str());
+        this->ui->curvaYSup->setText(ssY.str().c_str());
+        this->ui->curvaZSup->setText(ssZ.str().c_str());
+        this->ui->inserirPontoSupBotao->click();
+        break;
     }
 }
 
@@ -94,7 +102,7 @@ void Dialog::construirPoligono(){
             emit construirFigura(POLIGONOPREENCHIDO, pontosPoligono, faces, scene->backgroundBrush().color());
         }
         else{
-            emit construirFigura(SUPERFICIEBEZIER, pontosPoligono, faces, scene->backgroundBrush().color());
+            emit construirFigura(POLIGONO, pontosPoligono, faces, scene->backgroundBrush().color());
         }
         pontosPoligono.clear();
 
@@ -196,4 +204,69 @@ void Dialog::limparTudo(){
     pontosPoligono.clear();
     while(ui->tableWidget->rowCount())
 	ui->tableWidget->removeRow(0);
+}
+
+void Dialog::on_inserirPontoSupBotao_clicked()
+{
+    stringstream string;
+    string << ui->tableSup->rowCount();
+    QString s = "Ponto " + QString::fromStdString(string.str());
+    ui->tableSup->insertRow(ui->tableSup->rowCount());
+    ui->tableSup->setVerticalHeaderItem(ui->tableSup->rowCount()-1, new QTableWidgetItem(s));;
+    ui->tableSup->setItem(ui->tableSup->rowCount()-1, 0, new QTableWidgetItem(ui->curvaXSup->text()));
+    ui->tableSup->setItem(ui->tableSup->rowCount()-1, 1, new QTableWidgetItem(ui->curvaYSup->text()));
+    ui->tableSup->setItem(ui->tableSup->rowCount()-1, 2, new QTableWidgetItem(ui->curvaZSup->text()));
+}
+
+void Dialog::on_inserirSup_clicked()
+{
+    list<Face*> faces;
+    if(ui->tableSup->rowCount() == linhasSup*colunasSup){
+        for(int i = 0; i < ui->tableSup->rowCount(); i++){
+            pontosSuperficie.push_back(new Ponto(ui->tableSup->item(i,0)->text().toDouble(), ui->tableSup->item(i,1)->text().toDouble(), ui->tableSup->item(i,2)->text().toDouble()));
+        }
+        if(ui->radioBezierSup->isChecked())
+            emit construirFigura(SUPERFICIEBEZIER, pontosSuperficie, faces, scene->backgroundBrush().color());
+
+        //AQUI TEM Q MUDAR PRA SPLINE
+        if(ui->radioSplineSup->isChecked())
+            emit construirFigura(SUPERFICIEBEZIER, pontosSuperficie, faces, scene->backgroundBrush().color());
+
+        pontosCurva.clear();
+        //ui->tableWidget->clear();
+        while(ui->tableSup->rowCount())
+            ui->tableSup->removeRow(0);
+    }
+}
+
+void Dialog::on_fixarLinhasColunasSup_clicked()
+{
+    if(ui->radioBezierSup->isChecked()){
+        if(ui->editColunasSup->text().toInt() % 4 == 0 && ui->editLinhasSup->text().toInt() % 4 == 0 && ui->editColunasSup->text().toInt() != 0 && ui->editLinhasSup->text().toInt() != 0){
+            linhasSup = ui->editLinhasSup->text().toInt();
+            colunasSup = ui->editColunasSup->text().toInt();
+        } else{
+            ui->logSup->clear();
+            ui->logSup->insertPlainText("Para a superficie bezier, o numero de linhas e colunas tem q ser multiplo de 4");
+        }
+    } else{
+        if(ui->editColunasSup->text().toInt() >= 4 && ui->editLinhasSup->text().toInt() >= 4){
+            linhasSup = ui->editLinhasSup->text().toInt();
+            colunasSup = ui->editColunasSup->text().toInt();
+        } else{
+            ui->logSup->clear();
+            ui->logSup->insertPlainText("Para a superficie spline, o numero de linhas e colunas tem q ser maior ou igual a 4");
+        }
+    }
+}
+
+void Dialog::on_pushButton_8_clicked()
+{
+    while(ui->tableSup->rowCount())
+        ui->tableSup->removeRow(0);
+}
+
+void Dialog::on_pushButton_11_clicked()
+{
+    ui->tableSup->removeRow(ui->tableSup->currentRow());
 }

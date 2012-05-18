@@ -41,10 +41,23 @@ public slots:
 signals:
     void construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor cor);
 
+private slots:
+    void on_inserirPontoSupBotao_clicked();
+
+    void on_inserirSup_clicked();
+
+    void on_fixarLinhasColunasSup_clicked();
+
+    void on_pushButton_8_clicked();
+
+    void on_pushButton_11_clicked();
+
 private:
+    int linhasSup, colunasSup;
     Ui::Dialog *ui;
     list<Ponto*> pontosPoligono;
     list<Ponto*> pontosCurva;
+    list<Ponto*> pontosSuperficie;
     QGraphicsScene *scene;
 };
 
