@@ -273,7 +273,7 @@ void MainWindow::desenharFiguras() {
                     Ponto p2(x2, y2, -400);
                     Ponto np1(0, 0, 0);
                     Ponto np2(0, 0, 0);
-                    if (i%nPassos!=0 && clipador->clippingDeLinha(p1, p2, np1, np2))
+                    if (i%(nPassos+1)!=0 && clipador->clippingDeLinha(p1, p2, np1, np2))
                         viewport->addLine(transformadaViewportX(np1.obterX()), transformadaViewportY(np1.obterY()),
                                           transformadaViewportX(np2.obterX()), transformadaViewportY(np2.obterY()), QPen(qCor));
                     x1 = x2;
@@ -285,6 +285,7 @@ void MainWindow::desenharFiguras() {
                 }
                 i++;
             }
+            pontosCurva.clear();
         } else {
             QPolygonF poligono;
             list<Ponto*> nPontos;

@@ -162,7 +162,7 @@ void GeradorDeCurvas::gerarBSplineBlending(double constantesX[], double constant
 }
 
 void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto *> &nPontos) {
-    Ponto** pontos = new Ponto*[16];
+    Ponto* pontos[16];
 
     list<Ponto*>::iterator it = pontosSup.begin();
 
@@ -179,10 +179,9 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
     double tm[4];
     double sPX[4], sPY[4], sPZ[4];
     double nX, nY, nZ;
-    int n=0;
 
     for (int l=0; l<(pontosSup.size()-4)/12; l++) {
-        for (int i=0; i<nPassos; i++) {
+        for (int i=0; i<=nPassos; i++) {
             s = (double)i/(double)nPassos;
             s2 = s*s;
             s3 = s2*s;
@@ -209,7 +208,7 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
                          sm[3]*pontos[j+12]->obterZ();
             }
 
-            for (int k=0; k<nPassos; k++) {
+            for (int k=0; k<=nPassos; k++) {
                 t = (double)k/(double)nPassos;
                 t2 = t*t;
                 t3 = t2*t;
@@ -231,7 +230,7 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
             s += passoS;
         }
 
-        for (int i=0; i<nPassos; i++) {
+        for (int i=0; i<=nPassos; i++) {
             t = (double)i/(double)nPassos;
             t2 = t*t;
             t3 = t2*t;
@@ -241,7 +240,7 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
             tm[2] = -3*t3+3*t2;
             tm[3] = t3;
 
-            for (int k=0; k<nPassos; k++) {
+            for (int k=0; k<=nPassos; k++) {
                 s = (double)k/(double)nPassos;
                 s2 = s*s;
                 s3 = s2*s;
@@ -279,7 +278,6 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
 
             t += passoS;
         }
-        n+=12;
 
         pontos[0] = pontos[3];
         pontos[4] = pontos[7];

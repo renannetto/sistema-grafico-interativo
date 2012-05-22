@@ -233,6 +233,7 @@ void Dialog::on_inserirSup_clicked()
             emit construirFigura(SUPERFICIEBEZIER, pontosSuperficie, faces, scene->backgroundBrush().color());
 
         pontosCurva.clear();
+        pontosSuperficie.clear();
         //ui->tableWidget->clear();
         while(ui->tableSup->rowCount())
             ui->tableSup->removeRow(0);
