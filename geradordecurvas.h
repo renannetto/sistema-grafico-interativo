@@ -18,7 +18,7 @@ public:
     void gerarBSpline(list<Ponto*> &pontos, list<Ponto*> &nPontos);
     void gerarBSplineBlending(double constantesX[], double constantesY[], double constantesZ[], list<Ponto*> &nPontos);
     void gerarSuperficieBSpline(list<Ponto*> &pontosSup, list<Ponto*> &nPontos, int nLinhas, int nColunas);
-    void gerarSuperficieBezier(list<Ponto*> &pontosSup, list<Ponto*> &nPontos);
+    void gerarSuperficieBezier(list<Ponto*> &pontosSup, list<Ponto*> &nPontos, int nLinhas, int nColunas);
     void forwardDifferences(Ponto &ponto, Ponto &delta, Ponto &delta2, Ponto &delta3, list<Ponto*> &nPontos);
     void fixarForward(bool vForward);
     int obterNPassos();

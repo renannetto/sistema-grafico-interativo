@@ -161,12 +161,12 @@ void GeradorDeCurvas::gerarBSplineBlending(double constantesX[], double constant
     }
 }
 
-void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto *> &nPontos) {
-    Ponto* pontos[16];
+void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto *> &nPontos, int nLinhas, int nColunas) {
+    Ponto* pontos[pontosSup.size()];
 
     list<Ponto*>::iterator it = pontosSup.begin();
 
-    for (int i=0; i<16; i++) {
+    for (int i=0; i<pontosSup.size(); i++) {
         pontos[i] = *it++;
     }
 
@@ -180,68 +180,10 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
     double sPX[4], sPY[4], sPZ[4];
     double nX, nY, nZ;
 
-    for (int l=0; l<(pontosSup.size()-4)/12; l++) {
-        for (int i=0; i<=nPassos; i++) {
-            s = (double)i/(double)nPassos;
-            s2 = s*s;
-            s3 = s2*s;
-
-            sm[0] = -s3+3*s2-3*s+1;
-            sm[1] = 3*s3-6*s2+3*s;
-            sm[2] = -3*s3+3*s2;
-            sm[3] = s3;
-
-            for (int j=0; j<4; j++) {
-                sPX[j] = sm[0]*pontos[j]->obterX() +
-                         sm[1]*pontos[j+4]->obterX() +
-                         sm[2]*pontos[j+8]->obterX() +
-                         sm[3]*pontos[j+12]->obterX();
-
-                sPY[j] = sm[0]*pontos[j]->obterY() +
-                         sm[1]*pontos[j+4]->obterY() +
-                         sm[2]*pontos[j+8]->obterY() +
-                         sm[3]*pontos[j+12]->obterY();
-
-                sPZ[j] = sm[0]*pontos[j]->obterZ() +
-                         sm[1]*pontos[j+4]->obterZ() +
-                         sm[2]*pontos[j+8]->obterZ() +
-                         sm[3]*pontos[j+12]->obterZ();
-            }
-
-            for (int k=0; k<=nPassos; k++) {
-                t = (double)k/(double)nPassos;
-                t2 = t*t;
-                t3 = t2*t;
-
-                tm[0] = -t3+3*t2-3*t+1;
-                tm[1] = 3*t3-6*t2+3*t;
-                tm[2] = -3*t3+3*t2;
-                tm[3] = t3;
-
-                nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
-                nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
-                nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
-
-                nPontos.push_back(new Ponto(nX, nY, nZ));
-
-                t += passoT;
-            }
-
-            s += passoS;
-        }
-
-        for (int i=0; i<=nPassos; i++) {
-            t = (double)i/(double)nPassos;
-            t2 = t*t;
-            t3 = t2*t;
-
-            tm[0] = -t3+3*t2-3*t+1;
-            tm[1] = 3*t3-6*t2+3*t;
-            tm[2] = -3*t3+3*t2;
-            tm[3] = t3;
-
-            for (int k=0; k<=nPassos; k++) {
-                s = (double)k/(double)nPassos;
+    for (int m=0; m<nLinhas/4; m++) {
+        for (int l=0; l<nColunas/4; l++) {
+            for (int i=0; i<=nPassos; i++) {
+                s = (double)i/(double)nPassos;
                 s2 = s*s;
                 s3 = s2*s;
 
@@ -251,55 +193,95 @@ void GeradorDeCurvas::gerarSuperficieBezier(list<Ponto *> &pontosSup, list<Ponto
                 sm[3] = s3;
 
                 for (int j=0; j<4; j++) {
-                    sPX[j] = sm[0]*pontos[j]->obterX() +
-                             sm[1]*pontos[j+4]->obterX() +
-                             sm[2]*pontos[j+8]->obterX() +
-                             sm[3]*pontos[j+12]->obterX();
+                    sPX[j] = sm[0]*pontos[j+3*l+nColunas*m*3]->obterX() +
+                            sm[1]*pontos[j+nColunas+3*l+nColunas*m*3]->obterX() +
+                            sm[2]*pontos[j+2*nColunas+3*l+nColunas*m*3]->obterX() +
+                            sm[3]*pontos[j+3*nColunas+3*l+nColunas*m*3]->obterX();
 
-                    sPY[j] = sm[0]*pontos[j]->obterY() +
-                             sm[1]*pontos[j+4]->obterY() +
-                             sm[2]*pontos[j+8]->obterY() +
-                             sm[3]*pontos[j+12]->obterY();
+                    sPY[j] = sm[0]*pontos[j+3*l+nColunas*m*3]->obterY() +
+                            sm[1]*pontos[j+nColunas+3*l+nColunas*m*3]->obterY() +
+                            sm[2]*pontos[j+2*nColunas+3*l+nColunas*m*3]->obterY() +
+                            sm[3]*pontos[j+3*nColunas+3*l+nColunas*m*3]->obterY();
 
-                    sPZ[j] = sm[0]*pontos[j]->obterZ() +
-                             sm[1]*pontos[j+4]->obterZ() +
-                             sm[2]*pontos[j+8]->obterZ() +
-                             sm[3]*pontos[j+12]->obterZ();
+                    sPZ[j] = sm[0]*pontos[j+3*l+nColunas*m*3]->obterZ() +
+                            sm[1]*pontos[j+nColunas+3*l+nColunas*m*3]->obterZ() +
+                            sm[2]*pontos[j+2*nColunas+3*l+nColunas*m*3]->obterZ() +
+                            sm[3]*pontos[j+3*nColunas+3*l+nColunas*m*3]->obterZ();
                 }
 
-                nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
-                nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
-                nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
+                for (int k=0; k<=nPassos; k++) {
+                    t = (double)k/(double)nPassos;
+                    t2 = t*t;
+                    t3 = t2*t;
 
-                nPontos.push_back(new Ponto(nX, nY, nZ));
+                    tm[0] = -t3+3*t2-3*t+1;
+                    tm[1] = 3*t3-6*t2+3*t;
+                    tm[2] = -3*t3+3*t2;
+                    tm[3] = t3;
 
-                s += passoT;
+                    nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
+                    nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
+                    nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
+
+                    nPontos.push_back(new Ponto(nX, nY, nZ));
+
+                    t += passoT;
+                }
+
+                s += passoS;
             }
 
-            t += passoS;
+            for (int i=0; i<=nPassos; i++) {
+                t = (double)i/(double)nPassos;
+                t2 = t*t;
+                t3 = t2*t;
+
+                tm[0] = -t3+3*t2-3*t+1;
+                tm[1] = 3*t3-6*t2+3*t;
+                tm[2] = -3*t3+3*t2;
+                tm[3] = t3;
+
+                for (int k=0; k<=nPassos; k++) {
+                    s = (double)k/(double)nPassos;
+                    s2 = s*s;
+                    s3 = s2*s;
+
+                    sm[0] = -s3+3*s2-3*s+1;
+                    sm[1] = 3*s3-6*s2+3*s;
+                    sm[2] = -3*s3+3*s2;
+                    sm[3] = s3;
+
+                    for (int j=0; j<4; j++) {
+                        sPX[j] = sm[0]*pontos[j+3*l+nColunas*m*3]->obterX() +
+                                sm[1]*pontos[j+nColunas+3*l+nColunas*m*3]->obterX() +
+                                sm[2]*pontos[j+2*nColunas+3*l+nColunas*m*3]->obterX() +
+                                sm[3]*pontos[j+3*nColunas+3*l+nColunas*m*3]->obterX();
+
+                        sPY[j] = sm[0]*pontos[j+3*l+nColunas*m*3]->obterY() +
+                                sm[1]*pontos[j+nColunas+3*l+nColunas*m*3]->obterY() +
+                                sm[2]*pontos[j+2*nColunas+3*l+nColunas*m*3]->obterY() +
+                                sm[3]*pontos[j+3*nColunas+3*l+nColunas*m*3]->obterY();
+
+                        sPZ[j] = sm[0]*pontos[j+3*l+nColunas*m*3]->obterZ() +
+                                sm[1]*pontos[j+nColunas+3*l+nColunas*m*3]->obterZ() +
+                                sm[2]*pontos[j+2*nColunas+3*l+nColunas*m*3]->obterZ() +
+                                sm[3]*pontos[j+3*nColunas+3*l+nColunas*m*3]->obterZ();
+                    }
+
+                    nX = sPX[0]*tm[0] + sPX[1]*tm[1] + sPX[2]*tm[2] + sPX[3]*tm[3];
+                    nY = sPY[0]*tm[0] + sPY[1]*tm[1] + sPY[2]*tm[2] + sPY[3]*tm[3];
+                    nZ = sPZ[0]*tm[0] + sPZ[1]*tm[1] + sPZ[2]*tm[2] + sPZ[3]*tm[3];
+
+                    nPontos.push_back(new Ponto(nX, nY, nZ));
+
+                    s += passoT;
+                }
+
+                t += passoS;
+            }
         }
-
-        pontos[0] = pontos[3];
-        pontos[4] = pontos[7];
-        pontos[8] = pontos[11];
-        pontos[12] = pontos[15];
-
-        pontos[1] = *it++;
-        pontos[2] = *it++;
-        pontos[3] = *it++;
-
-        pontos[5] = *it++;
-        pontos[6] = *it++;
-        pontos[7] = *it++;
-
-        pontos[9] = *it++;
-        pontos[10] = *it++;
-        pontos[11] = *it++;
-
-        pontos[13] = *it++;
-        pontos[14] = *it++;
-        pontos[15] = *it++;
     }
+
 
 }
 

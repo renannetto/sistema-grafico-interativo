@@ -226,7 +226,7 @@ void Dialog::on_inserirSup_clicked()
             pontosSuperficie.push_back(new Ponto(ui->tableSup->item(i,0)->text().toDouble(), ui->tableSup->item(i,1)->text().toDouble(), ui->tableSup->item(i,2)->text().toDouble()));
         }
         if(ui->radioBezierSup->isChecked())
-            emit construirFigura(SUPERFICIEBEZIER, pontosSuperficie, faces, scene->backgroundBrush().color());
+            emit construirFigura(SUPERFICIEBEZIER, pontosSuperficie, faces, scene->backgroundBrush().color(), linhasSup, colunasSup);
 
         //AQUI TEM Q MUDAR PRA SPLINE
         if(ui->radioSplineSup->isChecked())

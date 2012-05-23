@@ -211,7 +211,7 @@ string DisplayFile::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> 
         nome = "Superficie ";
         nomeInt << nome << nSuperficies;
         nome = nomeInt.str();
-        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta);
+        figura = new Figura(nome, tipo, pontos, faces, cor, vrp, tetaX, tetaY, centro, teta, nLinhas, nColunas);
         nSuperficies++;
         break;
     case EIXO: break;

@@ -255,7 +255,7 @@ void MainWindow::desenharFiguras() {
         } else if(tipoDaFigura == SUPERFICIEBEZIER || tipoDaFigura == SUPERFICIESPLINE){
             list<Ponto*> pontosCurva;
             if (tipoDaFigura == SUPERFICIEBEZIER)
-                geradorDeCurvas->gerarSuperficieBezier(pontos, pontosCurva);
+                geradorDeCurvas->gerarSuperficieBezier(pontos, pontosCurva, figura->obterNLinhas(), figura->obterNColunas());
             else
                 geradorDeCurvas->gerarSuperficieBSpline(pontos, pontosCurva, figura->obterNLinhas(), figura->obterNColunas());
             list<Ponto*>::iterator it = pontosCurva.begin();
