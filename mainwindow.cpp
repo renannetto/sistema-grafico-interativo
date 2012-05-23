@@ -38,8 +38,8 @@ void MainWindow::iniciar(){
     ui->graphicsView->setScene(viewport);
     ui->zoomText->clear();
 
-    connect(janelaDeCriacoes, SIGNAL(construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor)),
-    this, SLOT(construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor)));
+    connect(janelaDeCriacoes, SIGNAL(construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor, int, int)),
+    this, SLOT(construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor, int, int)));
     connect(janelaDeTransformacoes, SIGNAL(sTransladar(double,double, double)),
     this, SLOT(transladar(double,double,double)));
     connect(janelaDeTransformacoes, SIGNAL(sEscalonar(double,double, double)),
@@ -86,8 +86,8 @@ void MainWindow::abrirJanelaDeTransformacoes(){
 void MainWindow::abrirJanelaDeAjuda(){
 }
 
-void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos, list<Face*> faces, QColor cor){
-    QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos, faces, cor.red(), cor.green(), cor.blue()));
+void MainWindow::construirFigura(Tipo tipo, list<Ponto *> pontos, list<Face*> faces, QColor cor, int nLinhas, int nColunas){
+    QString nome = QString::fromStdString(windowViewport->adicionarFigura(tipo, pontos, faces, cor.red(), cor.green(), cor.blue(), nLinhas, nColunas));
     ui->listaObjetos->addItem(nome);
     windowViewport->gerarDescricoesPPC();
     desenharFiguras();
@@ -257,7 +257,7 @@ void MainWindow::desenharFiguras() {
             if (tipoDaFigura == SUPERFICIEBEZIER)
                 geradorDeCurvas->gerarSuperficieBezier(pontos, pontosCurva);
             else
-                geradorDeCurvas->gerarSuperficieBSpline(pontos, pontosCurva);
+                geradorDeCurvas->gerarSuperficieBSpline(pontos, pontosCurva, figura->obterNLinhas(), figura->obterNColunas());
             list<Ponto*>::iterator it = pontosCurva.begin();
             double x1 = (*it)->obterX();
             double y1 = (*it)->obterY();

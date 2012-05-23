@@ -1,6 +1,6 @@
 #include "figura.h"
 
-Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFaces, Cor vCor, Ponto vrp, double tetaX, double tetaY, Ponto centroDaCamera, double teta)
+Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFaces, Cor vCor, Ponto vrp, double tetaX, double tetaY, Ponto centroDaCamera, double teta, int vNLinhas, int vNColunas)
     : cor(vCor), copWindow(0,0,0)
 {
     nome = vNome;
@@ -8,6 +8,9 @@ Figura::Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFac
     pontos = vPontos;
     faces = vFaces;
     distanciaCop = 300;
+
+    nLinhas = vNLinhas;
+    nColunas = vNColunas;
 
     pontosPPC = pontos;
 
@@ -45,6 +48,14 @@ Tipo Figura::obterTipo(){
 
 Cor Figura::obterCor(){
     return cor;
+}
+
+int Figura::obterNLinhas(){
+    return nLinhas;
+}
+
+int Figura::obterNColunas(){
+    return nColunas;
 }
 
 void Figura::transladar(double vX, double vY, double vZ) {

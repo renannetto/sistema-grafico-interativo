@@ -44,7 +44,7 @@ public slots:
     void abrirJanelaDeCriacoes();
     void abrirJanelaDeTransformacoes();
     void abrirJanelaDeAjuda();
-    void construirFigura(Tipo, list<Ponto*>, list<Face*> faces, QColor cor);
+    void construirFigura(Tipo, list<Ponto*>, list<Face*> faces, QColor cor, int nLinhas = 0, int nColunas = 0);
     void destruirFigura();
     void receberPonto(double, double);
     void zoomIn();

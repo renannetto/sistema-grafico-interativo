@@ -17,7 +17,7 @@ enum Tipo {SUPERFICIEBEZIER, SUPERFICIESPLINE, POLIEDRO, CURVASPLINE, CURVABEZIE
 class Figura
 {
 public:
-    Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFaces, Cor vCor, Ponto vrp, double tetaX, double tetaY, Ponto centroDaCamera, double teta);
+    Figura(string vNome, Tipo vTipo, list<Ponto *> vPontos, list<Face*> vFaces, Cor vCor, Ponto vrp, double tetaX, double tetaY, Ponto centroDaCamera, double teta, int vNLinhas = 0, int vNColunas = 0);
     ~Figura();
     list<Ponto *> &obterPontos();
     list<Face*> obterFaces();
@@ -25,6 +25,8 @@ public:
     string obterNome();
     Tipo obterTipo();
     Cor obterCor();
+    int obterNLinhas();
+    int obterNColunas();
     void transladar(double,double,double);
     void escalonar(double,double,double);
     void rotacionar(double);
@@ -50,6 +52,8 @@ private:
     Cor cor;
     Ponto copWindow;
     double distanciaCop;
+    int nLinhas;
+    int nColunas;
 };
 
 #endif // FIGURA_H

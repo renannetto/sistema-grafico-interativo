@@ -25,10 +25,10 @@ void WindowViewport::resetarWindow(){
     gerarDescricoesPPC();
 }
 
-string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> faces, int vermelho, int verde, int azul)
+string WindowViewport::adicionarFigura(Tipo tipo, list<Ponto*> pontos, list<Face*> faces, int vermelho, int verde, int azul, int nLinhas, int nColunas)
 {
     Cor cor = Cor(vermelho, verde, azul);
-    return displayFile->adicionarFigura(tipo, pontos, faces, cor);
+    return displayFile->adicionarFigura(tipo, pontos, faces, cor, nLinhas, nColunas);
 }
 
 list<Figura*> WindowViewport::obterFiguras(){

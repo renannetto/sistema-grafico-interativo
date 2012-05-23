@@ -16,7 +16,7 @@ public:
     DisplayFile();
     ~DisplayFile();
     Figura* criarWindow();
-    string adicionarFigura(Tipo, list<Ponto*> pontos, list<Face*> faces, Cor cor);
+    string adicionarFigura(Tipo, list<Ponto*> pontos, list<Face*> faces, Cor cor, int nLinhas = 0, int nColunas = 0);
     list<Figura*> obterFiguras();
     void destruirFigura(string);
     void construirEixosNaOrigem();

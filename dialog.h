@@ -39,7 +39,7 @@ public slots:
     void limparTudo();
 
 signals:
-    void construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor cor);
+    void construirFigura(Tipo, list<Ponto*>, list<Face*>, QColor cor, int nLinhas = 0, int nColunas = 0);
 
 private slots:
     void on_inserirPontoSupBotao_clicked();

@@ -230,7 +230,7 @@ void Dialog::on_inserirSup_clicked()
 
         //AQUI TEM Q MUDAR PRA SPLINE
         if(ui->radioSplineSup->isChecked())
-            emit construirFigura(SUPERFICIEBEZIER, pontosSuperficie, faces, scene->backgroundBrush().color());
+            emit construirFigura(SUPERFICIESPLINE, pontosSuperficie, faces, scene->backgroundBrush().color(), linhasSup, colunasSup);
 
         pontosCurva.clear();
         pontosSuperficie.clear();
